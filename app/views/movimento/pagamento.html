@@ -1,17 +1,32 @@
+<h4>Registro pagamento</h4>
 <div class="row">
-  <div><strong>Tipo</strong></div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="rbtipo"> Entrada
-    </label>
-
+  <div class="col-md-4">
+    <div class="radio">
+      <label>
+        <input type="radio" name="tipo" value="1">
+        Transferencia/Deposito
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="tipo" value="1">
+        Cheque
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="tipo" value="1">
+        Dinheiro
+      </label>
+    </div>
   </div>
-  <div class="radio">
-    <label>
-      <input type="radio" name="rbtipo"> Saida
-    </label>
-
+  <div class="col-md-4">
+    Opções para registro de numero de cheque ou conta de deposito
   </div>
+
+</div>
+<div class="row">
+
   <div class="form-group">
     <label for="conta" >Conta</label>
     <select id="conta" class="form-control">

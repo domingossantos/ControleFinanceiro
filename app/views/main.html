@@ -1,9 +1,13 @@
 <div class="row">
-  <div class="col-md-9"></div>
-  <div class="col-md-3">Saldo Atual: <span class="valor_positivo">R$ 127.367,10</span></div>
+  <div class="col-md-8">
+    <a href="#/pagamento" class="btn btn-sm btn-warning">Registrar Pagamento</a>
+    <a href="#/aplicacao" class="btn btn-sm btn-success">Registrar Aplicação</a>
+      <a href="#/deposito" class="btn btn-sm btn-success">Registrar Deposito</a>
+  </div>
+  <div class="col-md-4">Saldo Consolidado: <span class="valor_positivo">R$ 127.367,10</span></div>
 </div>
 <div class="row">
-  <h4>Últimos movimentos | <a href="#/movimento">Registar Movimento</a></h4>
+  <h4>Últimos movimentos </h4>
   <table class="table table-condensed">
     <tr>
       <th>Tipo</th>
@@ -13,30 +17,30 @@
       <th>#</th>
     </tr>
     <tr>
-      <td>Entrada</td>
+      <td>Aplicação</td>
       <td>Rendimento de aplicação</td>
       <td class="text-right">35.000,00</td>
       <td class="text-center">--</td>
-      <td><i class="glyphicon glyphicon-eye-open"></i></td>
+      <td><a href="javascript:" data-toggle="modal" data-target="#modalDetalhe"><i class="glyphicon glyphicon-eye-open"></i></a></td>
     </tr>
     <tr>
-      <td>Entrada</td>
+      <td>Pagamento</td>
       <td>Deposito de Cliente</td>
       <td class="text-right">5.000,00</td>
       <td class="text-center">10/10/2001</td>
-      <td><i class="glyphicon glyphicon-eye-open"></i></td>
+      <td><a href="javascript:" data-toggle="modal" data-target="#modalDetalhe"><i class="glyphicon glyphicon-eye-open"></i></a></td>
     </tr>
     <tr>
-      <td>Saida</td>
+      <td>Pagamento</td>
       <td>Pagamento de obra</td>
       <td class="text-right">3.700,00</td>
       <td class="text-center">11/10/2001</td>
-      <td><i class="glyphicon glyphicon-eye-open"></i></td>
+      <td><a href="javascript:" data-toggle="modal" data-target="#modalDetalhe"><i class="glyphicon glyphicon-eye-open"></i></a></td>
     </tr>
 
   </table>
 
-  <h4>Movimentos a homologar </h4>
+  <h4>Pagamentos a homologar </h4>
   <table class="table table-condensed">
     <tr>
       <th>Tipo</th>
@@ -45,15 +49,54 @@
       <th class="text-center">Homologar</th>
     </tr>
     <tr>
-      <td>Entrada</td>
+      <td>Pagamento</td>
       <td>Deposito de cliente</td>
       <td class="text-right">15.000,00</td>
       <td class="text-center">
-        <i class="glyphicon glyphicon-ok"> </i>
         <i class="glyphicon glyphicon-remove"> </i>
-        <i class="glyphicon glyphicon-eye-open"> </i>
+        <a href="javascript:" data-toggle="modal" data-target="#modalHomologa">
+          <i class="glyphicon glyphicon-eye-open"> </i>
+        </a>
       </td>
     </tr>
   </table>
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalHomologa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Homologação de Pagamento</h4>
+      </div>
+      <div class="modal-body">
+        Todas as informações para exclarecer o pagamento
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary">Homologar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalDetalhe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Detalhe de Movimento</h4>
+      </div>
+      <div class="modal-body">
+        Todas as informações do movimento
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -22,8 +22,16 @@ angular
       templateUrl: 'views/main.html',
       controller: 'MainCtrl'
     })
-    .when('/movimento', {
-      templateUrl: 'views/movimento/registro.html',
+    .when('/pagamento', {
+      templateUrl: 'views/movimento/pagamento.html',
+      controller: 'MovimentoCtrl'
+    })
+    .when('/aplicacao', {
+      templateUrl: 'views/movimento/aplicacao.html',
+      controller: 'MovimentoCtrl'
+    })
+    .when('/deposito', {
+      templateUrl: 'views/movimento/deposito.html',
       controller: 'MovimentoCtrl'
     })
     .when('/conta', {
