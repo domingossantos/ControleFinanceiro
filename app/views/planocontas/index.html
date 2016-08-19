@@ -1,0 +1,72 @@
+<div class="row">
+  <label>Tipo conta</label>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <div class="radio">
+      <label>
+        <input type="radio" name="tipo" value="1">
+        Despesa
+      </label>
+    </div>
+    <div class="radio">
+      <label>
+        <input type="radio" name="tipo" value="1">
+        Receita
+      </label>
+    </div>
+
+  </div>
+</div>
+<div class="row">
+  <div class="form-group">
+    <label for="obra" >Conta Ascendente</label>
+    <select id="obra" class="form-control">
+      <option>Selecione...</option>
+      <option>Receita</option>
+      <option>Despesa</option>
+      <option>Obras</option>
+    </select>
+  </div>
+  <div class="form-group col-md-4">
+    <label for="conta">Descrição Conta</label>
+    <input id="conta" type="text" class="form-control ">
+  </div>
+</div>
+<div class="row">
+  <div class="text-right">
+    <button class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Salvar</button>
+    <button class="btn btn-warning"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
+  </div>
+</div>
+<div class="row">&af;</div>
+<div class="row">
+  <table class="table">
+    <tr>
+      <th>Grupo</th>
+      <th>Descrição</th>
+      <th>Ações</th>
+    </tr>
+    <tr>
+      <td>01</td>
+      <td>Receita</td>
+      <td><a href="javascript:" data-toggle="modal" data-target="#modalDetalhe"><i class="glyphicon glyphicon-eye-open"></i></a></td>
+    </tr>
+    <tr>
+      <td>01.1</td>
+      <td>Obras</td>
+      <td><a href="javascript:" data-toggle="modal" data-target="#modalDetalhe"><i class="glyphicon glyphicon-eye-open"></i></a></td>
+    </tr>
+    <tr>
+      <td>01.2</td>
+      <td>Investimentos</td>
+      <td><a href="javascript:" data-toggle="modal" data-target="#modalDetalhe"><i class="glyphicon glyphicon-eye-open"></i></a></td>
+    </tr>
+    <tr>
+      <td>01.3</td>
+      <td>Geral</td>
+      <td><a href="javascript:" data-toggle="modal" data-target="#modalDetalhe"><i class="glyphicon glyphicon-eye-open"></i></a></td>
+    </tr>
+  </table>
+
+</div>
