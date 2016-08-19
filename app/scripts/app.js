@@ -19,6 +19,10 @@ angular
 .config(function ($routeProvider) {
   $routeProvider
     .when('/', {
+      templateUrl: 'views/login.html',
+      controller: 'MainCtrl'
+    })
+    .when('/main', {
       templateUrl: 'views/main.html',
       controller: 'MainCtrl'
     })
@@ -37,6 +41,14 @@ angular
     .when('/conta', {
       templateUrl: 'views/conta/index.html',
       controller: 'ContaCtrl'
+    })
+    .when('/resumo', {
+      templateUrl: 'views/balanco/resumo_conta.html',
+      controller: 'BalancoCtrl'
+    })
+    .when('/plano', {
+      templateUrl: 'views/planocontas/index.html',
+      controller: 'PlanoContaCtrl'
     })
     .otherwise({
       redirectTo: '/'

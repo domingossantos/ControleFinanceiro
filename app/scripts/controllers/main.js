@@ -14,4 +14,10 @@ angular.module('controleFinanceiroApp')
       'AngularJS',
       'Karma'
     ];
+
+    $scope.menu = false;
+
+    $scope.login = function(){
+      $scope.menu = true;
+    }
   });
