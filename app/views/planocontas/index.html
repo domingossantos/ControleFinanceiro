@@ -1,72 +1,73 @@
-<div class="row">
-  <label>Tipo conta</label>
-</div>
-<div class="row">
-  <div class="col-md-4">
-    <div class="radio">
-      <label>
-        <input type="radio" name="tipo" value="1">
-        Despesa
-      </label>
+<div class="header"><h4>Plano de Contas</h4></div>
+<div ng-show="formulario">
+  <div class="row">
+    <label>Tipo conta</label>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div >
+        <label>
+          <input type="radio" ng-model="planoconta.tipoPlanoConta" name="tipo" value="DESPESA">
+          Despesa
+        </label>
+        <label>
+          <input type="radio" ng-model="planoconta.tipoPlanoConta" name="tipo" value="RECEITA">
+          Receita
+        </label>
+      </div>
+
     </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="tipo" value="1">
-        Receita
-      </label>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-10">
+      <label for="obra" >Conta Ascendente</label>
+      <select id="obra"
+              class="form-control"
+              ng-model="codigoSelecionado"
+              ng-options="conta as conta.descricao for conta in planocontas"
+              ng-change="getCodigoConta(codigoSelecionado)">
+        <option value="">Rais</option>
+
+      </select>
     </div>
 
   </div>
-</div>
-<div class="row">
-  <div class="form-group">
-    <label for="obra" >Conta Ascendente</label>
-    <select id="obra" class="form-control">
-      <option>Selecione...</option>
-      <option>Receita</option>
-      <option>Despesa</option>
-      <option>Obras</option>
-    </select>
+  <div class="row">
+    <div class="form-group col-md-2">
+      <label>Codigo : {{incremento}}</label>
+    </div>
+    <div class="form-group col-md-8 ">
+      <label for="conta">Descrição Conta</label>
+      <input id="conta" type="text" class="form-control text-uppercase" ng-model="planoconta.descricao">
+    </div>
   </div>
-  <div class="form-group col-md-4">
-    <label for="conta">Descrição Conta</label>
-    <input id="conta" type="text" class="form-control ">
+  <div class="row">
+    <div class="text-right">
+      <button class="btn btn-success" ng-click="onSalvar()"><i class="glyphicon glyphicon-ok"></i> Salvar</button>
+      <button class="btn btn-warning" ng-click="onCancelar()"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
+    </div>
   </div>
 </div>
-<div class="row">
+<div class="row" ng-show="painel">
   <div class="text-right">
-    <button class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Salvar</button>
-    <button class="btn btn-warning"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
+    <button class="btn btn-success" ng-click="onNovo()"><i class="glyphicon glyphicon-plus"></i> Novo</button>
+    <button class="btn btn-info" onclick="javascript:history.back();"><i class="glyphicon glyphicon-arrow-left"></i> Voltar</button>
   </div>
 </div>
 <div class="row">&af;</div>
 <div class="row">
-  <table class="table">
+  <table class="table table-hover">
+    <tbody>
     <tr>
       <th>Grupo</th>
       <th>Descrição</th>
       <th>Ações</th>
     </tr>
-    <tr>
-      <td>01</td>
-      <td>Receita</td>
-      <td><a href="javascript:" data-toggle="modal" data-target="#modalDetalhe"><i class="glyphicon glyphicon-eye-open"></i></a></td>
-    </tr>
-    <tr>
-      <td>01.1</td>
-      <td>Obras</td>
-      <td><a href="javascript:" data-toggle="modal" data-target="#modalDetalhe"><i class="glyphicon glyphicon-eye-open"></i></a></td>
-    </tr>
-    <tr>
-      <td>01.2</td>
-      <td>Investimentos</td>
-      <td><a href="javascript:" data-toggle="modal" data-target="#modalDetalhe"><i class="glyphicon glyphicon-eye-open"></i></a></td>
-    </tr>
-    <tr>
-      <td>01.3</td>
-      <td>Geral</td>
-      <td><a href="javascript:" data-toggle="modal" data-target="#modalDetalhe"><i class="glyphicon glyphicon-eye-open"></i></a></td>
+    </tbody>
+    <tr ng-repeat="conta in planocontas">
+      <td>{{conta.codigo}}</td>
+      <td>{{conta.descricao}}</td>
+      <td><a href="javascript:" data-toggle="modal" data-target="#modalDetalhe" ng-click="onCarregar(conta.id)"><i class="glyphicon glyphicon-eye-open"></i></a></td>
     </tr>
   </table>
-
 </div>

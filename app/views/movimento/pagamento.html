@@ -1,91 +1,131 @@
 <h4>Registro pagamento</h4>
 <div class="row">
   <div class="col-md-4">
-    <div class="radio">
-      <label>
-        <input type="radio" name="tipo" value="1">
-        Transferencia/Deposito
-      </label>
+    <div class="form-group">
+      <label for="formaPagamanto">Forma Pagamento</label>
+      <select id="formaPagamanto" class="form-control"
+              ng-model="formaPagamentoSelecionada"
+              ng-options="forma as forma.nome for forma in formasPagamento">
+        <option value="">Selecione...</option>
+      </select>
+
     </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="tipo" value="1">
-        Cheque
-      </label>
-    </div>
-    <div class="radio">
-      <label>
-        <input type="radio" name="tipo" value="1">
-        Dinheiro
-      </label>
+    <div class="form-group">
+      <label for="conta" >Conta</label>
+      <select id="conta" class="form-control"
+              ng-model="contaSelecionada"
+              ng-options="conta as conta.apelido for conta in contas">
+        <option>Selecione...</option>
+      </select>
     </div>
   </div>
   <div class="col-md-4">
-    Opções para registro de numero de cheque ou conta de deposito
+    <div class="form-group">
+        <label for="agencia">Agência</label>
+      <input id="agencia" class="form-control" ng-model="detalhePagamento.agencia"/>
+    </div>
+    <div class="form-group">
+      <label for="conta">Conta Corrente</label>
+      <input id="conta" class="form-control" ng-model="detalhePagamento.conta"/>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <label for="numeroCheque">Cheque</label>
+      <input id="numeroCheque" class="form-control" ng-model="detalhePagamento.numeroCheque"/>
+    </div>
+    <div class="form-group">
+      <label for="cpfCnpj">CPF/CNPJ Favorecido</label>
+      <input id="cpfCnpj" class="form-control" ng-model="detalhePagamento.cpfCnpj"/>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="valorTotal">Valor Total: </label>
+    <span id="valorTotal">R$ {{valorTotal}}</span>
   </div>
 
 </div>
 <div class="row">
-
-  <div class="form-group">
-    <label for="conta" >Conta</label>
-    <select id="conta" class="form-control">
-      <option>Selecione...</option>
-      <option>Caixa</option>
-      <option>BB</option>
-      <option>Santander</option>
-    </select>
-  </div>
-
-  <div class="form-inline">
+  <h3>Itens</h3>
+</div>
+<div class="row">
+  <div class="col-md-4">
     <div class="form-group">
       <label for="obra" >Obra</label>
-      <select id="obra" class="form-control">
+      <select id="obra" class="form-control"
+              ng-model="obraSelecionada"
+              ng-options="obra as obra.apelido for obra in obras">
         <option>Selecione...</option>
-        <option>Obra 01</option>
-        <option>Obra 02</option>
-        <option>Obra 03</option>
-        <option>Obra 04</option>
 
       </select>
     </div>
-    <div class="form-group">
-      <label for="valor">Valor</label>
-      <input type="text" id="valor" class="form-control text-right">
-    </div>
-    <div class="form-group">
-      <label for="valor">Historico</label>
-      <input type="text" id="valor" class="form-control text-right">
-    </div>
+  </div>
+  <div class="col-md-4">
     <div class="form-group">
       <label for="despesa">Plano de Contas</label>
-      <select id="despesa" class="form-control">
+      <select id="despesa" class="form-control"
+              ng-model="planoContaSelecionado"
+              ng-options="plano as plano.descricao for plano in planosContas">
         <option>Selecione</option>
-        <option>Despesas 01</option>
-        <option>Despesas 02</option>
-        <option>Despesas 03</option>
-        <option>Despesas 04</option>
-        <option>Despesas 05</option>
+
       </select>
 
     </div>
-
-    <button class="btn btn-success">Registrar</button>
   </div>
-  <div>
+  <div class="col-md-4">
+    <div class="form-group">
+      <label for="despesa">Fornecedor</label>
+      <select id="despesa" class="form-control"
+              ng-model="planoContaSelecionado"
+              ng-options="plano as plano.descricao for plano in planosContas">
+        <option>Selecione</option>
+
+      </select>
+
+    </div>
+  </div>
+
+
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="valor">Historico</label>
+        <input type="text" id="valor" class="form-control text-uppercase" ng-model="historico">
+
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label for="valor">Valor</label>
+        <input type="text" id="valor" class="form-control text-right" ng-model="valor">
+      </div>
+
+    </div>
+
+
+  <div class="row text-right">
+
+    <button class="btn btn-success" ng-click="noRegistraItem()"><i class="glyphicon glyphicon-plus"></i> Add Item</button>
+    <button class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Salvar Pagamento</button>
+    <button class="btn btn-warning"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
+  </div>
+  <div class="row">
     <table class="table">
       <tr>
-        <th>Despesa</th>
-        <th>Valor</th>
+        <th>Obra</th>
+        <th>Plano Conta</th>
+        <th>Histórico</th>
+        <th class="text-right">Valor</th>
+
       </tr>
-      <tr>
-        <td></td>
-        <td></td>
+      <tr ng-repeat="item in itensPagamento">
+        <td>{{item.obra.apelido}}</td>
+        <td >{{item.planoConta.descricao}}</td>
+        <td >{{item.descricao}}</td>
+        <td class="text-right">{{item.valor}}</td>
       </tr>
     </table>
   </div>
   <div class="text-right">
-    <button class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Salvar</button>
-    <button class="btn btn-warning"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
+
   </div>
 </div>

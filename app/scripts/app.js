@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  * @ngdoc overview
  * @name controleFinanceiroApp
@@ -8,15 +7,16 @@
  *
  * Main module of the application.
  */
-angular
-  .module('controleFinanceiroApp', [
+var app = angular.module('controleFinanceiroApp', [
     'ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
-    'ngSanitize'
+    'ngSanitize',
+    'controleFinanceiroApp.controllers',
+    'controleFinanceiroApp.resources'
   ])
-.config(function ($routeProvider) {
+  .config(function ($routeProvider) {
   $routeProvider
     .when('/', {
       templateUrl: 'views/login.html',
@@ -54,3 +54,9 @@ angular
       redirectTo: '/'
     });
 });
+
+app.rootContext = 'http://localhost:8080/cf-api/';
+
+angular.module('controleFinanceiroApp.resources',[]);
+angular.module('controleFinanceiroApp.controllers',[]);
+
