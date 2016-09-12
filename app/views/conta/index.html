@@ -1,20 +1,29 @@
 <div class="row"><h4>Contas | <a href="javascrit:" data-toggle="modal" data-target="#modalForm">Nova Conta</a></h4> </div>
 
-
-
 <div class="row">
-  <div class="tabbable tabs-left">
-    <ul class="nav nav-tabs" id="myTabs">
+  <table class="table ">
+    <tr>
+      <th width="20%">Contas</th>
+      <th width="60%" class="text-right">Posição Atual:</th>
+      <th width="20%" class="text-right">0,00</th>
+    </tr>
+    <tr ng-repeat="conta in contas">
+      <td>{{conta.banco.sigla}} - {{conta.agencia}}/{{conta.numero}}</td>
+      <td colspan="2">
+        <table class="table table-hover">
+          <tr>
+            <th width="70%">Nome</th>
+            <th>Saldo</th>
+          </tr>
+          <tr ng-repeat="subconta in conta.subcontas">
+            <td>{{subconta.apelido}}</td>
+            <td class="text-right">0,00</td>
+          </tr>
+        </table>
 
-      <li ng-repeat="conta in contas"><a href="#/conta"  ng-click="onTabOrder(conta.banco.sigla)" >{{conta.banco.sigla}}</a></li>
-
-    </ul>
-    <div class="tab-content">
-      <div ng-repeat="conta in contas" class="tab-pane" id="{{conta.banco.sigla}}">
-        {{conta.banco.nome}}
-      </div>
-
-  </div>
+      </td>
+    </tr>
+  </table>
 
 </div>
 
@@ -34,27 +43,51 @@
       </div>
       <div class="modal-body">
         <div class="form-group">
-          <label for="banco">Banco</label>
-          <select id="banco" class="form-control">
-            <option>Selecione</option>
-            <option>BB</option>
-            <option>Caixa</option>
-            <option>Santander</option>
+          <label for="tipoConta">Tipo Conta</label>
+          <select id="tipoConta" class="form-control" ng-change="onShowFormConta()" ng-model="tipoConta">
+            <option value="1">Conta Física</option>
+            <option value="2">Conta Virtual</option>
           </select>
         </div>
-        <div class="form-group">
-          <label for="agencia">Agencia</label>
-          <input id="agencia" type="text" class="form-control">
-        </div>
-        <div class="form-group">
-          <label for="conta">Conta</label>
-          <input id="conta" type="text" class="form-control">
+        <div ng-show="grupoContaFisica">
+          <div class="form-group">
+            <label for="banco">Banco</label>
+            <select id="banco" class="form-control"
+                    ng-model="bancoSelecionado"
+                    ng-options="banco as banco.sigla for banco in bancos">
+
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="agencia">Agencia</label>
+            <input id="agencia" type="text" class="form-control" ng-model="conta.agencia">
+          </div>
+          <div class="form-group">
+            <label for="conta">Conta</label>
+            <input id="conta" type="text" class="form-control" ng-model="conta.numero">
+          </div>
         </div>
 
+        <div ng-show="grupoContaVirtual">
+          <div class="form-group">
+            <label for="contacorrente">Conta Física</label>
+            <select id="contacorrente" class="form-control"
+                    ng-model="contaCorrenteSelecionado"
+                    ng-options="conta as conta.banco.sigla for conta in contas">
+
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="apelido">Nome</label>
+            <input id="apelido" class="form-control" ng-model="subconta.apelido">
+          </div>
+        </div>
       </div>
+
+
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-primary" ng-click="onSalvar(tipoConta)">Salvar</button>
       </div>
     </div>
   </div>

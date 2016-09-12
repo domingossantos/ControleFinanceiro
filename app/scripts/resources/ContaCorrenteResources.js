@@ -7,6 +7,6 @@ angular.module('controleFinanceiroApp.resources').factory('ContaCorrenteResource
   return $resource(app.rootContext + 'rest/contascorrentes/:id',{id : '@id', idCliente: '@IdCliente'},
     {
       'get' : {method : 'GET', isArray : false},
-      'query' : {method : 'GET', isArray: false}
+      'query' : {method : 'GET', isArray: false},
     });
 }])
