@@ -1,26 +1,27 @@
 <div class="row"><h4>Contas | <a href="javascrit:" data-toggle="modal" data-target="#modalForm">Nova Conta</a></h4> </div>
-<div class="row">
-  <table class="table table-hover">
-    <tr >
-      <th>Banco</th>
-      <th>Apelido</th>
-      <th>Conta</th>
-      <th>Saldo</th>
-      <th>#</th>
-    </tr>
-    <tr ng-repeat="conta in contas">
-      <td>{{conta.banco.nome}}</td>
-      <td>{{conta.apelido}}</td>
-      <td>{{conta.agencia}}/{{conta.numero}}</td>
-      <td>0,00</td>
-      <td>
-        <i class="glyphicon glyphicon-ok"> </i>
-        <i class="glyphicon glyphicon-remove"> </i>
-        <i class="glyphicon glyphicon-eye-open"> </i>
-      </td>
-    </tr>
 
-  </table>
+
+
+<div class="row">
+  <div class="tabbable tabs-left">
+    <ul class="nav nav-tabs" id="myTabs">
+
+      <li ng-repeat="conta in contas"><a href="#/conta"  ng-click="onTabOrder(conta.banco.sigla)" >{{conta.banco.sigla}}</a></li>
+
+    </ul>
+    <div class="tab-content">
+      <div ng-repeat="conta in contas" class="tab-pane" id="{{conta.banco.sigla}}">
+        {{conta.banco.nome}}
+      </div>
+
+  </div>
+
+</div>
+
+
+<div class="row">
+
+
 </div>
 
 <!-- Modal -->
@@ -57,4 +58,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>
