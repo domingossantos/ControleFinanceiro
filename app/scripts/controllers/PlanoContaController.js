@@ -19,7 +19,8 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.planocontas = [];
 
     $scope.atualizar = function(){
-      PlanoContaResources.query({id : 1},function(success){
+      PlanoContaResources.query({ idCliente : 1},function(success){
+        console.log(success);
         $scope.planocontas = success.itens;
       });
     };
@@ -61,7 +62,7 @@ angular.module('controleFinanceiroApp.controllers')
 
 
     $scope.onCarregar = function(id){
-      PlanoContaClienteResources.query({idCliente : 1, id : id},function(success){
+      PlanoContaResources.get({id : id},function(success){
 
         console.log(success.item);
         $scope.painel = false;

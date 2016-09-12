@@ -13,6 +13,7 @@ var app = angular.module('controleFinanceiroApp', [
     'ngResource',
     'ngRoute',
     'ngSanitize',
+
     'controleFinanceiroApp.controllers',
     'controleFinanceiroApp.resources'
   ])
