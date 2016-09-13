@@ -51,6 +51,14 @@ var app = angular.module('controleFinanceiroApp', [
       templateUrl: 'views/planocontas/index.html',
       controller: 'PlanoContaCtrl'
     })
+    .when('/obra', {
+      templateUrl: 'views/obra/index.html',
+      controller: 'ObraCtrl'
+    })
+    .when('/fornecedor', {
+      templateUrl: 'views/fornecedor/index.html',
+      controller: 'FornecedorCtrl'
+    })
     .otherwise({
       redirectTo: '/'
     });
