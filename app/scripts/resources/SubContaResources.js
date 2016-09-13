@@ -8,7 +8,8 @@ angular.module('controleFinanceiroApp.resources').factory('SubContaResources',['
     {idContaCorrente : '@idContaCorrente', idSubConta: '@idSubConta'},
     {
       'get' : {method : 'GET', isArray : false},
-      'query' : {method : 'GET', isArray: false}
+      'query' : {method : 'GET', isArray: false},
+      'update' : {method : 'PUT'}
     });
 }])
 

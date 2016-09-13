@@ -9,6 +9,8 @@ angular.module('controleFinanceiroApp')
   $scope.contaCorrente = {};
   $scope.contasCorrentes = [];
   $scope.subcontas = [];
+  $scope.subconta = {};
+  $scope.subcontaSelecionada = null;
 
   $scope.listarContasCorrentes = function() {
     var contaCorrenteResources = $injector.get('ContaCorrenteResources');
@@ -21,14 +23,14 @@ angular.module('controleFinanceiroApp')
     });
   }
 
-  $scope.listarSubContas = function(contaCorrente) {
-    var subContaResources = $injector.get('SubContaResources');
-    $scope.subcontas = subContaResources.query({idContaCorrente : contaCorrente.id});
-  }
-
   $scope.selecionarContaCorrente = function(contaCorrente) {
     $scope.contaCorrenteSelecionada = contaCorrente;
     $scope.listarSubContas($scope.contaCorrenteSelecionada);
+  }
+
+  $scope.adicionarContaCorrente = function() {
+    $scope.contaCorrente = {};
+    $('#modalContaCorrente').modal('show');
   }
 
   $scope.salvarContaCorrente = function() {
@@ -75,6 +77,41 @@ angular.module('controleFinanceiroApp')
   $('#modalContaCorrenteVisualizar').on('shown.bs.modal', function () {
     $scope.contaCorrenteVisualizar = null;
   });
+
+  $scope.listarSubContas = function(contaCorrente) {
+    var subContaResources = $injector.get('SubContaResources');
+    $scope.subcontas = subContaResources.query({idContaCorrente : contaCorrente.id});
+  }
+
+  $scope.adicionarSubConta = function() {
+    $scope.subconta = {};
+    $scope.subconta.contaCorrente = $scope.contaCorrenteSelecionada;
+    $('#modalSubConta').modal('show');
+  }
+
+  $scope.salvarSubConta = function() {
+    var subContaResources = $injector.get('SubContaResources');
+
+    if($scope.subconta.id) {
+      subContaResources.update({
+          idContaCorrente : $scope.subconta.contaCorrente.id,
+          idSubConta : $scope.subconta.id
+        }, $scope.subconta, function(result) {
+          $('#modalSubConta').modal('hide');
+          $scope.listarSubContas($scope.subconta.contaCorrente);
+      });
+    } else {
+      subContaResources.save({idContaCorrente : $scope.subconta.contaCorrente.id}, $scope.subconta, function(result) {
+        $('#modalSubConta').modal('hide');
+        $scope.listarSubContas($scope.subconta.contaCorrente);
+      });
+    }
+  }
+
+  $scope.editarSubConta = function(subconta) {
+    $scope.subconta = angular.copy(subconta);
+    $('#modalSubConta').modal('show');
+  }
 
   $scope.listarContasCorrentes();
 }]);
