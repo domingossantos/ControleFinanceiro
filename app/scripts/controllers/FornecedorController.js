@@ -17,7 +17,6 @@ angular.module('controleFinanceiroApp')
       result.$promise.then(
         function(success){
           $scope.fornecedores = success;
-          console.log(success);
         }
         ,function(error){
           console.log(error);
@@ -34,9 +33,18 @@ angular.module('controleFinanceiroApp')
       return valido;
     }
 
+    $scope.onSetFornecedor = function(fornecedor){
+      $scope.fornecedor = fornecedor;
+    }
+
     $scope.limparCampos = function () {
       $('#nome').val('');
       $('#descricao').val('');
+      $scope.fornecedor = {
+        descricao : null,
+        nome : null,
+        cliente : null
+      }
     }
 
     $scope.onSalvar = function(){
@@ -59,7 +67,7 @@ angular.module('controleFinanceiroApp')
               },
               function (error) {
                 console.log('Erro ao gravar fornecedor');
-                alert(error);
+                console.log(error);
               }
             )
           },
@@ -75,17 +83,17 @@ angular.module('controleFinanceiroApp')
     }
 
 
-    $scope.onAtualizar = function(fornecedor){
+    $scope.onAtualizar = function(){
 
       var fornecedorResources = $injector.get('FornecedorResources');
 
-      fornecedorResources.update({idFornecedor:fornecedor.id}, fornecedor).$promise.then(
+      fornecedorResources.update({idFornecedor:$scope.fornecedor.id}, $scope.fornecedor).$promise.then(
         function (success) {
-          console.log(success);
-          $scope.listarFornecedor();
+          $('#modalAlterarFornecedor').modal('hide');
+          $scope.limparCampos();
         },
         function (error) {
-          alert(error);
+          console.log(error);
         }
       )
 
@@ -99,7 +107,15 @@ angular.module('controleFinanceiroApp')
 
     $('#modalCadastrarFornecedor').on('shown.bs.modal', function () {
       $('#nome').focus();
-    })
+    });
+
+    $('#modalAlterarFornecedor').on('hidden.bs.modal', function () {
+      $scope.listarFornecedor();
+    });
+
+    $('#modalAlterarFornecedor').on('shown.bs.modal', function () {
+      $('#nome').focus();
+    });
 
     $scope.listarFornecedor();
 

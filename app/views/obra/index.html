@@ -6,19 +6,22 @@
   </div>
 </div>
 <div ng-show="obras.itens.length > 0" class="row">
-  <h4>Obras <small><a href="javascrit:" data-toggle="modal" data-target="#modalCadastrarObra">Adicionar</a></small></h4>
-  <table class="table table-hover">
+  <h4>Obras <small><a href="javascrit:" data-toggle="modal" data-target="#modalCadastrarObra" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-ok"></i> Adicionar</a></small></h4>
+  <table class="table table-hover table-striped">
     <tr>
-      <th>Nome</th>
-      <th>Endereço</th>
-      <th>#</th>
+      <th width="40%">Nome</th>
+      <th width="50%">Endereço</th>
+      <th width="10%" class="text-center">#</th>
     </tr>
     <tr ng-repeat="obra in obras.itens">
       <td>{{obra.apelido}}</td>
       <td>{{obra.endereco}}</td>
-      <td>
-        <button type="button" class="btn btn-danger btn-xs" ng-click="onDelete(obra)">
+      <td class="text-center">
+        <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm" ng-click="onSetObra(obra)">
           <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalAlterarObra" ng-click="onSetObra(obra)">
+          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
         </button>
       </td>
     </tr>
@@ -51,7 +54,56 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary" ng-click="onSalvar()">Salvar</button>
+        <button type="button" class="btn btn-success" ng-click="onSalvar()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal Alterar -->
+<div class="modal fade" id="modalAlterarObra" tabindex="-1" role="dialog" aria-labelledby="myModalLabelAlterar">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabelAlterar"> Cadastrar Obra</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="nome" class="col-sm-2 control-label">Nome:</label>
+            <div class="col-sm-10">
+              <input id="nome" ng-model="obra.apelido" class="form-control" placeholder="Nome obra" required="true">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="endereco" class="col-sm-2 control-label">Endereço:</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="endereco" placeholder="Endereço completo" ng-model="obra.endereco" required="true">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-success" ng-click="onAlterar()">Alterar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Small modal -->
+
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        Deseja Apagar Obra {{obra.apelido}}?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" ng-click="onDelete(obra)">Sim</button>
+        <button class="btn btn-warning" data-dismiss="modal">Cancelar</button>
       </div>
     </div>
   </div>

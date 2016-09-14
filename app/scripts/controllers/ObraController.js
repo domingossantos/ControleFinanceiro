@@ -10,7 +10,8 @@ angular.module('controleFinanceiroApp')
       endereco : null,
       cliente : null,
       ativo : true
-    }
+    };
+
 
     $scope.listarObras = function(){
       var obraResources = $injector.get('ObraResources');
@@ -24,9 +25,13 @@ angular.module('controleFinanceiroApp')
           console.log(error);
         }
       )
+    };
 
-
+    $scope.limparCampos = function () {
+      $('#nome').val('');
+      $('')
     }
+
 
     $scope.validaCampos = function(){
       var valido = true;
@@ -50,6 +55,7 @@ angular.module('controleFinanceiroApp')
             obraResources.save({},angular.copy($scope.obra)).$promise.then(
               function (success) {
                 $('#modalCadastrarObra').modal('hide');
+                $scope.limparCampos();
 
               },
               function (error) {
@@ -61,9 +67,28 @@ angular.module('controleFinanceiroApp')
       } else {
         alert('Todos os campos são obrigatorios');
       }
-
     }
 
+
+    $scope.onAlterar = function(){
+      var obraResources = $injector.get('ObraResources');
+
+      obraResources.update({idObra:$scope.obra.id}, $scope.obra).$promise.then(
+        function (success) {
+          $('#modalAlterarObra').modal('hide');
+          $scope.listarObras();
+          $scope.limparCampos();
+        },
+        function (error) {
+          alert(error);
+        }
+      )
+    }
+
+    $scope.onSetObra = function(obra){
+      $scope.obra = obra;
+
+    }
 
     $scope.onDelete = function(obra){
       obra.ativo = false;
@@ -71,16 +96,14 @@ angular.module('controleFinanceiroApp')
 
       obraResources.update({idObra:obra.id}, obra).$promise.then(
         function (success) {
-          console.log(success);
+          $('.bs-example-modal-sm').modal('hide');
           $scope.listarObras()
         },
         function (error) {
           alert(error);
         }
       )
-
-
-    }
+    };
 
 
     $('#modalCadastrarObra').on('hidden.bs.modal', function () {

@@ -1,73 +1,122 @@
-<div class="header"><h4>Plano de Contas</h4></div>
-<div ng-show="formulario">
-  <div class="row">
-    <label>Tipo conta</label>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <div >
-        <label>
-          <input type="radio" ng-model="planoconta.tipoPlanoConta" name="tipo" value="DESPESA">
-          Despesa
-        </label>
-        <label>
-          <input type="radio" ng-model="planoconta.tipoPlanoConta" name="tipo" value="RECEITA">
-          Receita
-        </label>
-      </div>
-
-    </div>
-  </div>
-  <div class="row">
-    <div class="form-group col-md-10">
-      <label for="obra" >Conta Ascendente</label>
-      <select id="obra"
-              class="form-control"
-              ng-model="codigoSelecionado"
-              ng-options="conta as conta.descricao for conta in planocontas"
-              ng-change="getCodigoConta(codigoSelecionado)">
-        <option value="">Rais</option>
-
-      </select>
-    </div>
-
-  </div>
-  <div class="row">
-    <div class="form-group col-md-2">
-      <label>Codigo : {{incremento}}</label>
-    </div>
-    <div class="form-group col-md-8 ">
-      <label for="conta">Descrição Conta</label>
-      <input id="conta" type="text" class="form-control text-uppercase" ng-model="planoconta.descricao">
-    </div>
-  </div>
-  <div class="row">
-    <div class="text-right">
-      <button class="btn btn-success" ng-click="onSalvar()"><i class="glyphicon glyphicon-ok"></i> Salvar</button>
-      <button class="btn btn-warning" ng-click="onCancelar()"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
-    </div>
+<div ng-show="planocontas.itens.length < 1" class="row">
+  <div class="jumbotron">
+    <h1>Plano de Contas</h1>
+    <p>Nenhum plano de contas cadastrado.</p>
+    <p><a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalCastro" role="button">Cadastrar</a></p>
   </div>
 </div>
-<div class="row" ng-show="painel">
-  <div class="text-right">
-    <button class="btn btn-success" ng-click="onNovo()"><i class="glyphicon glyphicon-plus"></i> Novo</button>
-    <button class="btn btn-info" onclick="javascript:history.back();"><i class="glyphicon glyphicon-arrow-left"></i> Voltar</button>
-  </div>
-</div>
-<div class="row">&af;</div>
-<div class="row">
+<div ng-show="planocontas.itens.length > 0" class="row">
+  <h4>Plano Contas <small><a class="btn btn-xs btn-success" href="javascrit:" data-toggle="modal" data-target="#modalCadastro" ng-click="limparCampos()"><i class="glyphicon glyphicon-ok"></i> Adicionar</a></small></h4>
   <table class="table table-hover">
     <tbody>
     <tr>
-      <th>Grupo</th>
-      <th>Descrição</th>
-      <th>Ações</th>
+      <th width="15%">Grupo</th>
+      <th width="75%">Descrição</th>
+      <th width="10%" class="text-center">#</th>
     </tr>
     </tbody>
-    <tr ng-repeat="conta in planocontas">
+    <tr ng-repeat="conta in planocontas.itens">
       <td>{{conta.codigo}}</td>
       <td>{{conta.descricao}}</td>
-      <td><a href="javascript:" data-toggle="modal" data-target="#modalDetalhe" ng-click="onCarregar(conta.id)"><i class="glyphicon glyphicon-eye-open"></i></a></td>
+      <td class="text-center"><button data-toggle="modal" data-target="#modalAlteracao" ng-click="onCarregar(conta)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-pencil"></i></button></td>
     </tr>
   </table>
 </div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modalCadastro">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Cadastro Plano Conta</h4>
+      </div>
+      <div class="modal-body">
+          <div class="form-group">
+            <h5>Tipo de Conta</h5>
+            <label class="radio-inline">
+              <input type="radio" ng-model="planoconta.tipoPlanoConta" name="tipo" value="DESPESA">
+              Despesa
+            </label>
+            <label class="radio-inline">
+              <input type="radio" ng-model="planoconta.tipoPlanoConta" name="tipo" value="RECEITA">
+              Receita
+            </label>
+          </div>
+
+          <div class="form-group">
+            <label for="obra" >Conta Ascendente</label>
+            <select id="obra"
+                    class="form-control"
+                    ng-model="codigoSelecionado"
+                    ng-options="conta as conta.descricao for conta in planocontas.itens"
+                    ng-change="getCodigoConta(codigoSelecionado)">
+              <option value="">Rais</option>
+
+            </select>
+          </div>
+        <div class="form-group ">
+          <label>Grupo : {{incremento}}</label>
+        </div>
+
+        <div class="form-group">
+          <label for="conta">Descrição Conta</label>
+          <input id="conta" type="text" class="form-control text-uppercase" ng-model="planoconta.descricao" />
+        </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" ng-click="onSalvar()">Salvar</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modalAlteracao">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Cadastro Plano Conta</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <h5>Tipo de Conta</h5>
+          <label class="radio-inline">
+            <input type="radio" ng-model="planoconta.tipoPlanoConta" name="tipo" value="DESPESA">
+            Despesa
+          </label>
+          <label class="radio-inline">
+            <input type="radio" ng-model="planoconta.tipoPlanoConta" name="tipo" value="RECEITA">
+            Receita
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="obra" >Conta Ascendente</label>
+          <select id="obra"
+                  class="form-control"
+                  ng-model="codigoSelecionado"
+                  ng-options="conta as conta.descricao for conta in planocontas.itens">
+            <option ng-selected="codigoSelecionado"></option>
+
+          </select>
+        </div>
+        <div class="form-group ">
+          <label>Grupo : {{planoconta.codigo}}</label>
+        </div>
+
+        <div class="form-group">
+          <label for="conta">Descrição Conta</label>
+          <input id="conta" type="text" class="form-control text-uppercase" ng-model="planoconta.descricao" />
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" ng-click="onSalvar()">Atualizar</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  </div>
