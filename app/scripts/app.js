@@ -21,7 +21,7 @@ var app = angular.module('controleFinanceiroApp', [
   $routeProvider
     .when('/', {
       templateUrl: 'views/login.html',
-      controller: 'MainCtrl'
+      controller: 'LoginCtrl'
     })
     .when('/main', {
       templateUrl: 'views/main.html',
@@ -63,6 +63,16 @@ var app = angular.module('controleFinanceiroApp', [
       redirectTo: '/'
     });
 });
+
+app.run(['$rootScope', '$location', function ($rootScope, $location) {
+
+  $rootScope.$on('$routeChangeStart', function (angularEvent, next, current) {
+    var requireLogin = typeof $rootScope.usuario === 'undefined' || $rootScope.usuario == null;
+    if (requireLogin) {
+      $location.path('/')
+    }
+  });
+}]);
 
 app.rootContext = 'http://localhost:8080/cf-api/';
 

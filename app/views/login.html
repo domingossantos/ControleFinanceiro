@@ -5,15 +5,15 @@
   <div class="col-md-4"></div>
   <div class="col-md-4">
     <div class="form-group">
-      <label for="email">Email</label>
-      <input id="email" type="text" class="form-control" placeholder="Digite seu Email">
+      <label for="email">E-mail</label>
+      <input ng-model="usuario.email" id="email" type="text" class="form-control" placeholder="Digite seu Email">
     </div>
     <div class="form-group">
       <label id="senha">Senha</label>
-      <input id="senha" type="password" class="form-control">
+      <input ng-model="usuario.senha" id="senha" type="password" class="form-control">
     </div>
     <div>
-      <a href="#/main" class="btn btn-primary">Login</a>
+      <button ng-click="login()" class="btn btn-primary">Login</button>
     </div>
   </div>
   <div class="col-md-4"></div>
