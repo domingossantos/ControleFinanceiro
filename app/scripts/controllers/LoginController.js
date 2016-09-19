@@ -17,7 +17,7 @@ angular.module('controleFinanceiroApp')
     loginResources.save($scope.usuario, function(success) {
       $rootScope.usuario = success.item;
       $http.defaults.headers.common['Authorization'] = 'Bearer ' + $rootScope.usuario.token;
-      $location.path('/conta');
+      $location.path('/main');
     });
   }
 }]);

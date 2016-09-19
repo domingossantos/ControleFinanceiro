@@ -13,7 +13,7 @@ var app = angular.module('controleFinanceiroApp', [
     'ngResource',
     'ngRoute',
     'ngSanitize',
-
+    'ui.utils.masks',
     'controleFinanceiroApp.controllers',
     'controleFinanceiroApp.resources'
   ])
@@ -29,7 +29,7 @@ var app = angular.module('controleFinanceiroApp', [
     })
     .when('/pagamento', {
       templateUrl: 'views/movimento/pagamento.html',
-      controller: 'MovimentoCtrl'
+      controller: 'PagamentoCtrl'
     })
     .when('/aplicacao', {
       templateUrl: 'views/movimento/aplicacao.html',
@@ -37,7 +37,7 @@ var app = angular.module('controleFinanceiroApp', [
     })
     .when('/deposito', {
       templateUrl: 'views/movimento/deposito.html',
-      controller: 'MovimentoCtrl'
+      controller: 'DepositoCtrl'
     })
     .when('/conta', {
       templateUrl: 'views/conta/conta_corrente.html',

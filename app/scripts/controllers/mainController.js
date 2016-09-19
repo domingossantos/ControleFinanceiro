@@ -8,7 +8,7 @@
  * Controller of the controleFinanceiroApp
  */
 angular.module('controleFinanceiroApp.controllers')
-  .controller('MainCtrl', ['$rootScope','$scope', 'PagamentoResources','PagamentoClienteResources' , 'ItemPagamentoResources',function ($rootScope, $scope, PagamentoResources ,PagamentoClienteResources, ItemPagamentoResources) {
+  .controller('MainCtrl', ['$rootScope','$scope', '$injector',function ($rootScope, $scope, $injector) {
     $scope.menu = false;
 
     $scope.login = function(){
@@ -22,45 +22,43 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.detalheMovimento = {};
     $scope.itens = {};
 
+    $scope.movimentoResources = $injector.get('MovimentoResources');
 
     $scope.onDetalheMovimento = function(id){
-      PagamentoResources.query({ idCliente:1, id : id}, function(success){
-        $scope.detalheMovimento = success.item;
-        var idPagamento = success.item.id;
-
-        ItemPagamentoResources.query({id:idPagamento}, function(success){
-          $scope.itens = success.itens;
-
-        })
-
-      });
     }
 
     $scope.onMovimentosPendentes = function(){
-      PagamentoClienteResources.query({id : 1, status : 'PENDENTE_HOMOLOGACAO'}, function(success){
 
-        $scope.movimentosPendentes = success.itens;
-      });
+      $scope.movimentoResources.query({idCliente: 1, status : 'PENDENTE_HOMOLOGACAO'}).$promise.then(
+        function (success) {
+          $scope.movimentosPendentes = success.itens;
+        }
+      );
+
     };
 
     $scope.onMovimentosHomologados = function(){
-      PagamentoClienteResources.query({id : 1,status:'HOMOLOGADO'}, function(success){
 
-        $scope.movimentosHomologados = success.itens;
-      });
+      $scope.movimentoResources.query({idCliente: 1, status : 'HOMOLOGADO'}).$promise.then(
+        function (success) {
+          $scope.movimentosHomologados = success.itens;
+        }
+      );
+
     };
 
     $scope.onMovimentosNaoHomologados = function(){
-      PagamentoClienteResources.query({id : 1, status : 'NAO_HOMOLOGADO'}, function(success){
-        $scope.movimentosNaoHomologados = success.itens;
-      });
+
+      $scope.movimentoResources.query({idCliente: 1, status : 'NAO_HOMOLOGADO'}).$promise.then(
+        function (success) {
+          $scope.movimentosNaoHomologados = success.itens;
+        }
+      );
     };
 
     $scope.onMudarStatus = function(id,status){
       console.log(id);
-      PagamentoResources.update({ id:id, status:status}, function(success){
-        console.log(success);
-      });
+
       $('#modalHomologa').modal('hide');
     }
 

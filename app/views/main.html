@@ -17,7 +17,7 @@
       <th>#</th>
     </tr>
      <tr ng-repeat="movimento in movimentosHomologados">
-      <td>Pagamento</td>
+      <td>{{movimento.descricao}}</td>
       <td>{{movimento.descricao}}</td>
       <td class="text-right">{{movimento.valor}}</td>
       <td class="text-center">{{movimento.dataOperacao | date:'dd/MM/yyyy H:m:ss'}}</td>
@@ -25,7 +25,7 @@
     </tr>
   </table>
 
-  <h4>Pagamentos a homologar </h4>
+  <h4>Movimentos a homologar </h4>
   <table class="table table-condensed">
     <tr>
       <th>Tipo</th>

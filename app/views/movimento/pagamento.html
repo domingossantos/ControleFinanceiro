@@ -1,47 +1,37 @@
 <h4>Registro pagamento</h4>
+<form name="formPagamento" novalidate>
 <div class="row">
   <div class="col-md-4">
-    <div class="form-group">
-      <label for="formaPagamanto">Forma Pagamento</label>
-      <select id="formaPagamanto" class="form-control"
+    <div class="form-group" ng-class="{ 'has-error': formPagamento.formaPagamento.$invalid }">
+      <label for="formaPagamento">Forma Pagamento</label>
+      <select id="formaPagamento" class="form-control" name="formaPagamento" required
               ng-model="formaPagamentoSelecionada"
               ng-options="forma as forma.nome for forma in formasPagamento">
         <option value="">Selecione...</option>
       </select>
-
     </div>
     <div class="form-group">
+      <label for="valorTotal">Valor Total: </label>
+      <input type="text" class="form-control " disabled="true" id="valorTotal" ui-number-mask="2" placeholder="Total" ng-model="valorTotal" value="{{valorTotal | currency}}">
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="form-group" ng-class="{ 'has-error': formPagamento.conta.$invalid }">
       <label for="conta" >Conta</label>
-      <select id="conta" class="form-control"
+      <select id="conta" class="form-control" name="conta" required
               ng-model="contaSelecionada"
               ng-options="conta as conta.apelido for conta in contas">
         <option>Selecione...</option>
       </select>
     </div>
+
   </div>
+
   <div class="col-md-4">
-    <div class="form-group">
-        <label for="agencia">Agência</label>
-      <input id="agencia" class="form-control" ng-model="detalhePagamento.agencia"/>
+    <div class="form-group" ng-class="{ 'has-error': formPagamento.dataMovimento.$invalid }">
+      <label for="dataMovimento">Data</label>
+      <input ng-model="dataMovimento" id="dataMovimento" name="dataMovimento" required type="date" class="form-control">
     </div>
-    <div class="form-group">
-      <label for="conta">Conta Corrente</label>
-      <input id="conta" class="form-control" ng-model="detalhePagamento.conta"/>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <div class="form-group">
-      <label for="numeroCheque">Cheque</label>
-      <input id="numeroCheque" class="form-control" ng-model="detalhePagamento.numeroCheque"/>
-    </div>
-    <div class="form-group">
-      <label for="cpfCnpj">CPF/CNPJ Favorecido</label>
-      <input id="cpfCnpj" class="form-control" ng-model="detalhePagamento.cpfCnpj"/>
-    </div>
-  </div>
-  <div class="col-md-4">
-    <label for="valorTotal">Valor Total: </label>
-    <span id="valorTotal">R$ {{valorTotal}}</span>
   </div>
 
 </div>
@@ -50,9 +40,9 @@
 </div>
 <div class="row">
   <div class="col-md-4">
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error': formPagamento.obra.$invalid }">
       <label for="obra" >Obra</label>
-      <select id="obra" class="form-control"
+      <select id="obra" class="form-control" name="obra" required
               ng-model="obraSelecionada"
               ng-options="obra as obra.apelido for obra in obras">
         <option>Selecione...</option>
@@ -61,9 +51,9 @@
     </div>
   </div>
   <div class="col-md-4">
-    <div class="form-group">
+    <div class="form-group" ng-class="{ 'has-error': formPagamento.despesa.$invalid }">
       <label for="despesa">Plano de Contas</label>
-      <select id="despesa" class="form-control"
+      <select id="despesa" class="form-control" name="despesa" required
               ng-model="planoContaSelecionado"
               ng-options="plano as plano.descricao for plano in planosContas">
         <option>Selecione</option>
@@ -73,11 +63,11 @@
     </div>
   </div>
   <div class="col-md-4">
-    <div class="form-group">
-      <label for="despesa">Fornecedor</label>
-      <select id="despesa" class="form-control"
-              ng-model="planoContaSelecionado"
-              ng-options="plano as plano.descricao for plano in planosContas">
+    <div class="form-group" ng-class="{ 'has-error': formPagamento.fornecedor.$invalid }">
+      <label for="fornecedor">Fornecedor</label>
+      <select id="fornecedor" class="form-control" name="fornecedor" required
+              ng-model="fornecedorSelecionado"
+              ng-options="fornecedor as fornecedor.nome for fornecedor in fornecedores">
         <option>Selecione</option>
 
       </select>
@@ -86,42 +76,45 @@
   </div>
 
 
-    <div class="col-md-6">
-      <div class="form-group">
-        <label for="valor">Historico</label>
-        <input type="text" id="valor" class="form-control text-uppercase" ng-model="historico">
+    <div class="col-md-8">
+      <div class="form-group" ng-class="{ 'has-error': formPagamento.historico.$invalid }">
+        <label for="historico">Historico</label>
+        <input type="text" id="historico" name="historico" required class="form-control text-uppercase" ng-model="historico">
 
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="form-group">
+    <div class="col-md-4">
+      <div class="form-group" ng-class="{ 'has-error': formPagamento.valor.$invalid }">
         <label for="valor">Valor</label>
-        <input type="text" id="valor" class="form-control text-right" ng-model="valor">
+        <input type="text" id="valor" name="valor" required class="form-control text-right" ng-model="valor" ui-number-mask="2">
       </div>
 
     </div>
 
-
+</div>
   <div class="row text-right">
 
-    <button class="btn btn-success" ng-click="noRegistraItem()"><i class="glyphicon glyphicon-plus"></i> Add Item</button>
-    <button class="btn btn-success"><i class="glyphicon glyphicon-ok"></i> Salvar Pagamento</button>
+    <button class="btn btn-success" ng-click="onRegistraItem()"><i class="glyphicon glyphicon-plus"></i> Add Item</button>
+    <button class="btn btn-success" ng-click="onSalvar()"><i class="glyphicon glyphicon-ok"></i> Salvar Pagamento</button>
     <button class="btn btn-warning"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
   </div>
   <div class="row">
     <table class="table">
       <tr>
+        <th>Fornecedor</th>
         <th>Obra</th>
         <th>Plano Conta</th>
         <th>Histórico</th>
         <th class="text-right">Valor</th>
-
+        <th>#</th>
       </tr>
       <tr ng-repeat="item in itensPagamento">
+        <td>{{item.fornecedor.nome}}</td>
         <td>{{item.obra.apelido}}</td>
         <td >{{item.planoConta.descricao}}</td>
-        <td >{{item.descricao}}</td>
-        <td class="text-right">{{item.valor}}</td>
+        <td >{{item.historico}}</td>
+        <td class="text-right">{{item.valor | currency}}</td>
+        <td class="text-right"><button class="btn btn-warning" ng-click="onDeleteItem(item)"><i class="glyphicon glyphicon-remove"></i></button></td>
       </tr>
     </table>
   </div>
@@ -129,3 +122,4 @@
 
   </div>
 </div>
+</form>
