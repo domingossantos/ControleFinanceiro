@@ -3,7 +3,7 @@
  * Created by domingossantos on 07/08/16.
  */
 angular.module('controleFinanceiroApp')
-  .controller('DepositoCtrl',['$rootScope','$scope', '$injector', function ($rootScope, $scope, $injector) {
+  .controller('DepositoCtrl',['$rootScope','$scope', '$injector', '$location', function ($rootScope, $scope, $injector, $location) {
 
     $scope.formasPagamento = [];
     $scope.contas = [];
@@ -46,6 +46,8 @@ angular.module('controleFinanceiroApp')
         function (success) {
           console.log(success);
           $scope.limparCampos();
+          alert('Registro salvo');
+          $location.path('/main');
         }
       )
     }

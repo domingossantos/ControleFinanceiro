@@ -19,9 +19,9 @@
      <tr ng-repeat="movimento in movimentosHomologados">
       <td>{{movimento.descricao}}</td>
       <td>{{movimento.descricao}}</td>
-      <td class="text-right">{{movimento.valor}}</td>
+      <td class="text-right">{{movimento.valor | currency}}</td>
       <td class="text-center">{{movimento.dataOperacao | date:'dd/MM/yyyy H:m:ss'}}</td>
-      <td><a href="javascript:" data-toggle="modal" data-target="#modalDetalhe"><i class="glyphicon glyphicon-eye-open"></i></a></td>
+      <td><a href="javascript:" data-toggle="modal" data-target="#modalHomologa" ng-click="onDetalheMovimento(movimento.id, 1)"><i class="glyphicon glyphicon-eye-open"></i></a></td>
     </tr>
   </table>
 
@@ -37,10 +37,10 @@
     <tr ng-repeat="pendente in movimentosPendentes">
       <td>Pagamento</td>
       <td>{{pendente.descricao}}</td>
-      <td class="text-right">{{pendente.valor}}</td>
+      <td class="text-right">{{pendente.valor | currency}}</td>
       <td class="text-center">{{pendente.dataOperacao | date:'dd/MM/yyyy H:m:ss'}}</td>
       <td class="text-center">
-        <a href="javascript:" data-toggle="modal" data-target="#modalHomologa" ng-click="onDetalheMovimento(pendente.id)">
+        <a href="javascript:" data-toggle="modal" data-target="#modalHomologa" ng-click="onDetalheMovimento(pendente.id,2)">
           <i class="glyphicon glyphicon-eye-open"> </i>
         </a>
       </td>
@@ -55,7 +55,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Homologação de Pagamento</h4>
+        <h4 class="modal-title" id="myModalLabel">Homologação de Movimento</h4>
       </div>
       <div class="modal-body">
         <div class="row">
@@ -68,11 +68,7 @@
         </div>
         <div class="row">
           <div class="col-md-3 text-right">Valor: </div>
-          <div class="col-md-9">{{detalheMovimento.valor}}</div>
-        </div>
-        <div class="row">
-          <div class="col-md-3 text-right">Conta: </div>
-          <div class="col-md-9">{{detalheMovimento.conta.apelido}}</div>
+          <div class="col-md-9">{{detalheMovimento.valor | currency}}</div>
         </div>
         <div class="row">
           <table class="table">
@@ -86,14 +82,14 @@
               <td>{{item.historico}}</td>
               <td>{{item.fornecedor.nome}}</td>
               <td>{{item.obra.apelido}}</td>
-              <td>{{item.valor}}</td>
+              <td>{{item.valor | currency}}</td>
             </tr>
           </table>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-primary" ng-click="onMudarStatus(detalheMovimento.id,'HOMOLOGADO')">Homologar</button>
+        <button type="button" id="btnHomologar" class="btn btn-primary" ng-click="onMudarStatus(detalheMovimento,'HOMOLOGADO')">Homologar</button>
       </div>
     </div>
   </div>

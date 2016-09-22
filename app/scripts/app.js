@@ -14,6 +14,7 @@ var app = angular.module('controleFinanceiroApp', [
     'ngRoute',
     'ngSanitize',
     'ui.utils.masks',
+    'growlNotifications',
     'controleFinanceiroApp.controllers',
     'controleFinanceiroApp.resources'
   ])

@@ -3,13 +3,15 @@
  * Created by domingossantos on 07/08/16.
  */
 angular.module('controleFinanceiroApp')
-  .controller('PagamentoCtrl',['$rootScope','$scope', '$injector', function ($rootScope, $scope, $injector) {
+  .controller('PagamentoCtrl',['$rootScope','$scope', '$injector', '$location', function ($rootScope, $scope, $injector,$location) {
 
     $scope.formasPagamento = [];
     $scope.contas = [];
     $scope.obras = [];
     $scope.planosContas = [];
     $scope.fornecedores = [];
+    $scope.notificacao = null;
+    $scope.showNotification = false;
 
     $scope.itensPagamento = [];
     $scope.formaPagamentoSelecionada = null;
@@ -17,6 +19,7 @@ angular.module('controleFinanceiroApp')
     $scope.contaSelecionada = null;
     $scope.planoContaSelecionado = null;
     $scope.fornecedorSelecionado = null;
+    $scope.descricao = null;
     $scope.historico = null;
     $scope.valor = null;
     $scope.dataMovimento = null;
@@ -32,12 +35,26 @@ angular.module('controleFinanceiroApp')
 
     }
 
+    $scope.resetCampos = function(){
+      $scope.itensPagamento = [];
+      $scope.formaPagamentoSelecionada = null;
+      $scope.obraSelecionada = null;
+      $scope.contaSelecionada = null;
+      $scope.planoContaSelecionado = null;
+      $scope.fornecedorSelecionado = null;
+      $scope.historico = null;
+      $scope.valor = null;
+      $scope.dataMovimento = null;
+      $scope.valorTotal = 0;
+      $scope.descricao = null;
+    }
+
     $scope.onSalvar = function(){
       console.log($scope.dataMovimento);
 
       var pagamentoResources = $injector.get('PagamentoResources');
       var pagamento = {
-        descricao:'Pagamento',
+        descricao: $scope.descricao,
         status : 'PENDENTE_HOMOLOGACAO',
         valor : $scope.valorTotal,
         dataOperacao : $scope.dataMovimento,
@@ -48,10 +65,20 @@ angular.module('controleFinanceiroApp')
 
       var itensPagamento = $scope.itensPagamento;
       console.log($scope.itensPagamento);
-      pagamentoResources.save({idSubConta: $scope.contaSelecionada.id}
-                              ,pagamento,itensPagamento).$promise.then(
+      pagamentoResources.save({idContaCorrente: $scope.contaSelecionada.id}
+                              ,pagamento).$promise.then(
         function (success) {
-          console.log(success);
+          var itemPagamentoResources = $injector.get('ItemPagamentoResources');
+          console.log(itensPagamento);
+          itemPagamentoResources.save({idPagamento:success.item.id},angular.copy(itensPagamento)).$promise.then(
+            function (success) {
+              console.log(success)
+              $scope.notificacao = 'Registro Salvo';
+              $scope.showNotification = true;
+              $scope.resetCampos();
+
+            }
+          )
         }
       );
     }
@@ -62,14 +89,13 @@ angular.module('controleFinanceiroApp')
         valor: $scope.valor,
         obra: $scope.obraSelecionada,
         fornecedor : $scope.fornecedorSelecionado,
-        conta: $scope.contaSelecionada,
         planoConta : $scope.planoContaSelecionado
-
       }
       $scope.valorTotal = $scope.valorTotal + $scope.valor;
 
       $scope.itensPagamento.push(item);
 
+      $('#btnSalvar').removeAttr('disabled');
       $scope.limparItem();
     }
 
@@ -79,6 +105,10 @@ angular.module('controleFinanceiroApp')
       $scope.itensPagamento.splice(index,1);
 
       $scope.valorTotal = $scope.valorTotal - item.valor;
+
+      if($scope.itensPagamento.length <= 0 ){
+        $('#btnSalvar').attr('disabled','disabled');
+      }
     }
 
     var formaPagamantoResources = $injector.get('FormaPagamantoResources');
@@ -89,9 +119,9 @@ angular.module('controleFinanceiroApp')
       }
     )
 
-    var subContaResources = $injector.get('SubContaResources');
+    var contaCorrenteResources = $injector.get('ContaCorrenteResources');
 
-    subContaResources.query({idContaCorrente:1}).$promise.then(
+    contaCorrenteResources.query({}).$promise.then(
       function (success) {
         $scope.contas = success.itens;
       }
@@ -106,7 +136,7 @@ angular.module('controleFinanceiroApp')
     );
 
     var planoContaResources = $injector.get('PlanoContaResources');
-    planoContaResources.query({idCliente:1}).$promise.then(
+    planoContaResources.query({idCliente:1,tipo:'DESPESA'}).$promise.then(
       function (success) {
         $scope.planosContas = success.itens;
       }

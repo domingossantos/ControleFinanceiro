@@ -194,3 +194,18 @@ body {
   border-color: #ddd #ddd #ddd transparent;
   *border-left-color: #ffffff;
 }
+
+
+growl-notifications{
+  position: fixed;
+  top: 150px;
+  right: 10px;
+  border: 1px solid black;
+  padding: 15px;
+}
+
+growl-notification{
+  border: 1px solid black;
+  padding: 15px 30px;
+  margin-bottom: 15px;
+}

@@ -4,7 +4,7 @@ angular.module('controleFinanceiroApp.resources').factory('PagamentoResources',[
   return $resource(app.rootContext + 'rest/pagamentos/:idPagamento',{idPagamento : '@idPagamento'},
     {'query' : {method : 'GET', isArray : false},
     'update' : {method : 'PUT'},
-    'save' : {method : 'POST', isArray: true}
+    'save' : {method : 'POST'}
 
     }
   );

@@ -23,8 +23,28 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.itens = {};
 
     $scope.movimentoResources = $injector.get('MovimentoResources');
+    $scope.itensPagamentoResources = $injector.get('ItemPagamentoResources');
 
-    $scope.onDetalheMovimento = function(id){
+    $scope.onDetalheMovimento = function(id, origem){
+
+      if(origem == 1){
+        $('#btnHomologar').hide();
+      } else {
+        $('#btnHomologar').show();
+      }
+      $scope.itens = {};
+      $scope.movimentoResources.get({idMovimento:id}).$promise.then(
+        function (success) {
+          $scope.detalheMovimento = success.item;
+          $scope.itensPagamentoResources.get({idPagamento:id}).$promise.then(
+            function (success) {
+              $scope.itens = success.itens;
+              console.log(success);
+            }
+          );
+        }
+      );
+
     }
 
     $scope.onMovimentosPendentes = function(){
@@ -56,10 +76,27 @@ angular.module('controleFinanceiroApp.controllers')
       );
     };
 
-    $scope.onMudarStatus = function(id,status){
-      console.log(id);
+    $scope.onMudarStatus = function(movimento,status){
 
-      $('#modalHomologa').modal('hide');
+      movimento.status = status;
+      console.log(movimento);
+
+      var homologarResources = $injector.get('HomologarResources');
+
+      homologarResources.update({idMovimento: movimento.id},{}).$promise.then(
+        function (success) {
+          console.log(success);
+          $('#modalHomologa').modal('hide');
+
+          $scope.onMovimentosPendentes();
+          $scope.onMovimentosHomologados();
+          $scope.onMovimentosNaoHomologados();
+        }
+      );
+
+
+
+
     }
 
 
