@@ -31,13 +31,13 @@ angular.module('controleFinanceiroApp')
     }
 
     $scope.onSalvar = function(){
-
+      var data = $scope.dataMovimento.substring(4,8).concat('-'+$scope.dataMovimento.substring(2,4)).concat('-'+ $scope.dataMovimento.substring(0,2));
       var deposito = {
-        subConta : $scope.contaSelecionada,
+        contaCorrente : $scope.contaSelecionada,
         obra : $scope.obraSelecionada,
         descricao : 'Deposito',
         valor : $scope.valor,
-        dataOperacao : $scope.dataMovimento,
+        dataOperacao : data,
         status : 'PENDENTE_HOMOLOGACAO'
       }
 
@@ -60,9 +60,9 @@ angular.module('controleFinanceiroApp')
       }
     )
 
-    var subContaResources = $injector.get('SubContaResources');
+    var contaCorrenteResources = $injector.get('ContaCorrenteResources');
 
-    subContaResources.query({idContaCorrente:1}).$promise.then(
+    contaCorrenteResources.query({}).$promise.then(
       function (success) {
         $scope.contas = success.itens;
       }

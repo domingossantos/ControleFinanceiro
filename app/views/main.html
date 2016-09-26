@@ -20,7 +20,7 @@
       <td>{{movimento.descricao}}</td>
       <td>{{movimento.descricao}}</td>
       <td class="text-right">{{movimento.valor | currency}}</td>
-      <td class="text-center">{{movimento.dataOperacao | date:'dd/MM/yyyy H:m:ss'}}</td>
+      <td class="text-center">{{movimento.dataOperacao | date:'dd/MM/yyyy'}}</td>
       <td><a href="javascript:" data-toggle="modal" data-target="#modalHomologa" ng-click="onDetalheMovimento(movimento.id, 1)"><i class="glyphicon glyphicon-eye-open"></i></a></td>
     </tr>
   </table>
@@ -38,7 +38,7 @@
       <td>Pagamento</td>
       <td>{{pendente.descricao}}</td>
       <td class="text-right">{{pendente.valor | currency}}</td>
-      <td class="text-center">{{pendente.dataOperacao | date:'dd/MM/yyyy H:m:ss'}}</td>
+      <td class="text-center">{{pendente.dataOperacao | date:'dd/MM/yyyy'}}</td>
       <td class="text-center">
         <a href="javascript:" data-toggle="modal" data-target="#modalHomologa" ng-click="onDetalheMovimento(pendente.id,2)">
           <i class="glyphicon glyphicon-eye-open"> </i>
@@ -64,7 +64,11 @@
         </div>
         <div class="row">
           <div class="col-md-3 text-right">Data: </div>
-          <div class="col-md-9">{{detalheMovimento.dataOperacao | date:'dd/MM/yyyy H:m:ss'}}</div>
+          <div class="col-md-9">{{detalheMovimento.dataOperacao | date:'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-right">Conta: </div>
+          <div class="col-md-9">{{detalheMovimento.contaCorrente.banco.sigla}} - {{detalheMovimento.contaCorrente.apelido}}</div>
         </div>
         <div class="row">
           <div class="col-md-3 text-right">Valor: </div>

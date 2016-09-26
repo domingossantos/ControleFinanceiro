@@ -13,6 +13,7 @@ var app = angular.module('controleFinanceiroApp', [
     'ngResource',
     'ngRoute',
     'ngSanitize',
+    'ui.mask',
     'ui.utils.masks',
     'growlNotifications',
     'controleFinanceiroApp.controllers',
@@ -21,8 +22,8 @@ var app = angular.module('controleFinanceiroApp', [
   .config(function ($routeProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: 'views/login.html',
-      controller: 'LoginCtrl'
+      templateUrl: 'views/movimento/aplicacao.html',
+      controller: 'AplicacaoCtrl'
     })
     .when('/main', {
       templateUrl: 'views/main.html',

@@ -5,29 +5,22 @@
   <div class="col-md-4">
     <div class="form-group" ng-class="{ 'has-error': formPagamento.formaPagamento.$invalid }">
       <label for="formaPagamento">Forma Pagamento</label>
-      <select id="formaPagamento" class="form-control" name="formaPagamento" required
+      <select id="formaPagamento" class="form-control" name="formaPagamento" required tabindex="1"
               ng-model="formaPagamentoSelecionada"
               ng-options="forma as forma.nome for forma in formasPagamento">
         <option value="">Selecione...</option>
       </select>
     </div>
-    <div class="form-group">
-      <label for="valorTotal">Valor Total: </label>
-      <input type="text" class="form-control " disabled="true" id="valorTotal" ui-number-mask="2" placeholder="Total" ng-model="valorTotal" value="{{valorTotal | currency}}">
-    </div>
+
   </div>
   <div class="col-md-4">
     <div class="form-group" ng-class="{ 'has-error': formPagamento.conta.$invalid }">
       <label for="conta" >Conta</label>
-      <select id="conta" class="form-control" name="conta" required
+      <select id="conta" class="form-control" name="conta" required tabindex="2"
               ng-model="contaSelecionada"
               ng-options="conta as conta.apelido for conta in contas">
-        <option>Selecione...</option>
+        <option value="">Selecione...</option>
       </select>
-    </div>
-    <div class="form-group" ng-class="{ 'has-error': formPagamento.conta.$invalid }">
-      <label for="descricao">Descricao</label>
-      <input id="descricao" name="descricao" ng-model="descricao" placeholder="Descrição" required class="form-control"/>
     </div>
 
   </div>
@@ -35,10 +28,24 @@
   <div class="col-md-4">
     <div class="form-group" ng-class="{ 'has-error': formPagamento.dataMovimento.$invalid }">
       <label for="dataMovimento">Data</label>
-      <input ng-model="dataMovimento" id="dataMovimento" name="dataMovimento" required type="date" class="form-control">
+      <input tabindex="3" ng-model="dataMovimento" id="dataMovimento" name="dataMovimento" required ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\.\/]?+$/" class="form-control">
     </div>
   </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <div class="form-group">
+      <label for="valorTotal">Valor Total: </label>
+      <input type="text" class="form-control " disabled="true" id="valorTotal" ui-number-mask="2" placeholder="Total" ng-model="valorTotal" value="{{valorTotal | currency}}">
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="form-group" ng-class="{ 'has-error': formPagamento.conta.$invalid }">
+      <label for="descricao">Descricao</label>
+      <input tabindex id="descricao" name="descricao" ng-model="descricao" placeholder="Descrição" required class="form-control" size="50"/>
+    </div>
 
+  </div>
 </div>
 <div class="row">
   <h3>Itens</h3>
@@ -50,7 +57,7 @@
       <select id="obra" class="form-control" name="obra" required
               ng-model="obraSelecionada"
               ng-options="obra as obra.apelido for obra in obras">
-        <option>Selecione...</option>
+        <option value="">Selecione...</option>
 
       </select>
     </div>
@@ -61,7 +68,7 @@
       <select id="despesa" class="form-control" name="despesa" required
               ng-model="planoContaSelecionado"
               ng-options="plano as plano.descricao for plano in planosContas">
-        <option>Selecione</option>
+        <option value="">Selecione</option>
 
       </select>
 
@@ -73,7 +80,7 @@
       <select id="fornecedor" class="form-control" name="fornecedor" required
               ng-model="fornecedorSelecionado"
               ng-options="fornecedor as fornecedor.nome for fornecedor in fornecedores">
-        <option>Selecione</option>
+        <option value="">Selecione</option>
 
       </select>
 
@@ -84,8 +91,7 @@
     <div class="col-md-8">
       <div class="form-group" ng-class="{ 'has-error': formPagamento.historico.$invalid }">
         <label for="historico">Historico</label>
-        <input type="text" id="historico" name="historico" required class="form-control text-uppercase" ng-model="historico">
-
+        <input type="text" id="historico" name="historico" required class="form-control text-uppercase" ng-model="historico" size="250">
       </div>
     </div>
     <div class="col-md-4">
@@ -101,7 +107,7 @@
 
     <button class="btn btn-success" ng-click="onRegistraItem()" ng-class="{ 'disabled': formPagamento.$invalid }"><i class="glyphicon glyphicon-plus"></i> Add Item</button>
     <button class="btn btn-success" ng-click="onSalvar()" disabled id="btnSalvar"><i class="glyphicon glyphicon-ok"></i> Salvar Pagamento</button>
-    <button class="btn btn-warning"><i class="glyphicon glyphicon-remove"></i> Cancelar</button>
+    <a href="/#/main/" class="btn btn-warning"><i class="glyphicon glyphicon-remove"></i> Cancelar</a>
   </div>
   <div class="row">
     <table class="table">

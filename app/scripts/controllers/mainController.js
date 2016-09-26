@@ -36,10 +36,10 @@ angular.module('controleFinanceiroApp.controllers')
       $scope.movimentoResources.get({idMovimento:id}).$promise.then(
         function (success) {
           $scope.detalheMovimento = success.item;
+
           $scope.itensPagamentoResources.get({idPagamento:id}).$promise.then(
             function (success) {
               $scope.itens = success.itens;
-              console.log(success);
             }
           );
         }

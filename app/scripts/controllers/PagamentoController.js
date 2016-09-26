@@ -50,21 +50,22 @@ angular.module('controleFinanceiroApp')
     }
 
     $scope.onSalvar = function(){
-      console.log($scope.dataMovimento);
+
+      var data = $scope.dataMovimento.substring(4,8).concat('-'+$scope.dataMovimento.substring(2,4)).concat('-'+ $scope.dataMovimento.substring(0,2));
 
       var pagamentoResources = $injector.get('PagamentoResources');
       var pagamento = {
         descricao: $scope.descricao,
         status : 'PENDENTE_HOMOLOGACAO',
         valor : $scope.valorTotal,
-        dataOperacao : $scope.dataMovimento,
+        dataOperacao : data,
         detalhePagamento : {
           formaPagamento : $scope.formaPagamentoSelecionada
         }
       }
 
       var itensPagamento = $scope.itensPagamento;
-      console.log($scope.itensPagamento);
+
       pagamentoResources.save({idContaCorrente: $scope.contaSelecionada.id}
                               ,pagamento).$promise.then(
         function (success) {
