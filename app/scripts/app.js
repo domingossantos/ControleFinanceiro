@@ -22,8 +22,8 @@ var app = angular.module('controleFinanceiroApp', [
   .config(function ($routeProvider) {
   $routeProvider
     .when('/', {
-      templateUrl: 'views/movimento/aplicacao.html',
-      controller: 'AplicacaoCtrl'
+      templateUrl: 'views/login.html',
+      controller: 'LoginCtrl'
     })
     .when('/main', {
       templateUrl: 'views/main.html',
@@ -35,7 +35,7 @@ var app = angular.module('controleFinanceiroApp', [
     })
     .when('/aplicacao', {
       templateUrl: 'views/movimento/aplicacao.html',
-      controller: 'MovimentoCtrl'
+      controller: 'AplicacaoCtrl'
     })
     .when('/deposito', {
       templateUrl: 'views/movimento/deposito.html',

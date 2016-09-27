@@ -10,6 +10,7 @@ angular.module('controleFinanceiroApp')
       nome : null,
       cliente : null
     }
+    $scope.filtro = null;
 
     $scope.listarFornecedor = function(){
       var fornecedorResources = $injector.get('FornecedorResources');

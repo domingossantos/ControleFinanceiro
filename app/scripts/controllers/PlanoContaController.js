@@ -65,48 +65,6 @@ angular.module('controleFinanceiroApp.controllers')
       $scope.codigoSelecionado = conta;
       console.log($scope.planoconta);
     }
-    /*
-
-
-    $scope.onNovo = function(){
-      $scope.painel = false;
-      $scope.formulario = true;
-    }
-
-
-    $scope.onCancelar = function(){
-      $scope.painel = true;
-      $scope.formulario = false;
-      $scope.onLimpar();
-    }
-
-    $scope.onLimpar = function () {
-      $scope.planoconta.codigo = 0;
-      $scope.planoconta.descricao = "";
-      $scope.planoconta.tipoPlanoConta = "";
-
-    }
-
-
-    $scope.getCodigoConta = function(id){
-      var idx = parseFloat(id.codigo) + 0.1;
-      $scope.incremento = Number(idx).toFixed(1);
-    }
-
-
-    $scope.onCarregar = function(id){
-      PlanoContaResources.get({id : id},function(success){
-
-        console.log(success.item);
-        $scope.painel = false;
-        $scope.formulario = true;
-
-        $scope.planoconta = success.item;
-
-      })
-
-    }
-*/
 
     $scope.atualizar();
 
