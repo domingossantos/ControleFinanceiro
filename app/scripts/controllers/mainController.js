@@ -19,11 +19,24 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.movimentosPendentes =[];
     $scope.movimentosNaoHomologados =[];
 
+    $scope.posicaoContas = 0;
+
     $scope.detalheMovimento = {};
     $scope.itens = {};
 
     $scope.movimentoResources = $injector.get('MovimentoResources');
     $scope.itensPagamentoResources = $injector.get('ItemPagamentoResources');
+
+    $scope.onAtualizarPosicao = function () {
+      var posicaoContaCorrenteResources = $injector.get('PosicaoContaCorrenteResources');
+
+      posicaoContaCorrenteResources.get({idCliente:1}).$promise.then(
+        function (success) {
+          $scope.posicaoContas = success.item;
+
+        }
+      );
+    };
 
     $scope.onDetalheMovimento = function(id, origem){
 
@@ -79,18 +92,19 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.onMudarStatus = function(movimento,status){
 
       movimento.status = status;
-      console.log(movimento);
+
 
       var homologarResources = $injector.get('HomologarResources');
 
       homologarResources.update({idMovimento: movimento.id},{}).$promise.then(
         function (success) {
-          console.log(success);
+
           $('#modalHomologa').modal('hide');
 
           $scope.onMovimentosPendentes();
           $scope.onMovimentosHomologados();
           $scope.onMovimentosNaoHomologados();
+          $scope.onAtualizarPosicao();
         }
       );
 
@@ -103,5 +117,6 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.onMovimentosPendentes();
     $scope.onMovimentosHomologados();
     $scope.onMovimentosNaoHomologados();
+    $scope.onAtualizarPosicao();
 
   }]);

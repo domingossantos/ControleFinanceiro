@@ -14,7 +14,7 @@
       <th width="55%">Descricao</th>
       <th width="10%" class="text-center">#</th>
     </tr>
-    <tr ng-repeat="fornecedor in fornecedores.itens">
+    <tr ng-repeat="fornecedor in fornecedores.itens | filter:filtro">
       <td>{{fornecedor.nome}}</td>
       <td>{{fornecedor.descricao}}</td>
       <td class="text-center">
