@@ -15,9 +15,11 @@ angular.module('controleFinanceiroApp')
     $scope.listarFornecedor = function(){
       var fornecedorResources = $injector.get('FornecedorResources');
       var result = fornecedorResources.query({idCliente:1});
+
       result.$promise.then(
         function(success){
-          $scope.fornecedores = success;
+          console.log(success);
+          $scope.fornecedores = success.itens;
         }
         ,function(error){
           console.log(error);
