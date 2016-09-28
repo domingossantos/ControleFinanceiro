@@ -49,7 +49,7 @@ var app = angular.module('controleFinanceiroApp', [
       templateUrl: 'views/conta/conta_corrente.html',
       controller: 'ContaCorrenteCtrl'
     })
-    .when('/resumo', {
+    .when('/balanco', {
       templateUrl: 'views/balanco/resumo_conta.html',
       controller: 'BalancoCtrl'
     })
