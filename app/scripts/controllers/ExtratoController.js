@@ -12,12 +12,11 @@ angular.module('controleFinanceiroApp')
 
     $scope.onPesquisar = function( dataInicio, dataFim){
       movimentoResources.query({inicio:dataInicio, fim:dataFim}).$promise.then(
-        function (sucess) {
-          console.log(sucess);
+        function (success) {
+          $scope.movimentos = success.itens;
         }
       );
     }
 
-
-    $scope.onPesquisar('2016-01-01', '2016-10-01');
+    $scope.onPesquisar('01012016', '01102016');
   }]);

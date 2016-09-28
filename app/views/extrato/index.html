@@ -11,12 +11,28 @@
       <input id="fim" name="fim" class="form-control" ng-model="dataFim" ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\.\/]?+$/">
     </div>
   </div>
-  <div class="col-md-4">
-    <button class="btn btn-success" ng-click="" ><i class="glyphicon glyphicon-search"></i> Pesquisar</button>
+
+</div>
+<div class="row">
+  <div class="col-md-8 text-right">
+    <button id="botao" class="btn btn-success" ng-click="onPesquisar(dataInicio, dataFim)" ><i class="glyphicon glyphicon-search"></i> Pesquisar</button>
   </div>
 </div>
 <div class="row">
-  <table>
-
+  <table class="table table-condensed">
+    <tr>
+      <th>Movimento</th>
+      <th>Conta</th>
+      <th>Data</th>
+      <th>Valor</th>
+      <th>#</th>
+    </tr>
+    <tr ng-repeat="movimento in movimentos">
+      <td>{{movimento.descricao}}</td>
+      <td>{{movimento.contaCorrente.apelido}}</td>
+      <td class="text-center">{{movimento.dataOperacao | date:'dd/MM/yyyy'}}</td>
+      <td class="text-right">{{movimento.valor | currency}}</td>
+      <td></td>
+    </tr>
   </table>
 </div>
