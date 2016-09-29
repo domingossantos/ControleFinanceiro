@@ -11,6 +11,8 @@ angular.module('controleFinanceiroApp')
       cliente : null,
       ativo : true
     };
+    $scope.valorTotal = 0;
+
 
 
     $scope.listarObras = function(){
@@ -20,6 +22,11 @@ angular.module('controleFinanceiroApp')
         function(success){
 
           $scope.obras = success;
+
+          for(var i = 0; i < success.itens.length; i++){
+            console.log(success.itens[i].saldoAtual);
+            $scope.valorTotal += success.itens[i].saldoAtual;
+          }
         }
         ,function(error){
           console.log(error);
@@ -29,7 +36,7 @@ angular.module('controleFinanceiroApp')
 
     $scope.limparCampos = function () {
       $('#nome').val('');
-      $('')
+
     }
 
 

@@ -8,10 +8,19 @@ angular.module('controleFinanceiroApp')
   $scope.contaCorrenteSelecionada = null;
   $scope.contaCorrente = {};
   $scope.contasCorrentes = [];
+  $scope.valorTotal = 0;
 
   $scope.listarContasCorrentes = function() {
     var contaCorrenteResources = $injector.get('ContaCorrenteResources');
-    $scope.contasCorrentes = contaCorrenteResources.query();
+    contaCorrenteResources.query().$promise.then(
+      function (success) {
+        $scope.contasCorrentes = success;
+
+        for(var i = 0; i < success.itens.length; i++){
+          $scope.valorTotal += success.itens[i].saldoAtual;
+        }
+      }
+    );
   }
 
   $scope.selecionarContaCorrente = function(contaCorrente) {

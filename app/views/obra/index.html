@@ -10,12 +10,14 @@
   <table class="table table-hover table-striped">
     <tr>
       <th width="40%">Nome</th>
-      <th width="50%">Endereço</th>
+      <th width="40%">Endereço</th>
+      <th width="10%">Saldo</th>
       <th width="10%" class="text-center">#</th>
     </tr>
     <tr ng-repeat="obra in obras.itens">
       <td>{{obra.apelido}}</td>
       <td>{{obra.endereco}}</td>
+      <td>{{obra.saldoAtual | currency }}</td>
       <td class="text-center">
         <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm" ng-click="onSetObra(obra)">
           <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
@@ -24,6 +26,11 @@
           <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
         </button>
       </td>
+    </tr>
+    <tr>
+      <td colspan="2" class="text-right">Total</td>
+      <td >{{valorTotal | currency}}</td>
+      <td></td>
     </tr>
   </table>
 </div>

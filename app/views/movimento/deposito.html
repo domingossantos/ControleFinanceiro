@@ -36,6 +36,15 @@
       </select>
     </div>
 
+  <div class="form-group" ng-class="{ 'has-error': formDeposito.planoConta.$invalid }">
+    <label for="planoConta" >Conta</label>
+    <select id="planoConta" class="form-control" name="planoConta" required
+            ng-model="planoContaSelecionado"
+            ng-options="planoConta as planoConta.descricao for planoConta in planoContas">
+      <option value="">Selecione...</option>
+    </select>
+  </div>
+
 
   <div class="form-group" ng-class="{ 'has-error': formDeposito.valor.$invalid }">
     <label for="valor">Valor</label>

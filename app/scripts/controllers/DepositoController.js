@@ -8,9 +8,11 @@ angular.module('controleFinanceiroApp')
     $scope.formasPagamento = [];
     $scope.contas = [];
     $scope.obras = [];
+    $scope.planoContas = [];
     $scope.formaPagamentoSelecionada = null;
     $scope.obraSelecionada = null;
     $scope.contaSelecionada = null;
+    $scope.planoContaSelecionado;
     $scope.valor = null;
     $scope.dataMovimento = null;
 
@@ -19,7 +21,8 @@ angular.module('controleFinanceiroApp')
       obra : null,
       descricao : null,
       valor : null,
-      dataOperacao : null
+      dataOperacao : null,
+      planoConta : null
     }
 
     $scope.limparCampos = function(){
@@ -38,7 +41,8 @@ angular.module('controleFinanceiroApp')
         descricao : 'Deposito',
         valor : $scope.valor,
         dataOperacao : data,
-        status : 'PENDENTE_HOMOLOGACAO'
+        status : 'PENDENTE_HOMOLOGACAO',
+        planoConta : $scope.planoContaSelecionado
       }
 
       var depositoResources = $injector.get('DepositoResources');
@@ -51,6 +55,16 @@ angular.module('controleFinanceiroApp')
         }
       )
     }
+
+
+    var planoContaResources = $injector.get('PlanoContaResources');
+
+    planoContaResources.query({idCliente:1,tipo:'RECEITA'}).$promise.then(
+      function (success) {
+        $scope.planoContas = success.itens;
+      }
+    );
+
 
     var formaPagamantoResources = $injector.get('FormaPagamantoResources');
 
