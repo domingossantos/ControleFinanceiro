@@ -67,7 +67,7 @@
       <label for="despesa">Plano de Contas</label>
       <select id="despesa" class="form-control" name="despesa" required
               ng-model="planoContaSelecionado"
-              ng-options="plano as plano.descricao for plano in planosContas">
+              ng-options="plano.planoConta as plano.descricao for plano in planosContas">
         <option value="">Selecione</option>
 
       </select>
@@ -86,7 +86,6 @@
 
     </div>
   </div>
-
 
     <div class="col-md-8">
       <div class="form-group" ng-class="{ 'has-error': formPagamento.historico.$invalid }">

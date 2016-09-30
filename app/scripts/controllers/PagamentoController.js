@@ -139,7 +139,18 @@ angular.module('controleFinanceiroApp')
     var planoContaResources = $injector.get('PlanoContaResources');
     planoContaResources.query({idCliente:1,tipo:'DESPESA'}).$promise.then(
       function (success) {
-        $scope.planosContas = success.itens;
+        for(var i = 0; i < success.itens.length; i++){
+
+          var itemPlano = {
+            planoConta : {},
+            descricao : null
+          }
+          itemPlano.planoConta = success.itens[i];
+          itemPlano.descricao = success.itens[i].codigo + ' - '+ success.itens[i].descricao;
+
+          $scope.planosContas[i] = itemPlano;
+        }
+
       }
     );
 

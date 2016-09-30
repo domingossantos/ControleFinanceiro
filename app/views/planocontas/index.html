@@ -16,7 +16,9 @@
     </tr>
     </tbody>
     <tr ng-repeat="conta in planocontas.itens">
+
       <td>{{conta.codigo}}</td>
+
       <td>{{conta.descricao}}</td>
       <td class="text-center"><button data-toggle="modal" data-target="#modalAlteracao" ng-click="onCarregar(conta)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-pencil"></i></button></td>
     </tr>

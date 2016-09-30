@@ -31,6 +31,9 @@ module.exports = function(config) {
       'bower_components/angular-input-masks/angular-input-masks-standalone.js',
       'bower_components/angular-growl-notifications/dist/angular-growl-notifications.js',
       'bower_components/angular-ui-mask/dist/mask.js',
+      'bower_components/angular-aria/angular-aria.js',
+      'bower_components/angular-messages/angular-messages.js',
+      'bower_components/angular-material/angular-material.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',
