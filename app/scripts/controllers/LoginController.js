@@ -4,7 +4,7 @@
  */
 angular.module('controleFinanceiroApp')
 
-.controller('LoginCtrl', ['$scope', '$rootScope', '$http', '$location', '$injector', function ($scope, $rootScope, $http, $location, $injector) {
+.controller('LoginCtrl', ['$scope', '$rootScope', '$http', '$location', '$injector', 'growl', function ($scope, $rootScope, $http, $location, $injector, growl) {
 
   $scope.usuario = {
     email : null,
@@ -21,9 +21,15 @@ angular.module('controleFinanceiroApp')
         $http.defaults.headers.common['Authorization'] = 'Bearer ' + $rootScope.usuario.token;
         $location.path('/main');
       } else {
-        alert('Usuario Inválido!!');
+        growl.warning('Usuario Inválido!!');
       }
 
     });
   }
+
+  $rootScope.sair = function() {
+    $http.defaults.headers.common['Authorization'] = null;
+    $rootScope.usuario = null;
+    $location.path('#/');
+  };
 }]);

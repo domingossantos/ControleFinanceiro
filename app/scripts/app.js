@@ -16,7 +16,7 @@ var app = angular.module('controleFinanceiroApp', [
     'ngMaterial',
     'ui.mask',
     'ui.utils.masks',
-    'growlNotifications',
+    'angular-growl',
     'controleFinanceiroApp.controllers',
     'controleFinanceiroApp.resources'
   ])
@@ -86,4 +86,5 @@ app.rootContext = 'http://localhost:8080/cf-api/';
 
 angular.module('controleFinanceiroApp.resources',[]);
 angular.module('controleFinanceiroApp.controllers',[]);
+angular.module('controleFinanceiroApp.services',[]);
 
