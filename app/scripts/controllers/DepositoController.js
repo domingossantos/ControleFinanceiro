@@ -59,7 +59,7 @@ angular.module('controleFinanceiroApp')
 
     var planoContaResources = $injector.get('PlanoContaResources');
 
-    planoContaResources.query({idCliente:1,tipo:'RECEITA'}).$promise.then(
+    planoContaResources.query({tipo:'RECEITA'}).$promise.then(
       function (success) {
 
         for(var i = 0; i < success.itens.length; i++){

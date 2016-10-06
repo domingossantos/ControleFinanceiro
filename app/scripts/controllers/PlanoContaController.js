@@ -24,7 +24,7 @@ angular.module('controleFinanceiroApp.controllers')
 
       var planoContaResources = $injector.get('PlanoContaResources');
 
-      planoContaResources.query({idCliente:1}).$promise.then(
+      planoContaResources.query().$promise.then(
         function(success){
           $scope.planocontas = success;
       }
@@ -63,11 +63,8 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.onCarregar = function(conta){
       $scope.planoconta = conta;
       $scope.codigoSelecionado = conta;
-      console.log($scope.planoconta);
     }
 
     $scope.atualizar();
-
-
 
   }]);
