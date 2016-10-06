@@ -27,8 +27,9 @@
 
   <div class="col-md-4">
     <div class="form-group" ng-class="{ 'has-error': formPagamento.dataMovimento.$invalid }">
+
       <label for="dataMovimento">Data</label>
-      <input tabindex="3" ng-model="dataMovimento" id="dataMovimento" name="dataMovimento" required ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\.\/]?+$/" class="form-control">
+      <input tabindex="3" ng-model="dataMovimento" id="dataMovimento" name="dataMovimento" required ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\./]?+$/" class="form-control">
     </div>
   </div>
 </div>
@@ -65,21 +66,23 @@
   <div class="col-md-4">
     <div class="form-group" ng-class="{ 'has-error': formPagamento.despesa.$invalid }">
       <label for="despesa">Plano de Contas</label>
+
+      <input class="form-control" ng-model="planoDigitado" size="5">
       <select id="despesa" class="form-control" name="despesa" required
               ng-model="planoContaSelecionado"
-              ng-options="plano.planoConta as plano.descricao for plano in planosContas">
+              ng-options="plano.planoConta as plano.descricao for plano in planosContas | filter : planoDigitado">
         <option value="">Selecione</option>
 
       </select>
-
     </div>
   </div>
   <div class="col-md-4">
     <div class="form-group" ng-class="{ 'has-error': formPagamento.fornecedor.$invalid }">
       <label for="fornecedor">Fornecedor</label>
+      <input class="form-control" ng-model="fornecedorDigitado">
       <select id="fornecedor" class="form-control" name="fornecedor" required
               ng-model="fornecedorSelecionado"
-              ng-options="fornecedor as fornecedor.nome for fornecedor in fornecedores">
+              ng-options="fornecedor.fornecedor as fornecedor.descricao for fornecedor in fornecedores | filter : fornecedorDigitado">
         <option value="">Selecione</option>
 
       </select>

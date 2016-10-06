@@ -47,6 +47,8 @@ angular.module('controleFinanceiroApp.controllers')
       $scope.dataMovimento = null;
       $scope.valorTotal = 0;
       $scope.descricao = null;
+      $scope.planoDigitado = null;
+      $scope.fornecedorDigitado = null;
     }
 
     $scope.validaCampos = function(){
@@ -61,6 +63,19 @@ angular.module('controleFinanceiroApp.controllers')
       if($scope.contaSelecionada == null){
         valido = false;
       }
+      if($scope.planoContaSelecionado == null){
+        valido = false;
+      }
+      if($scope.fornecedorSelecionado == null){
+        valido = false;
+      }
+      if($scope.historico == null){
+        valido = false;
+      }
+      if($scope.valor == null){
+        valido = false;
+      }
+
       return valido;
     }
 
@@ -100,7 +115,9 @@ angular.module('controleFinanceiroApp.controllers')
     }
 
     $scope.onRegistraItem = function(){
-      if(validaCampos()){
+      if($scope.validaCampos()){
+
+        console.log($scope.planoContaSelecionado);
         var item = {
           historico: $scope.historico,
           valor: $scope.valor,
@@ -108,12 +125,16 @@ angular.module('controleFinanceiroApp.controllers')
           fornecedor : $scope.fornecedorSelecionado,
           planoConta : $scope.planoContaSelecionado
         }
+        console.log(item);
+
         $scope.valorTotal = $scope.valorTotal + $scope.valor;
 
         $scope.itensPagamento.push(item);
 
         $('#btnSalvar').removeAttr('disabled');
         $scope.limparItem();
+      } else {
+        growl.warning('Todos os campos de item de pagamento são obrigadótios!');
       }
 
     }
@@ -176,7 +197,18 @@ angular.module('controleFinanceiroApp.controllers')
     var fornecedorResources = $injector.get('FornecedorResources');
     fornecedorResources.query({idCliente:1}).$promise.then(
       function (success) {
-        $scope.fornecedores = success.itens;
+
+        for(var i = 0; i < success.itens.length; i++){
+          var itemFornecedor = {
+            fornecedor : {},
+            descricao : null
+          }
+          itemFornecedor.fornecedor = success.itens[i];
+          itemFornecedor.descricao = success.itens[i].id + ' - '+ success.itens[i].nome;
+
+          $scope.fornecedores[i] = itemFornecedor;
+        }
+        console.log($scope.fornecedores);
       }
     );
 

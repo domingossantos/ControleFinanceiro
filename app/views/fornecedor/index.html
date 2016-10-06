@@ -5,28 +5,35 @@
     <p><a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalCadastrarFornecedor" role="button">Cadastrar</a></p>
   </div>
 </div>
-<div ng-show="fornecedores.length > 0" class="row">
-  <h4>Fornecedores <small><a class="btn btn-xs btn-success" href="javascrit:" data-toggle="modal" data-target="#modalCadastrarFornecedor" ng-click="limparCampos()"><i class="glyphicon glyphicon-ok"></i> Adicionar</a></small></h4>
-  <input id="pesquisa" class="form-control col-md-4" placeholder="Filtro de consulta" ng-model="filtro">
-  <table class="table table-hover">
-    <tr>
-      <th width="35%">Nome</th>
-      <th width="55%">Descricao</th>
-      <th width="10%" class="text-center">#</th>
-    </tr>
-    <tr ng-repeat="fornecedor in fornecedores">
-      <td>{{fornecedor.nome}}</td>
-      <td>{{fornecedor.descricao}}</td>
-      <td class="text-center">
-        <button type="button" class="btn btn-warning btn-xs" ng-click="onSetFornecedor(fornecedor)" data-toggle="modal" data-target="#modalAlterarFornecedor">
-          <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-        </button>
-        <button type="button" class="btn btn-success btn-xs" ng-click="onSetFornecedor(fornecedor)" data-toggle="modal" data-target="#modalAlterarFornecedor">
-          <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-        </button>
-      </td>
-    </tr>
-  </table>
+<div ng-show="fornecedores.length > 0">
+  <div class="row form-inline">
+    <h4>Fornecedores <small><a class="btn btn-xs btn-success" href="javascrit:" data-toggle="modal" data-target="#modalCadastrarFornecedor" ng-click="limparCampos()"><i class="glyphicon glyphicon-ok"></i> Adicionar</a></small></h4>
+    <label>Pesquisa</label>
+    <input id="pesquisa" class="form-control " placeholder="Filtro de consulta" ng-model="nome">
+  </div>
+
+  <div class="row">
+    <table class="table table-hover">
+      <tr>
+        <th width="35%">Nome</th>
+        <th width="55%">Descricao</th>
+        <th width="10%" class="text-center">#</th>
+      </tr>
+      <tr ng-repeat="fornecedor in fornecedores | filter : nome">
+        <td>{{fornecedor.nome}}</td>
+        <td>{{fornecedor.descricao}}</td>
+        <td class="text-center">
+          <button type="button" class="btn btn-warning btn-xs" ng-click="onSetFornecedor(fornecedor)" data-toggle="modal" data-target="#modalAlterarFornecedor">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+          </button>
+          <button type="button" class="btn btn-success btn-xs" ng-click="onSetFornecedor(fornecedor)" data-toggle="modal" data-target="#modalAlterarFornecedor">
+            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+
 </div>
 
 
