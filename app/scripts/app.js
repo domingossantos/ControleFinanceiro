@@ -31,8 +31,12 @@ var app = angular.module('controleFinanceiroApp', [
       controller: 'MainCtrl'
     })
     .when('/pagamento', {
-      templateUrl: 'views/movimento/pagamento.html',
+      templateUrl: 'views/movimento/pagamento/pagamento.html',
       controller: 'PagamentoCtrl'
+    })
+    .when('/movimento/pagamento', {
+      templateUrl: 'views/movimento/pagamento/lista_pagamento.html',
+      controller: 'PagamentoListaCtrl'
     })
     .when('/aplicacao', {
       templateUrl: 'views/movimento/aplicacao.html',
@@ -85,8 +89,8 @@ app.run(['$rootScope', '$location', function ($rootScope, $location) {
   });
 }]);
 
-app.rootContext = 'http://api.domsantos.com.br:8080/cf-api/';
-// app.rootContext = 'http://localhost:8080/cf-api/';
+//app.rootContext = 'http://api.domsantos.com.br:8080/cf-api/';
+app.rootContext = 'http://localhost:8080/cf-api/';
 
 angular.module('controleFinanceiroApp.resources',[]);
 angular.module('controleFinanceiroApp.controllers',[]);

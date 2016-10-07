@@ -1,0 +1,31 @@
+<div ng-show="pagamentos.itens.length < 1" class="row">
+  <div class="jumbotron">
+    <h1>Lista de Pagamentos</h1>
+    <p>Nenhum Pagamento encontrado.</p>
+    <p><a class="btn btn-primary btn-lg"  href="#/pagamento" role="button">Registrar Pagamento</a></p>
+  </div>
+</div>
+<div class="row" ng-show="pagamentos.itens.length > 0">
+  <div class="col-md-12">
+    <table class="table table-hover">
+      <thead>
+      <tr class="success">
+        <th>Descrição</th>
+        <th>Data</th>
+        <th>Valor</th>
+        <th class="text-center">#</th>
+      </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="pagamento in pagamentos.itens">
+          <td>{{pagamento.descricao}}</td>
+          <td>{{pagamento.dataOperacao | date:'dd/MM/yyyy'}}</td>
+          <td>{{pagamento.valor | currency}}</td>
+          <td>...</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
