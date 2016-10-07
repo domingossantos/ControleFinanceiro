@@ -81,8 +81,8 @@ app.run(['$rootScope', '$location', function ($rootScope, $location) {
   });
 }]);
 
-//app.rootContext = 'http://api.domsantos.com.br:8080/cf-api/';
-app.rootContext = 'http://localhost:8080/cf-api/';
+app.rootContext = 'http://api.domsantos.com.br:8080/cf-api/';
+// app.rootContext = 'http://localhost:8080/cf-api/';
 
 angular.module('controleFinanceiroApp.resources',[]);
 angular.module('controleFinanceiroApp.controllers',[]);
