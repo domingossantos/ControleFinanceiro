@@ -66,6 +66,10 @@ var app = angular.module('controleFinanceiroApp', [
       templateUrl: 'views/fornecedor/index.html',
       controller: 'FornecedorCtrl'
     })
+    .when('/alterar-senha', {
+      templateUrl: 'views/alterar_senha.html',
+      controller: 'AlterarSenhaCtrl'
+    })
     .otherwise({
       redirectTo: '/'
     });
