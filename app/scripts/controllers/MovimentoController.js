@@ -37,7 +37,7 @@ angular.module('controleFinanceiroApp')
     $scope.onCarregaContas = function(){
       ContaResources.query({id:1}, function(success){
         $scope.contas = success.itens;
-        //console.log(success);
+
       })
     };
 

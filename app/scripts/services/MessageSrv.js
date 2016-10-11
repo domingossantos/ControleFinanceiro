@@ -1,7 +1,7 @@
 /**
  * Created by domingossantos on 01/10/16.
  */
-"use strict";
+'use strict';
 
 angular.module('controleFinanceiroApp.services').factory('MessageSrv', ['growl', function(growl) {
   return {
@@ -21,10 +21,6 @@ angular.module('controleFinanceiroApp.services').factory('MessageSrv', ['growl',
 
     success: function (mensagem) {
       growl.success(mensagem, { ttl : 9000});
-    },
-
-    processar: function (mensagem) {
-
     }
   };
 }]);

@@ -62,7 +62,7 @@ angular.module('controleFinanceiroApp.controllers')
 
     $scope.onMovimentosPendentes = function(){
 
-      $scope.movimentoResources.query({idCliente: 1, status : 'PENDENTE_HOMOLOGACAO'}).$promise.then(
+      $scope.movimentoResources.query({idCliente: 1, status : 'PENDENTE_HOMOLOGACAO', maxResults : 10, firstResult: 0}).$promise.then(
         function (success) {
           $scope.movimentosPendentes = success.itens;
         }
@@ -72,7 +72,7 @@ angular.module('controleFinanceiroApp.controllers')
 
     $scope.onMovimentosHomologados = function(){
 
-      $scope.movimentoResources.query({idCliente: 1, status : 'HOMOLOGADO'}).$promise.then(
+      $scope.movimentoResources.query({idCliente: 1, status : 'HOMOLOGADO', maxResults : 10, firstResult: 0}).$promise.then(
         function (success) {
           $scope.movimentosHomologados = success.itens;
         }
@@ -82,7 +82,7 @@ angular.module('controleFinanceiroApp.controllers')
 
     $scope.onMovimentosNaoHomologados = function(){
 
-      $scope.movimentoResources.query({idCliente: 1, status : 'NAO_HOMOLOGADO'}).$promise.then(
+      $scope.movimentoResources.query({idCliente: 1, status : 'NAO_HOMOLOGADO', maxResults : 10, firstResult: 0}).$promise.then(
         function (success) {
           $scope.movimentosNaoHomologados = success.itens;
         }

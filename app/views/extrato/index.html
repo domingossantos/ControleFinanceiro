@@ -1,26 +1,20 @@
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-8 form-inline">
     <div class="form-group">
       <label for="inicio">Data Inicio</label>
       <input id="inicio" name="inicio" class="form-control" ng-model="dataInicio"  ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\.\/]?+$/">
+
     </div>
-  </div>
-  <div class="col-md-4">
     <div class="form-group">
       <label for="fim">Data Fim</label>
       <input id="fim" name="fim" class="form-control" ng-model="dataFim" ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\.\/]?+$/">
     </div>
-  </div>
-
-</div>
-<div class="row">
-  <div class="col-md-8 text-right">
     <button id="botao" class="btn btn-success" ng-click="onPesquisar(dataInicio, dataFim)" ><i class="glyphicon glyphicon-search"></i> Pesquisar</button>
   </div>
 </div>
 <div class="row">
   <table class="table table-condensed">
-    <tr>
+    <tr class="success">
       <th>Movimento</th>
       <th>Conta</th>
       <th>Data</th>

@@ -6,15 +6,25 @@
   </div>
 </div>
 <div ng-show="fornecedores.length > 0">
-  <div class="row form-inline">
-    <h4>Fornecedores <small><a class="btn btn-xs btn-success" href="javascrit:" data-toggle="modal" data-target="#modalCadastrarFornecedor" ng-click="limparCampos()"><i class="glyphicon glyphicon-ok"></i> Adicionar</a></small></h4>
-    <label>Pesquisa</label>
-    <input id="pesquisa" class="form-control " placeholder="Filtro de consulta" ng-model="nome">
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Fornecedores <small><a class="btn btn-xs btn-success" href="javascrit:" data-toggle="modal" data-target="#modalCadastrarFornecedor" ng-click="limparCampos()"><i class="glyphicon glyphicon-ok"></i> Adicionar</a></small></h4>
+    </div>
+    <div class="col-md-6">
+      <div class="form-inline">
+        <div class="form-group">
+          <label>Pesquisa</label>
+          <input id="pesquisa" class="form-control " placeholder="Filtro de consulta" ng-model="nome">
+        </div>
+      </div>
+    </div>
+
+
   </div>
 
   <div class="row">
     <table class="table table-hover">
-      <tr>
+      <tr class="success">
         <th width="35%">Nome</th>
         <th width="55%">Descricao</th>
         <th width="10%" class="text-center">#</th>

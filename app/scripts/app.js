@@ -31,8 +31,12 @@ var app = angular.module('controleFinanceiroApp', [
       controller: 'MainCtrl'
     })
     .when('/pagamento', {
-      templateUrl: 'views/movimento/pagamento.html',
+      templateUrl: 'views/movimento/pagamento/pagamento.html',
       controller: 'PagamentoCtrl'
+    })
+    .when('/movimento/pagamento', {
+      templateUrl: 'views/movimento/pagamento/lista_pagamento.html',
+      controller: 'PagamentoListaCtrl'
     })
     .when('/aplicacao', {
       templateUrl: 'views/movimento/aplicacao.html',
@@ -65,6 +69,10 @@ var app = angular.module('controleFinanceiroApp', [
     .when('/fornecedor', {
       templateUrl: 'views/fornecedor/index.html',
       controller: 'FornecedorCtrl'
+    })
+    .when('/alterar-senha', {
+      templateUrl: 'views/alterar_senha.html',
+      controller: 'AlterarSenhaCtrl'
     })
     .otherwise({
       redirectTo: '/'
