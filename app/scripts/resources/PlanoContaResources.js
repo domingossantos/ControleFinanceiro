@@ -4,6 +4,7 @@ angular.module('controleFinanceiroApp.resources').factory('PlanoContaResources',
   return $resource(app.rootContext + 'rest/planocontas/:idPlanoConta',{idPlanoConta : '@idPlanoConta'},
     {
       'query' : {method : 'GET', isArray : false},
-      'get' : {method : 'GET', isArray : false}
+      'get' : {method : 'GET', isArray : false},
+      'update' : {method : 'PUT', isArray: false}
   });
 }])

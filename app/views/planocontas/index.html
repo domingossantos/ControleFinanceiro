@@ -11,16 +11,22 @@
     <tbody>
     <tr class="success">
       <th width="15%">Grupo</th>
-      <th width="75%">Descrição</th>
-      <th width="10%" class="text-center">#</th>
+      <th width="70%">Descrição</th>
+      <th width="15%" class="text-center">#</th>
     </tr>
     </tbody>
     <tr ng-repeat="conta in planocontas.itens">
-
       <td>{{conta.codigo}}</td>
-
       <td>{{conta.descricao}}</td>
-      <td class="text-center"><button data-toggle="modal" data-target="#modalAlteracao" ng-click="onCarregar(conta)" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-pencil"></i></button></td>
+      <td class="text-center">
+        <button ng-click="onAtualizarStatus(conta)" class="btn btn-success btn-xs">
+          <i class="glyphicon" ng-class="{'glyphicon-eye-open' : conta.status == 'ATIVO', 'glyphicon-eye-close' : conta.status == 'INATIVO'}"></i> {{conta.status}}
+        </button>
+
+        <button data-toggle="modal" data-target="#modalAlteracao" ng-click="onCarregar(conta)" class="btn btn-success btn-xs">
+          <i class="glyphicon glyphicon-edit" ></i>
+        </button>
+      </td>
     </tr>
   </table>
 </div>
@@ -44,6 +50,10 @@
               <input type="radio" ng-model="planoconta.tipoPlanoConta" name="tipo" value="RECEITA">
               Receita
             </label>
+            <label class="radio-inline">
+              <input type="radio" ng-model="planoconta.tipoPlanoConta" name="tipo" value="GERAL">
+              CONTA SISTÉTICA
+            </label>
           </div>
 
           <div class="form-group">
@@ -51,11 +61,12 @@
             <select id="obra"
                     class="form-control"
                     ng-model="codigoSelecionado"
-                    ng-options="conta as conta.descricao for conta in planocontas.itens"
-                    ng-change="getCodigoConta(codigoSelecionado)">
+                    ng-options="conta as conta.descricao for conta in planoContasCombo.itens"
+                    ng-change="gerarCodigo(codigoSelecionado)">
               <option value="">Rais</option>
 
             </select>
+
           </div>
         <div class="form-group ">
           <label>Grupo : {{incremento}}</label>
@@ -75,6 +86,7 @@
 </div><!-- /.modal -->
 </div>
 
+
 <div class="modal fade" tabindex="-1" role="dialog" id="modalAlteracao">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -86,26 +98,11 @@
         <div class="form-group">
           <h5>Tipo de Conta</h5>
           <label class="radio-inline">
-            <input type="radio" ng-model="planoconta.tipoPlanoConta" name="tipo" value="DESPESA">
-            Despesa
+            {{planoconta.tipo}}
           </label>
-          <label class="radio-inline">
-            <input type="radio" ng-model="planoconta.tipoPlanoConta" name="tipo" value="RECEITA">
-            Receita
-          </label>
-        </div>
 
-        <div class="form-group">
-          <label for="obra" >Conta Ascendente</label>
-          <select id="obra"
-                  class="form-control"
-                  ng-model="codigoSelecionado"
-                  ng-options="conta as conta.descricao for conta in planocontas.itens">
-            <option ng-selected="codigoSelecionado"></option>
-
-          </select>
         </div>
-        <div class="form-group ">
+      <div class="form-group ">
           <label>Grupo : {{planoconta.codigo}}</label>
         </div>
 
@@ -116,9 +113,9 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success" ng-click="onSalvar()">Atualizar</button>
+          <button type="button" class="btn btn-success" ng-click="onAtualizar(planoconta)">Atualizar</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
-  </div>
+</div>

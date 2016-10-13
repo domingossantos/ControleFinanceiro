@@ -8,7 +8,7 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.pagamentos = [];
     $scope.valorTotal = 0;
 
-    var pagamentoListaResources = $injector.get('PagamentoListaResources');
+    var pagamentoListaResources = $injector.get('PagamentoResources');
 
     pagamentoListaResources.query({idContaCorrente:0, status:'', maxResults : 10, firstResult: 0}).$promise.then(
       function (success) {

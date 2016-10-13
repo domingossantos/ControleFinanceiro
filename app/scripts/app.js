@@ -24,6 +24,9 @@ var app = angular.module('controleFinanceiroApp', [
   $routeProvider
     .when('/', {
       templateUrl: 'views/login.html',
+
+
+
       controller: 'LoginCtrl'
     })
     .when('/main', {

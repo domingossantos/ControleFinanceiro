@@ -13,6 +13,8 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.notificacao = null;
     $scope.showNotification = false;
 
+    $scope.pagamento = null;
+
     $scope.itensPagamento = [];
     $scope.formaPagamentoSelecionada = null;
     $scope.obraSelecionada = null;
@@ -49,6 +51,7 @@ angular.module('controleFinanceiroApp.controllers')
       $scope.descricao = null;
       $scope.planoDigitado = null;
       $scope.fornecedorDigitado = null;
+      $scope.pagamento = null;
     }
 
     $scope.validaCampos = function(){
@@ -107,15 +110,42 @@ angular.module('controleFinanceiroApp.controllers')
               console.log(success)
               growl.info('Registro Salvo');
               $scope.resetCampos();
-
             }
           )
         }
       );
     }
 
+    $scope.registraPagamento = function() {
+      if($scope.pagamento == null){
+        var data = $scope.dataMovimento.substring(4,8).concat('-'+$scope.dataMovimento.substring(2,4)).concat('-'+ $scope.dataMovimento.substring(0,2));
+
+        var pagamentoResources = $injector.get('PagamentoResources');
+
+        var pagamento = {
+          descricao: $scope.descricao,
+          status : 'RASCUNHO',
+          valor : $scope.valorTotal,
+          dataOperacao : data,
+          detalhePagamento : {
+            formaPagamento : $scope.formaPagamentoSelecionada
+          }
+        };
+
+        pagamentoResources.save({idContaCorrente: $scope.contaSelecionada.id}
+          ,pagamento).$promise.then(
+          function (success) {
+            growl.info('Pagamento salvo como rascunho');
+            $scope.pagamento = success.item;
+          }
+        );
+
+      }
+    }
+
     $scope.onRegistraItem = function(){
       if($scope.validaCampos()){
+        $scope.registraPagamento();
 
         console.log($scope.planoContaSelecionado);
         var item = {

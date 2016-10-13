@@ -3,13 +3,13 @@
  * Created by domingossantos on 07/08/16.
  */
 angular.module('controleFinanceiroApp.controllers')
-  .controller('PlanoContaCtrl', ['$rootScope','$scope','$injector','PlanoContaResources','PlanoContaClienteResources',
-      function ($rootScope, $scope, $injector ) {
+  .controller('PlanoContaCtrl', ['$rootScope','$scope','$injector','growl', function ($rootScope, $scope, $injector ,growl) {
 
     $scope.planoconta = {
       codigo : 0,
       descricao : null,
-      tipoPlanoConta : null
+      tipoPlanoConta : null,
+      status : null
     };
 
     $scope.incremento = 0;
@@ -17,54 +17,93 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.formulario = false;
     $scope.painel = true;
 
-
+    $scope.planoContasCombo = [];
     $scope.planocontas = [];
+    var planoContaResources = $injector.get('PlanoContaResources');
+
 
     $scope.atualizar = function(){
-
-      var planoContaResources = $injector.get('PlanoContaResources');
-
-      planoContaResources.query().$promise.then(
+      planoContaResources.query({tipo:'GERAL'}).$promise.then(
         function(success){
-          $scope.planocontas = success;
+          $scope.planoContasCombo = success;
       }
       );
 
+      planoContaResources.query({}).$promise.then(
+        function(success){
+          $scope.planocontas = success;
+        }
+      );
 
     };
 
-    $scope.getCodigoConta = function(conta){
-      var partes = conta.codigo.split(".");
+    $scope.gerarCodigo = function(plano){
 
-      var ultimaParte = partes[partes.length - 1];
-      $scope.incremento = ultimaParte;
+      var parte = '';
 
+      if(plano.codigo == '1'){
+        parte = parte+'.';
+      }
+
+      parte = plano.codigo+'.';
+      planoContaResources.query({tipo:null,parte:parte}).$promise.then(
+        function(success){
+          var i = success.itens.length+1;
+          parte = parte + i;
+          $scope.incremento = parte;
+        }
+
+      );
+
+    }
+
+    $scope.onAtualizarStatus = function(planoConta){
+
+      if(planoConta.status == 'INATIVO'){
+        planoConta.status = 'ATIVO';
+      } else {
+        planoConta.status = 'INATIVO';
+      }
+
+      planoContaResources.update({idPlanoConta:planoConta.id},angular.copy(planoConta)).$promise.then(
+        function (success) {
+          growl.info(success.mensagem);
+          $scope.atualizar();
+        }
+      );
+    }
+
+    $scope.onAtualizar = function(planoConta){
+      planoContaResources.update({idPlanoConta:planoConta.id},angular.copy(planoConta)).$promise.then(
+        function (success) {
+          growl.info(success.mensagem);
+          $scope.atualizar();
+          $('#modalAlteracao').modal('hide');
+        }
+      );
     }
 
     $scope.onSalvar = function(){
       $scope.planoconta.codigo = $scope.incremento;
+      $scope.planoconta.status = 'ATIVO';
       var planoContaResource = $injector.get('PlanoContaResources');
-      var clienteResources = $injector.get('ClienteResources');
-      clienteResources.get({idCliente:1}).$promise.then(
-        function(success){
-          $scope.planoconta.cliente = success.item;
-          planoContaResource.save({},angular.copy($scope.planoconta)).$promise.then(
-            function (success) {
-              $('#modalCadastro').modal('hide');
-              $scope.atualizar();
-            }
-          );
+      planoContaResource.save({},angular.copy($scope.planoconta)).$promise.then(
+        function (success) {
+          growl.info(success.mensagem);
+
+          $('#modalCadastro').modal('hide');
+          $scope.atualizar();
         }
       );
-
 
     };
 
     $scope.onCarregar = function(conta){
       $scope.planoconta = conta;
-      $scope.codigoSelecionado = conta;
     }
 
     $scope.atualizar();
+
+
 
   }]);
