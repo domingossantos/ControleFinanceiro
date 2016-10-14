@@ -8,7 +8,7 @@
 <div ng-show="fornecedores.length > 0">
   <div class="row">
     <div class="col-md-6">
-      <h4>Fornecedores <small><a class="btn btn-xs btn-success" href="javascrit:" data-toggle="modal" data-target="#modalCadastrarFornecedor" ng-click="limparCampos()"><i class="glyphicon glyphicon-ok"></i> Adicionar</a></small></h4>
+      <h4>Fornecedores <small><a class="btn btn-xs btn-primary" href="javascrit:" data-toggle="modal" data-target="#modalCadastrarFornecedor" ng-click="limparCampos()"><i class="glyphicon glyphicon-ok"></i> Adicionar</a></small></h4>
     </div>
     <div class="col-md-6">
       <div class="form-inline">
@@ -35,7 +35,7 @@
           <button type="button" class="btn btn-warning btn-xs" ng-click="onSetFornecedor(fornecedor)" data-toggle="modal" data-target="#modalAlterarFornecedor">
             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
           </button>
-          <button type="button" class="btn btn-success btn-xs" ng-click="onSetFornecedor(fornecedor)" data-toggle="modal" data-target="#modalAlterarFornecedor">
+          <button type="button" class="btn btn-primary btn-xs" ng-click="onSetFornecedor(fornecedor)" data-toggle="modal" data-target="#modalAlterarFornecedor">
             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
           </button>
         </td>
@@ -72,7 +72,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-success" ng-click="onSalvar()">Salvar</button>
+        <button type="button" class="btn btn-primary" ng-click="onSalvar()">Salvar</button>
       </div>
     </div>
   </div>
@@ -104,7 +104,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-success" ng-click="onAtualizar()">Salvar</button>
+        <button type="button" class="btn btn-primary" ng-click="onAtualizar()">Salvar</button>
       </div>
     </div>
   </div>

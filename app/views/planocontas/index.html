@@ -6,7 +6,7 @@
   </div>
 </div>
 <div ng-show="planocontas.itens.length > 0" class="row">
-  <h4>Plano Contas <small><a class="btn btn-xs btn-success" href="javascrit:" data-toggle="modal" data-target="#modalCadastro" ng-click="limparCampos()"><i class="glyphicon glyphicon-ok"></i> Adicionar</a></small></h4>
+  <h4>Plano Contas <small><a class="btn btn-xs btn-primary" href="javascrit:" data-toggle="modal" data-target="#modalCadastro" ng-click="limparCampos()"><i class="glyphicon glyphicon-ok"></i> Adicionar</a></small></h4>
   <table class="table table-hover">
     <tbody>
     <tr class="success">
@@ -19,11 +19,11 @@
       <td>{{conta.codigo}}</td>
       <td>{{conta.descricao}}</td>
       <td class="text-center">
-        <button ng-click="onAtualizarStatus(conta)" class="btn btn-success btn-xs">
+        <button ng-click="onAtualizarStatus(conta)" class="btn btn-primary btn-xs">
           <i class="glyphicon" ng-class="{'glyphicon-eye-open' : conta.status == 'ATIVO', 'glyphicon-eye-close' : conta.status == 'INATIVO'}"></i> {{conta.status}}
         </button>
 
-        <button data-toggle="modal" data-target="#modalAlteracao" ng-click="onCarregar(conta)" class="btn btn-success btn-xs">
+        <button data-toggle="modal" data-target="#modalAlteracao" ng-click="onCarregar(conta)" class="btn btn-primary btn-xs">
           <i class="glyphicon glyphicon-edit" ></i>
         </button>
       </td>
@@ -79,7 +79,7 @@
 
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success" ng-click="onSalvar()">Salvar</button>
+        <button type="button" class="btn btn-primary" ng-click="onSalvar()">Salvar</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
@@ -113,7 +113,7 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-success" ng-click="onAtualizar(planoconta)">Atualizar</button>
+          <button type="button" class="btn btn-primary" ng-click="onAtualizar(planoconta)">Atualizar</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

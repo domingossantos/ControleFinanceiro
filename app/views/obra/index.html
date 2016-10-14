@@ -6,7 +6,7 @@
   </div>
 </div>
 <div ng-show="obras.itens.length > 0" class="row">
-  <h4>Obras <small><a href="javascrit:" data-toggle="modal" data-target="#modalCadastrarObra" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-ok"></i> Adicionar</a></small></h4>
+  <h4>Obras <small><a href="javascrit:" data-toggle="modal" data-target="#modalCadastrarObra" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-ok"></i> Adicionar</a></small></h4>
   <table class="table table-hover table-striped">
     <tr class="success">
       <th width="40%">Nome</th>
@@ -22,7 +22,7 @@
         <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm" ng-click="onSetObra(obra)">
           <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
         </button>
-        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalAlterarObra" ng-click="onSetObra(obra)">
+        <button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalAlterarObra" ng-click="onSetObra(obra)">
           <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
         </button>
       </td>
@@ -61,7 +61,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-success" ng-click="onSalvar()" ng-class="{ 'disabled': formCadastro.$invalid }">Salvar</button>
+        <button type="button" class="btn btn-primary" ng-click="onSalvar()" ng-class="{ 'disabled': formCadastro.$invalid }">Salvar</button>
       </div>
     </div>
   </div>
@@ -94,7 +94,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-        <button type="button" class="btn btn-success" ng-click="onAlterar()">Alterar</button>
+        <button type="button" class="btn btn-primary" ng-click="onAlterar()">Alterar</button>
       </div>
     </div>
   </div>
@@ -109,7 +109,7 @@
         Deseja Apagar Obra {{obra.apelido}}?
       </div>
       <div class="modal-footer">
-        <button class="btn btn-success" ng-click="onDelete(obra)">Sim</button>
+        <button class="btn btn-primary" ng-click="onDelete(obra)">Sim</button>
         <button class="btn btn-warning" data-dismiss="modal">Cancelar</button>
       </div>
     </div>

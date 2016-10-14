@@ -8,7 +8,7 @@
 
 <div ng-show="contasCorrentes.itens.length > 0" class="row">
   <div class="col-md-12">
-    <h4>Contas Correntes <small><button class="btn btn-success btn-xs" ng-click="adicionarContaCorrente()" role="button"><i class="glyphicon glyphicon-ok"></i> Adicionar</button></small></h4>
+    <h4>Contas Correntes <small><button class="btn btn-primary btn-xs" ng-click="adicionarContaCorrente()" role="button"><i class="glyphicon glyphicon-ok"></i> Adicionar</button></small></h4>
     <table class="table table-hover">
       <thead>
         <tr class="success">
@@ -28,7 +28,7 @@
             <td>{{cc.numero}}</td>
             <td ng-class="{ 'bg-info' : cc.saldoAtual == 0, 'bg-success' : cc.saldoAtual > 0, 'bg-danger' : cc.saldoAtual < 0 }" >{{cc.saldoAtual | currency}}</td>
             <td>
-              <button ng-click="editarContaCorrente(cc)" type="button" class="btn btn-success btn-xs">
+              <button ng-click="editarContaCorrente(cc)" type="button" class="btn btn-primary btn-xs">
                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
               </button>
               <!--<button type="button" class="btn btn-danger btn-xs">
@@ -90,7 +90,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-        <button ng-click="salvarContaCorrente()" type="button" class="btn btn-success" ng-class="{ 'disabled': formContaCorrente.$invalid }">Salvar</button>
+        <button ng-click="salvarContaCorrente()" type="button" class="btn btn-primary" ng-class="{ 'disabled': formContaCorrente.$invalid }">Salvar</button>
       </div>
     </div>
   </div>
