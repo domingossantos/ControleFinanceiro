@@ -9,12 +9,40 @@ angular.module('controleFinanceiroApp')
   $scope.usuario = {}
 
   $scope.salvar = function() {
+    var usuarioResources = $injector.get('UsuarioResources');
 
+    if($scope.usuario.id) {
+      usuarioResources.update({ 'id' : $scope.usuario.id, 'idCliente' : $rootScope.usuario.cliente.id}, $scope.usuario, function(result) {
+        $('#modalCadastrarUsuario').modal('hide');
+        $scope.listar();
+      });
+    } else {
+      usuarioResources.save({ 'idCliente' : $rootScope.usuario.cliente.id}, $scope.usuario, function(result) {
+        $('#modalCadastrarUsuario').modal('hide');
+        $scope.listar();
+      });
+    }
   }
 
   $scope.adicionarUsuario = function() {
     $scope.usuario = {};
     $('#modalCadastrarUsuario').modal('show');
+  }
+
+  $scope.atualizarPerfil = function(perfilSelecionado) {
+    $scope.usuario.perfil = perfilSelecionado;
+  }
+
+  $scope.editarUsuario = function(usuario) {
+    $scope.usuario = angular.copy(usuario);
+    $('#modalCadastrarUsuario').modal('show');
+  }
+
+  $scope.removerUsuario = function(usuario) {
+    var usuarioResources = $injector.get('UsuarioResources');
+    usuarioResources.delete({ 'id' : usuario.id, 'idCliente' : $rootScope.usuario.cliente.id}, function(result) {
+      $scope.listar();
+    });
   }
 
   $scope.listar = function() {
