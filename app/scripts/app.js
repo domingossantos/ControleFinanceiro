@@ -77,6 +77,10 @@ var app = angular.module('controleFinanceiroApp', [
       templateUrl: 'views/usuario/lista_usuario.html',
       controller: 'UsuarioCtrl'
     })
+    .when('/perfil', {
+      templateUrl: 'views/perfil/lista_perfil.html',
+      controller: 'PerfilCtrl'
+    })
     .when('/alterar-senha', {
       templateUrl: 'views/alterar_senha.html',
       controller: 'AlterarSenhaCtrl'

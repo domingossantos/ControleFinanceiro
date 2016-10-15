@@ -7,8 +7,8 @@ angular.module('controleFinanceiroApp')
 .controller('LoginCtrl', ['$scope', '$rootScope', '$http', '$location', '$injector', 'growl', function ($scope, $rootScope, $http, $location, $injector, growl) {
 
   $scope.usuario = {
-    email : null,
-    senha : null
+    email : 'gilsonrocha@gmail.com',
+    senha : 'g00gl3'
   }
 
   $scope.login = function() {
