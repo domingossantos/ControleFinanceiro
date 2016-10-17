@@ -1,49 +1,44 @@
 <h4>Registro pagamento</h4>
-<growl-notifications ng-if="showNotification" ttl="500" class="fading">{{notificacao}}</growl-notifications>
 <form name="formPagamento" novalidate>
 <div class="row">
   <div class="col-md-4">
-    <div class="form-group" ng-class="{ 'has-error': formPagamento.formaPagamento.$invalid }">
+    <div class="form-group">
       <label for="formaPagamento">Forma Pagamento</label>
-      <select id="formaPagamento" class="form-control" name="formaPagamento" required tabindex="1"
-              ng-model="formaPagamentoSelecionada"
-              ng-options="forma as forma.nome for forma in formasPagamento">
-        <option value="">Selecione...</option>
-      </select>
+      <span id="formaPagamento" class="form-control">{{pagamento.detalhePagamento.formaPagamento.nome}}</span>
     </div>
 
   </div>
   <div class="col-md-4">
-    <div class="form-group" ng-class="{ 'has-error': formPagamento.conta.$invalid }">
+    <div class="form-group">
       <label for="conta" >Conta</label>
-      <select id="conta" class="form-control" name="conta" required tabindex="2"
-              ng-model="contaSelecionada"
-              ng-options="conta as conta.apelido for conta in contas">
-        <option value="">Selecione...</option>
-      </select>
+      <span id="conta" class="form-control">{{pagamento.contaCorrente.apelido}}</span>
     </div>
-
   </div>
 
   <div class="col-md-4">
-    <div class="form-group" ng-class="{ 'has-error': formPagamento.dataMovimento.$invalid }">
-
-      <label for="dataMovimento">Data</label>
-      <input tabindex="3" ng-model="dataMovimento" id="dataMovimento" name="dataMovimento" required ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\./]?+$/" class="form-control">
+    <div class="form-group" >
+      <label for="dataOperacao">Data</label>
+      <span id="dataOperacao" class="form-control">{{pagamento.dataOperacao | date:'dd/MM/yyyy'}}</span>
     </div>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-4">
+  <div class="col-md-3">
     <div class="form-group">
-      <label for="valorTotal">Valor Total: </label>
-      <input type="text" class="form-control " disabled="true" id="valorTotal" ui-number-mask="2" placeholder="Total" ng-model="valorTotal" value="{{valorTotal | currency}}">
+      <label for="valorEsperado">Valor Esperado: </label>
+      <span class="form-control" id="valorEsperado" >{{pagamento.valorEsperado | currency}}</span>
     </div>
   </div>
-  <div class="col-md-8">
+  <div class="col-md-3">
+    <div class="form-group">
+      <label for="valorTotal">Valor Total: </label>
+      <span class="form-control "  id="valorTotal">{{pagamento.valor | currency}}</span>
+    </div>
+  </div>
+  <div class="col-md-6">
     <div class="form-group" ng-class="{ 'has-error': formPagamento.conta.$invalid }">
       <label for="descricao">Descricao</label>
-      <input tabindex id="descricao" name="descricao" ng-model="descricao" placeholder="Descrição" required class="form-control" size="50"/>
+      <span id="descricao" class="form-control">{{pagamento.descricao}}</span>
     </div>
 
   </div>
@@ -56,7 +51,7 @@
     <div class="form-group" ng-class="{ 'has-error': formPagamento.obra.$invalid }">
       <label for="obra" >Obra</label>
       <select id="obra" class="form-control" name="obra" required
-              ng-model="obraSelecionada"
+              ng-model="itemPagamento.obra"
               ng-options="obra as obra.apelido for obra in obras">
         <option value="">Selecione...</option>
 
@@ -69,7 +64,7 @@
 
       <input class="form-control" ng-model="planoDigitado" size="5">
       <select id="despesa" class="form-control" name="despesa" required
-              ng-model="planoContaSelecionado"
+              ng-model="itemPagamento.planoConta"
               ng-options="plano.planoConta as plano.descricao for plano in planosContas | filter : planoDigitado">
         <option value="">Selecione</option>
 
@@ -81,7 +76,7 @@
       <label for="fornecedor">Fornecedor</label>
       <input class="form-control" ng-model="fornecedorDigitado">
       <select id="fornecedor" class="form-control" name="fornecedor" required
-              ng-model="fornecedorSelecionado"
+              ng-model="itemPagamento.fornecedor"
               ng-options="fornecedor.fornecedor as fornecedor.descricao for fornecedor in fornecedores | filter : fornecedorDigitado">
         <option value="">Selecione</option>
 
@@ -93,13 +88,13 @@
     <div class="col-md-8">
       <div class="form-group" ng-class="{ 'has-error': formPagamento.historico.$invalid }">
         <label for="historico">Historico</label>
-        <input type="text" id="historico" name="historico" required class="form-control" ng-model="historico" size="250">
+        <input type="text" id="historico" name="historico" required class="form-control" ng-model="itemPagamento.historico" size="250">
       </div>
     </div>
     <div class="col-md-4">
       <div class="form-group" ng-class="{ 'has-error': formPagamento.valor.$invalid }">
         <label for="valor">Valor</label>
-        <input type="text" id="valor" name="valor" required class="form-control text-right" ng-model="valor" ui-number-mask="2">
+        <input type="text" id="valor" name="valor" required class="form-control text-right" ng-model="itemPagamento.valor" ui-number-mask="2">
       </div>
 
     </div>
@@ -112,7 +107,7 @@
   </div>
   <div class="row">
     <table class="table">
-      <tr>
+      <tr class="info">
         <th>Fornecedor</th>
         <th>Obra</th>
         <th>Plano Conta</th>
@@ -131,7 +126,7 @@
     </table>
   </div>
   <div class="text-right">
-    <button class="btn btn-primary" ng-click="onSalvar()" disabled id="btnSalvar"><i class="glyphicon glyphicon-ok"></i> Salvar Pagamento</button>
+    <button class="btn btn-primary" ng-click="onSalvar()"  id="btnSalvar"><i class="glyphicon glyphicon-ok"></i> Salvar Pagamento</button>
   </div>
 </div>
 </form>

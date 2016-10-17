@@ -3,7 +3,7 @@
  * Created by domingossantos on 07/08/16.
  */
 angular.module('controleFinanceiroApp.controllers')
-  .controller('PagamentoCtrl',['$rootScope','$scope', '$injector', '$location', 'growl', function ($rootScope, $scope, $injector, $location, growl) {
+  .controller('PagamentoCtrl',['$rootScope','$scope', '$injector', '$location', '$routeParams' ,'growl', function ($rootScope, $scope, $injector, $location, $routeParams, growl) {
 
     $scope.formasPagamento = [];
     $scope.contas = [];
@@ -77,10 +77,20 @@ angular.module('controleFinanceiroApp.controllers')
 
     }
 
+    var pagamentoResources = $injector.get('PagamentoResources');
+
+    var formaPagamantoResources = $injector.get('FormaPagamantoResources');
+
+    formaPagamantoResources.query({},function(success){
+      $scope.formasPagamento = success.itens;
+
+    });
+
+
     $scope.validaCampos = function(){
       var valido = true;
 
-      if($scope.formaPagamentoSelecionada == null){
+      if($scope.pagamento.detalhePagamento.formaPagamento == null){
         valido = false;
       }
       if($scope.obraSelecionada == null){
@@ -113,24 +123,27 @@ angular.module('controleFinanceiroApp.controllers')
 
     $scope.onSalvar = function(){
 
-      $scope.pagamento.status = 'PENDENTE_HOMOLOGACAO'
+      if($scope.pagamento.valor == $scope.pagamento.valorEsperado){
+        $scope.pagamento.status = 'PENDENTE_HOMOLOGACAO'
 
-      pagamentoResources.update({idContaCorrente: $scope.contaSelecionada.id}
-                              ,angular.copy($scope.pagamento)).$promise.then(
-        function (success) {
-          growl.info(success.mensagem);
-          $scope.resetCampos();
-          $scope.itensPagamento = [];
-        }
-      );
+        pagamentoResources.update({idContaCorrente: $scope.contaSelecionada.id}
+          ,angular.copy($scope.pagamento)).$promise.then(
+          function (success) {
+            growl.info(success.mensagem);
+            $scope.resetCampos();
+            $scope.itensPagamento = [];
+          }
+        );
+      } else {
+        growl.warning('Valor Total é diferente do Valor Esperado!');
+      }
     }
 
     $scope.registraPagamento = function() {
       if($scope.pagamento.id == null){
-        var data = $scope.dataMovimento.substring(4,8).concat('-'+$scope.dataMovimento.substring(2,4)).concat('-'+ $scope.dataMovimento.substring(0,2));
+        var data = $scope.pagamento.dataOperacao.substring(4,8).concat('-'+$scope.pagamento.dataOperacao.substring(2,4)).concat('-'+ $scope.pagamento.dataOperacao.substring(0,2));
 
-        var pagamentoResources = $injector.get('PagamentoResources');
-        $scope.pagamento.detalhePagamento = {formaPagamento : $scope.formaPagamentoSelecionada};
+        $scope.pagamento.detalhePagamento = {formaPagamento : $scope.pagamento.detalhePagamento.formaPagamento};
         $scope.pagamento.status = 'RASCUNHO';
         $scope.pagamento.contaCorrente = $scope.contaSelecionada;
         $scope.pagamento.dataOperacao = data;
@@ -153,7 +166,7 @@ angular.module('controleFinanceiroApp.controllers')
               function (success) {
                 $scope.onCarregaItens();
                 $scope.limparItem();
-                if($scope.itensPagamento.length < 0 ){
+                if($scope.itensPagamento.length > 0 ){
                   $('#btnSalvar').removeAttr('disabled','disabled');
                 }
               },
@@ -196,7 +209,7 @@ angular.module('controleFinanceiroApp.controllers')
               $scope.pagamento.valor += $scope.itemPagamento.valor;
               $scope.onCarregaItens();
               $scope.limparItem();
-              if($scope.itensPagamento.length < 0 ){
+              if($scope.itensPagamento.length > 0 ){
                 $('#btnSalvar').removeAttr('disabled','disabled');
               }
             },
@@ -228,13 +241,7 @@ angular.module('controleFinanceiroApp.controllers')
 
     }
 
-    var formaPagamantoResources = $injector.get('FormaPagamantoResources');
 
-    formaPagamantoResources.query({}).$promise.then(
-      function(success){
-        $scope.formasPagamento = success.itens;
-      }
-    )
 
     var contaCorrenteResources = $injector.get('ContaCorrenteResources');
 
@@ -288,6 +295,7 @@ angular.module('controleFinanceiroApp.controllers')
 
       }
     );
+
 
 
 

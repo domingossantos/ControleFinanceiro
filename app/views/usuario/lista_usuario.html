@@ -1,7 +1,7 @@
 <div class="row">
-  <h4>Usuários <small><button ng-click="adicionarUsuario()" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-ok"></i> Adicionar</button></small></h4>
+  <h4>Usuários <small><button ng-click="adicionarUsuario()" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-ok"></i> Adicionar</button></small></h4>
   <table class="table table-hover table-striped">
-    <tr class="success">
+    <tr class="info">
       <th width="40%">Nome</th>
       <th width="40%">E-mail</th>
       <th width="10%">Perfil</th>
@@ -15,7 +15,7 @@
         <button ng-click="removerUsuario(usuario)" type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target=".bs-example-modal-sm">
           <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
         </button>
-        <button ng-click="editarUsuario(usuario)" type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalAlterarObra">
+        <button ng-click="editarUsuario(usuario)" type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalAlterarObra">
           <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
         </button>
       </td>
@@ -65,7 +65,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-        <button ng-click="salvar()" type="button" class="btn btn-success" ng-class="{ 'disabled': formUsuario.$invalid }">Salvar</button>
+        <button ng-click="salvar()" type="button" class="btn btn-primary" ng-class="{ 'disabled': formUsuario.$invalid }">Salvar</button>
       </div>
     </div>
   </div>
