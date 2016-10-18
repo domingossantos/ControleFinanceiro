@@ -1,32 +1,49 @@
-<div class="row">
-  <div class="col-md-8 form-inline">
-    <div class="form-group">
-      <label for="inicio">Data Inicio</label>
-      <input id="inicio" name="inicio" class="form-control" ng-model="dataInicio"  ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\.\/]?+$/">
-
-    </div>
-    <div class="form-group">
-      <label for="fim">Data Fim</label>
-      <input id="fim" name="fim" class="form-control" ng-model="dataFim" ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\.\/]?+$/">
-    </div>
-    <button id="botao" class="btn btn-primary" ng-click="onPesquisar(dataInicio, dataFim)" ><i class="glyphicon glyphicon-search"></i> Pesquisar</button>
+<div class="form-inline">
+  <div class="radio-inline">
+    <label>
+      <input ng-model="tipoConsulta" type="radio" name="radioConta" id="radioConta" value="C" checked>
+      Conta Corrente
+    </label>
   </div>
+  <div class="radio-inline">
+    <label>
+      <input ng-model="tipoConsulta" type="radio" name="radioObra" id="radioObra" value="O">
+      Obra
+    </label>
+  </div>
+  <select ng-show="tipoConsulta == 'C'" ng-change="atualizarConta(contaSelecionada)" ng-options="c as c.apelido for c in contas.itens" ng-model="contaSelecionada" class="form-control" name="conta" id="conta">
+  </select>
+  <select ng-show="tipoConsulta == 'O'" ng-change="atualizarObra(obraSelecionada)" ng-options="o as o.apelido for o in obras.itens" ng-model="obraSelecionada" class="form-control" name="perfil" id="perfil">
+  </select>
 </div>
+<br>
+<div class="form-inline">
+  <div class="form-group">
+    <label for="inicio">Data Inicio</label>
+    <input id="inicio" name="inicio" class="form-control" ng-model="dataInicio"  ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\.\/]?+$/">
+
+  </div>
+  <div class="form-group">
+    <label for="fim">Data Fim</label>
+    <input id="fim" name="fim" class="form-control" ng-model="dataFim" ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\.\/]?+$/">
+  </div>
+  <button id="botao" class="btn btn-primary" ng-click="onPesquisar(dataInicio, dataFim)" ><i class="glyphicon glyphicon-search"></i> Pesquisar</button>
+</div>
+<br>
 <div class="row">
   <table class="table table-condensed">
     <tr class="success">
-      <th>Movimento</th>
-      <th>Conta</th>
       <th>Data</th>
+      <th>Descrição</th>
       <th>Valor</th>
-      <th>#</th>
     </tr>
     <tr ng-repeat="movimento in movimentos">
+      <td style="width: 15%;">{{movimento.dataOperacao | date:'dd/MM/yyyy'}}</td>
       <td>{{movimento.descricao}}</td>
-      <td>{{movimento.contaCorrente.apelido}}</td>
-      <td class="text-center">{{movimento.dataOperacao | date:'dd/MM/yyyy'}}</td>
-      <td class="text-right">{{movimento.valor | currency}}</td>
-      <td></td>
+      <td ng-class="{'text-danger' : !movimento.credito}" style="width: 15%;" class="text-right"><span ng-show="!movimento.credito">-&nbsp;</span>{{movimento.valor | currency}}</td>
     </tr>
   </table>
+</div>
+<div class="row">
+  <h3>Saldo Atual <span ng-class="{ 'bg-info' : saldoAtual == 0, 'bg-success' : saldoAtual > 0, 'bg-danger' : saldoAtual < 0 }" ng-show="saldoAtual">{{saldoAtual | currency}}</span></h3>
 </div>
