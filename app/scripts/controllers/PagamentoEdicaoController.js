@@ -3,215 +3,142 @@
  * Created by domingossantos on 07/08/16.
  */
 angular.module('controleFinanceiroApp.controllers')
-  .controller('PagamentoEdicaoCtrl',['$rootScope','$scope', '$injector', '$location', 'growl', function ($rootScope, $scope, $injector, $location, growl) {
+  .controller('PagamentoEdicaoCtrl',['$rootScope','$scope', '$injector', '$location', '$routeParams', 'growl', function ($rootScope, $scope, $injector, $location, $routeParams, growl) {
 
-    $scope.formasPagamento = [];
-    $scope.contas = [];
-    $scope.obras = [];
     $scope.planosContas = [];
     $scope.fornecedores = [];
-    $scope.notificacao = null;
-    $scope.showNotification = false;
-
-    $scope.itensPagamento = [];
-    $scope.formaPagamentoSelecionada = null;
-    $scope.obraSelecionada = null;
-    $scope.contaSelecionada = null;
-    $scope.planoContaSelecionado = null;
-    $scope.fornecedorSelecionado = null;
-    $scope.descricao = null;
-    $scope.historico = null;
-    $scope.valor = null;
-    $scope.dataMovimento = null;
-
-    $scope.valorTotal = 0;
+    $scope.obras = [];
 
 
-    $scope.limparItem = function(){
-      $scope.obraSelecionada = null;
-      $scope.planoContaSelecionado = null;
-      $scope.fornecedorSelecionado = null;
-      $scope.historico = null;
-      $scope.valor = null;
+
+    $scope.itemPagamento = {
+      historico: null,
+      valor: null,
+      obra: null,
+      fornecedor : null,
+      planoConta : null
     }
 
-    $scope.resetCampos = function(){
-      $scope.itensPagamento = [];
-      $scope.formaPagamentoSelecionada = null;
-      $scope.obraSelecionada = null;
-      $scope.contaSelecionada = null;
-      $scope.planoContaSelecionado = null;
-      $scope.fornecedorSelecionado = null;
-      $scope.historico = null;
-      $scope.valor = null;
-      $scope.dataMovimento = null;
-      $scope.valorTotal = 0;
-      $scope.descricao = null;
-      $scope.planoDigitado = null;
-      $scope.fornecedorDigitado = null;
-    }
-
-    $scope.validaCampos = function(){
-      var valido = true;
-
-      if($scope.formaPagamentoSelecionada == null){
-        valido = false;
-      }
-      if($scope.obraSelecionada == null){
-        valido = false;
-      }
-      if($scope.contaSelecionada == null){
-        valido = false;
-      }
-      if($scope.planoContaSelecionado == null){
-        valido = false;
-      }
-      if($scope.fornecedorSelecionado == null){
-        valido = false;
-      }
-      if($scope.historico == null){
-        valido = false;
-      }
-      if($scope.valor == null){
-        valido = false;
-      }
-
-      return valido;
-    }
-
-    $scope.onSalvar = function(){
-
-      var data = $scope.dataMovimento.substring(4,8).concat('-'+$scope.dataMovimento.substring(2,4)).concat('-'+ $scope.dataMovimento.substring(0,2));
-
-      var pagamentoResources = $injector.get('PagamentoResources');
-
-      var pagamento = {
-        descricao: $scope.descricao,
-        status : 'PENDENTE_HOMOLOGACAO',
-        valor : $scope.valorTotal,
-        dataOperacao : data,
-        detalhePagamento : {
-          formaPagamento : $scope.formaPagamentoSelecionada
-        }
-      }
-
-      var itensPagamento = $scope.itensPagamento;
-
-      pagamentoResources.save({idContaCorrente: $scope.contaSelecionada.id}
-                              ,pagamento).$promise.then(
-        function (success) {
-          var itemPagamentoResources = $injector.get('ItemPagamentoResources');
-          console.log(itensPagamento);
-          itemPagamentoResources.save({idPagamento:success.item.id},angular.copy(itensPagamento)).$promise.then(
-            function (success) {
-              console.log(success)
-              growl.info('Registro Salvo');
-              $scope.resetCampos();
-
-            }
-          )
-        }
-      );
-    }
-
-    $scope.onRegistraItem = function(){
-      if($scope.validaCampos()){
-
-        console.log($scope.planoContaSelecionado);
-        var item = {
-          historico: $scope.historico,
-          valor: $scope.valor,
-          obra: $scope.obraSelecionada,
-          fornecedor : $scope.fornecedorSelecionado,
-          planoConta : $scope.planoContaSelecionado
-        }
-        console.log(item);
-
-        $scope.valorTotal = $scope.valorTotal + $scope.valor;
-
-        $scope.itensPagamento.push(item);
-
-        $('#btnSalvar').removeAttr('disabled');
-        $scope.limparItem();
-      } else {
-        growl.warning('Todos os campos de item de pagamento são obrigadótios!');
-      }
-
-    }
-
-
-    $scope.onDeleteItem = function(item){
-      var index = $scope.itensPagamento.indexOf(item);
-      $scope.itensPagamento.splice(index,1);
-
-      $scope.valorTotal = $scope.valorTotal - item.valor;
-
-      if($scope.itensPagamento.length <= 0 ){
-        $('#btnSalvar').attr('disabled','disabled');
+    $scope.limparCampos = function () {
+      $scope.itemPagamento = {
+        historico: null,
+        valor: null,
+        obra: null,
+        fornecedor : null,
+        planoConta : null
       }
     }
 
     var formaPagamantoResources = $injector.get('FormaPagamantoResources');
+    formaPagamantoResources.query({},function(success){
+      $scope.formasPagamento = success.itens;
+    })
 
-    formaPagamantoResources.query({}).$promise.then(
-      function(success){
-        $scope.formasPagamento = success.itens;
-      }
-    )
+    var pagamentoResources = $injector.get('PagamentoResources');
 
-    var contaCorrenteResources = $injector.get('ContaCorrenteResources');
+    $scope.onCarregaPagamento = function(idPagamento){
+      pagamentoResources.get({idPagamento:idPagamento},function (success) {
+        $scope.pagamento = success.item;
+        $scope.onCarregaItens();
+      })
+    }
 
-    contaCorrenteResources.query({}).$promise.then(
-      function (success) {
-        $scope.contas = success.itens;
-      }
-    );
+    if($routeParams.idPagamento != null) {
+      $scope.onCarregaPagamento($routeParams.idPagamento);
+    }
 
+    var itemPagamentoResources = $injector.get('ItemPagamentoResources');
+    $scope.onCarregaItens = function(){
+      itemPagamentoResources.query({idPagamento:$scope.pagamento.id},function (success) {
+        $scope.itensPagamento = success.itens;
+      });
+    }
 
     var obraResources = $injector.get('ObraResources');
-    obraResources.query().$promise.then(
-      function (success) {
-        $scope.obras = success.itens;
-      }
-    );
-
+    obraResources.query(function (success) {
+      $scope.obras = success.itens;
+    });
 
     var planoContaResources = $injector.get('PlanoContaResources');
 
-    planoContaResources.query({idCliente:1,tipo:'DESPESA'}).$promise.then(
-      function (success) {
-        for(var i = 0; i < success.itens.length; i++){
-
-          var itemPlano = {
-            planoConta : {},
-            descricao : null
-          }
-          itemPlano.planoConta = success.itens[i];
-          itemPlano.descricao = success.itens[i].codigo + ' - '+ success.itens[i].descricao;
-
-          $scope.planosContas[i] = itemPlano;
+    planoContaResources.query({tipo:'DESPESA'},function (success) {
+      for(var i = 0; i < success.itens.length; i++){
+        var itemPlano = {
+          planoConta : {},
+          descricao : null
         }
+
+        itemPlano.planoConta = success.itens[i];
+        itemPlano.descricao = success.itens[i].codigo + ' - '+ success.itens[i].descricao;
+
+        $scope.planosContas[i] = itemPlano;
       }
-    );
+
+      console.log($scope.planosContas);
+    });
 
     var fornecedorResources = $injector.get('FornecedorResources');
-    fornecedorResources.query({idCliente:1}).$promise.then(
-      function (success) {
-
-        for(var i = 0; i < success.itens.length; i++){
-          var itemFornecedor = {
-            fornecedor : {},
-            descricao : null
-          }
-          itemFornecedor.fornecedor = success.itens[i];
-          itemFornecedor.descricao = success.itens[i].id + ' - '+ success.itens[i].nome;
-
-          $scope.fornecedores[i] = itemFornecedor;
+    fornecedorResources.query({}, function (success) {
+      for(var i = 0; i < success.itens.length; i++){
+        var itemFornecedor = {
+          fornecedor : {},
+          descricao : null
         }
-        console.log($scope.fornecedores);
-      }
-    );
+        itemFornecedor.fornecedor = success.itens[i];
+        itemFornecedor.descricao = success.itens[i].id + ' - '+ success.itens[i].nome;
 
+        $scope.fornecedores[i] = itemFornecedor;
+      }
+
+    })
+
+
+    $scope.onRegistraItem = function(){
+
+      console.log($scope.itemPagamento);
+      itemPagamentoResources.save({idPagamento:$scope.pagamento.id}
+        ,angular.copy($scope.itemPagamento)).$promise.then(
+        function (success) {
+          $scope.pagamento.valor += $scope.itemPagamento.valor;
+          $scope.onCarregaItens();
+          $scope.atualizarPagamento('RASCUNHO');
+          $scope.limparCampos();
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
+    }
+
+    $scope.onDeleteItem = function(item){
+
+      itemPagamentoResources.delete({idItemPagamento:item.id}).$promise.then(
+        function (success) {
+          $scope.pagamento.valor -= item.valor;
+
+          $scope.onCarregaItens();
+        }
+      );
+
+    }
+
+    $scope.atualizarPagamento = function(status){
+
+      pagamentoResources.update({idPagamento: $scope.pagamento.id, status: status}
+        ,angular.copy($scope.pagamento)).$promise.then(
+        function (success) {
+          growl.info('Pagamento atualizado');
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
+    }
+
+    $scope.onSalvar = function () {
+      $scope.atualizarPagamento('PENDENTE_HOMOLOGACAO');
+      $location.path('/movimento/pagamento');
+    }
 
 
   }]);

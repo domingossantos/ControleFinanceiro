@@ -1,18 +1,31 @@
-<div ng-show="pagamentos.itens.length < 1" class="row">
-  <div class="jumbotron">
-    <h1>Lista de Pagamentos</h1>
-    <p>Nenhum Pagamento encontrado.</p>
-    <p><a class="btn btn-primary btn-lg"  href="#/pagamento" role="button">Registrar Pagamento</a></p>
+<h4>Lista de Pagamentos</h4>
+<div class="row">
+  <div class="col-md-8">
+    <form class="form-inline">
+      <label for="mes">Mês Referência</label>
+      <select id="mes"
+              ng-selected="mes"
+              ng-model="mes"
+              ng-options="mes as mes.nome for mes in meses"
+              class="form-control"
+      >
+      </select>
+      <button ng-click="onPesquisar()" class="btn btn-primary">Pesquisar</button>
+      <a href="#/pagamento" class="btn btn-warning">Registrar Pagamento</a>
+
+    </form>
   </div>
+
 </div>
 <div class="row" ng-show="pagamentos.itens.length > 0">
   <div class="col-md-12">
     <table class="table table-hover">
       <thead>
-      <tr class="success">
-        <th>Descrição</th>
-        <th>Data</th>
-        <th>Valor</th>
+      <tr class="info">
+        <th width="35%">Descrição</th>
+        <th width="15%">Data</th>
+        <th width="15%">Valor Esperado</th>
+        <th width="15%">Valor Total</th>
         <th class="text-center">#</th>
       </tr>
       </thead>
@@ -20,12 +33,69 @@
         <tr ng-repeat="pagamento in pagamentos.itens">
           <td>{{pagamento.descricao}}</td>
           <td>{{pagamento.dataOperacao | date:'dd/MM/yyyy'}}</td>
-          <td>{{pagamento.valor | currency}}</td>
-          <td>...</td>
+          <td class="text-right">{{pagamento.valorEsperado | currency}}</td>
+          <td class="text-right">{{pagamento.valor | currency}}</td>
+          <td class="text-center">
+            <a data-toggle="modal" data-target="#modalDetalhe" ng-click="onDetalhePagamento(pagamento)" class="btn btn-sm btn-primary">Detalhe</a>
+            <a  href="#/movimento/pagamento/{{pagamento.id}}" class="btn btn-sm btn-warning" ng-show="pagamento.status == 'RASCUNHO'">Editar</a>
+          </td>
         </tr>
       </tbody>
     </table>
 
   </div>
 
+</div>
+<div ng-show="pagamentos.itens.length < 1" class="row">
+  <div class="alert alert-info">
+    <h3>Nenhum Pagamento encontrado.</h3>
+  </div>
+</div>
+
+<div class="modal fade" id="modalDetalhe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Detalhe de Pagamento</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-3 text-right">Descrição: </div>
+          <div class="col-md-9">{{pagamento.descricao}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-right">Data: </div>
+          <div class="col-md-9">{{pagamento.dataOperacao | date:'dd/MM/yyyy'}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-right">Conta: </div>
+          <div class="col-md-9">{{pagamento.contaCorrente.banco.sigla}} - {{pagamento.contaCorrente.apelido}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3 text-right">Valor: </div>
+          <div class="col-md-9">{{pagamento.valor | currency}}</div>
+        </div>
+        <div class="row">
+          <table class="table">
+            <tr class="info">
+              <th>Historico</th>
+              <th>Fornecedor</th>
+              <th>Obra</th>
+              <th>Valor</th>
+            </tr>
+            <tr ng-repeat="item in itensPagamento">
+              <td>{{item.historico}}</td>
+              <td>{{item.fornecedor.nome}}</td>
+              <td>{{item.obra.apelido}}</td>
+              <td>{{item.valor | currency}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
 </div>
