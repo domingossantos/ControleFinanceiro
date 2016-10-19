@@ -18,7 +18,8 @@ var app = angular.module('controleFinanceiroApp', [
     'ui.utils.masks',
     'angular-growl',
     'controleFinanceiroApp.controllers',
-    'controleFinanceiroApp.resources'
+    'controleFinanceiroApp.resources',
+    'controleFinanceiroApp.services'
   ])
   .config(function ($routeProvider) {
   $routeProvider
@@ -43,8 +44,12 @@ var app = angular.module('controleFinanceiroApp', [
       controller: 'PagamentoEdicaoCtrl'
     })
     .when('/aplicacao', {
-      templateUrl: 'views/movimento/aplicacao.html',
+      templateUrl: 'views/movimento/aplicacao/aplicacao.html',
       controller: 'AplicacaoCtrl'
+    })
+    .when('/movimento/aplicacao', {
+       templateUrl: 'views/movimento/aplicacao/lista_aplicacao.html',
+       controller: 'AplicacaoCtrl'
     })
     .when('/extrato', {
       templateUrl: 'views/extrato/index.html',
@@ -107,4 +112,3 @@ app.rootContext = 'http://localhost:8080/cf-api/';
 angular.module('controleFinanceiroApp.resources',[]);
 angular.module('controleFinanceiroApp.controllers',[]);
 angular.module('controleFinanceiroApp.services',[]);
-

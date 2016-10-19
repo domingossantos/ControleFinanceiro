@@ -29,6 +29,7 @@ angular.module('controleFinanceiroApp.controllers')
       }
     }
 
+
     var formaPagamantoResources = $injector.get('FormaPagamantoResources');
     formaPagamantoResources.query({},function(success){
       $scope.formasPagamento = success.itens;

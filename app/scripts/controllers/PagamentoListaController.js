@@ -56,7 +56,7 @@ angular.module('controleFinanceiroApp.controllers')
 
     var now = new Date;
     var mes = parseInt(now.getMonth());
-    $scope.mes = $scope.meses[mes - 1];
+    $scope.mes = $scope.meses[mes];
 
     var pagamentoListaResources = $injector.get('PagamentoResources');
 

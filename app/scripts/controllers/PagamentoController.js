@@ -125,15 +125,17 @@ angular.module('controleFinanceiroApp.controllers')
 
       if($scope.pagamento.valor == $scope.pagamento.valorEsperado){
         $scope.pagamento.status = 'PENDENTE_HOMOLOGACAO'
-
-        pagamentoResources.update({idContaCorrente: $scope.contaSelecionada.id}
+        pagamentoResources.update({idPagamento: $scope.pagamento.id, status: 'PENDENTE_HOMOLOGACAO'}
           ,angular.copy($scope.pagamento)).$promise.then(
           function (success) {
-            growl.info(success.mensagem);
-            $scope.resetCampos();
-            $scope.itensPagamento = [];
+            growl.info('Pagamento Atualizado');
+            $location.path('/main');
+          },
+          function (error) {
+            console.log(error);
           }
         );
+
       } else {
         growl.warning('Valor Total é diferente do Valor Esperado!');
       }
@@ -141,7 +143,7 @@ angular.module('controleFinanceiroApp.controllers')
 
     $scope.registraPagamento = function() {
       if($scope.pagamento.id == null){
-        var data = $scope.pagamento.dataOperacao.substring(4,8).concat('-'+$scope.pagamento.dataOperacao.substring(2,4)).concat('-'+ $scope.pagamento.dataOperacao.substring(0,2));
+        var data = new Date($scope.pagamento.dataOperacao.substring(4,8),$scope.pagamento.dataOperacao.substring(2,4),$scope.pagamento.dataOperacao.substring(0,2));
 
         $scope.pagamento.detalhePagamento = {formaPagamento : $scope.pagamento.detalhePagamento.formaPagamento};
         $scope.pagamento.status = 'RASCUNHO';
@@ -149,6 +151,7 @@ angular.module('controleFinanceiroApp.controllers')
         $scope.pagamento.dataOperacao = data;
         $scope.pagamento.valor = $scope.itemPagamento.valor;
 
+        console.log($scope.pagamento);
         pagamentoResources.save({idContaCorrente: $scope.contaSelecionada.id}
           ,angular.copy($scope.pagamento),function (success) {
             $scope.pagamento.id = success.item.id;

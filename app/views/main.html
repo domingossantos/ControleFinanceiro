@@ -46,7 +46,8 @@
       </td>
     </tr>
   </table>
-
+    <button ng-click="onPaginarHomologacao('-1')">Anterior</button>
+    <button ng-click="onPaginarHomologacao('+1')">Próximo</button>
 </div>
 
 <!-- Modal Homologar-->
@@ -89,6 +90,7 @@
               <td>{{item.valor | currency}}</td>
             </tr>
           </table>
+
         </div>
       </div>
       <div class="modal-footer">

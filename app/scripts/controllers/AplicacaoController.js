@@ -3,7 +3,7 @@
  * Created by domingossantos on 07/08/16.
  */
 angular.module('controleFinanceiroApp.controllers')
-  .controller('AplicacaoCtrl', ['$rootScope','$scope','$injector', function ($rootScope, $scope, $injector ) {
+  .controller('AplicacaoCtrl', ['$rootScope','$scope','$injector','growl', function ($rootScope, $scope, $injector,growl ) {
     $scope.tipo = 0;
     $scope.labelContaOrigem = 'Conta Origem';
     $scope.labelContaDestino = 'Conta Destino';
@@ -12,6 +12,7 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.dataMovimento = null;
     $scope.contasOrigem = [];
     $scope.contasDestino = [];
+    $scope.aplicacoes = [];
 
     $scope.aplicacao = {
       descricao : null,
@@ -23,10 +24,13 @@ angular.module('controleFinanceiroApp.controllers')
       valor : null
     }
 
+    var aplicacaoResources = $injector.get('AplicacaoResources');
 
     $scope.onSalvar = function () {
-      var aplicacaoResources = $injector.get('AplicacaoResources');
-      var data = $scope.dataMovimento.substring(4,8).concat('-'+$scope.dataMovimento.substring(2,4)).concat('-'+ $scope.dataMovimento.substring(0,2));
+
+        var data = new Date($scope.dataMovimento.substring(4,8),
+                            $scope.dataMovimento.substring(2,4),
+                            $scope.dataMovimento.substring(0,2));
 
       $scope.aplicacao.dataOperacao = data;
       $scope.aplicacao.status = 'PENDENTE_HOMOLOGACAO';
@@ -50,10 +54,11 @@ angular.module('controleFinanceiroApp.controllers')
                                tipo:$scope.aplicacao.tipo},
                               angular.copy($scope.aplicacao)).$promise.then(
         function (success) {
-          console.log(success);
+            growl.success(success.mensagem,{ttl:9000})
+            $location.path('/movimento/aplicacao');
         },
         function (error) {
-          console.log(error);
+            growl.error('Erro ao salvar registro');
         }
       );
     }
@@ -86,5 +91,14 @@ angular.module('controleFinanceiroApp.controllers')
         $scope.labelContaDestino = 'Conta Destino';
       }
     }
+
+    $scope.onPesquisar = function () {
+        aplicacaoResources.query({},function (success) {
+            $scope.aplicacoes = success;
+        })
+    }
+
+    $scope.onPesquisar();
+
 
   }]);

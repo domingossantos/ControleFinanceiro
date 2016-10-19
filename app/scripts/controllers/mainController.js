@@ -21,6 +21,9 @@ angular.module('controleFinanceiroApp.controllers')
 
     $scope.posicaoContas = 0;
 
+    $scope.maxResults = 10;
+    $scope.firstResult = 0;
+
     $scope.detalheMovimento = {};
     $scope.itens = {};
 
@@ -62,7 +65,7 @@ angular.module('controleFinanceiroApp.controllers')
 
     $scope.onMovimentosPendentes = function(){
 
-      $scope.movimentoResources.query({idCliente: 1, status : 'PENDENTE_HOMOLOGACAO', maxResults : 10, firstResult: 0}).$promise.then(
+      $scope.movimentoResources.query({idCliente: 1, status : 'PENDENTE_HOMOLOGACAO', maxResults : $scope.maxResults, firstResult: $scope.firstResult}).$promise.then(
         function (success) {
           $scope.movimentosPendentes = success.itens;
         }
@@ -112,7 +115,19 @@ angular.module('controleFinanceiroApp.controllers')
 
 
     }
+      
+    $scope.onPaginarHomologacao = function (pagina) {
 
+        if(pagina = '+1'){
+            $scope.firstResult += $scope.maxResults;
+        }
+
+        if(pagina = '-1'){
+            $scope.firstResult -= $scope.maxResults;
+        }
+
+        $scope.onMovimentosPendentes();
+    }
 
     $scope.onMovimentosPendentes();
     $scope.onMovimentosHomologados();

@@ -11,33 +11,34 @@
       >
       </select>
       <button ng-click="onPesquisar()" class="btn btn-primary">Pesquisar</button>
-      <a href="#/pagamento" class="btn btn-warning">Registrar Pagamento</a>
+      <a href="#/aplicacao" class="btn btn-warning">Registrar Aplicação</a>
 
     </form>
   </div>
 
 </div>
-<div class="row" ng-show="pagamentos.itens.length > 0">
+<div class="row" ng-show="aplicacoes.itens.length > 0">
   <div class="col-md-12">
     <table class="table table-hover">
       <thead>
       <tr class="info">
-        <th width="35%">Descrição</th>
-        <th width="15%">Data</th>
-        <th width="15%">Valor Esperado</th>
+        <th width="30%">Descrição</th>
+        <th width="10%">Data</th>
+        <th width="15%">Conta Origem</th>
+        <th width="15%">Conta Destino</th>
         <th width="15%">Valor Total</th>
         <th class="text-center">#</th>
       </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="pagamento in pagamentos.itens">
-          <td>{{pagamento.descricao}}</td>
-          <td>{{pagamento.dataOperacao | date:'dd/MM/yyyy'}}</td>
-          <td class="text-right">{{pagamento.valorEsperado | currency}}</td>
-          <td class="text-right">{{pagamento.valor | currency}}</td>
+        <tr ng-repeat="aplicacao in aplicacoes.itens">
+          <td>{{aplicacao.descricao}}</td>
+          <td>{{aplicacao.dataOperacao | date:'dd/MM/yyyy'}}</td>
+          <td class="text-right">{{aplicacao.contaOrigem.apelido}}</td>
+          <td class="text-right">{{aplicacao.contaDestino.apelido}}</td>
+          <td class="text-right">{{aplicacao.valor | currency}}</td>
           <td class="text-center">
-            <a data-toggle="modal" data-target="#modalDetalhe" ng-click="onDetalhePagamento(pagamento)" class="btn btn-sm btn-primary">Detalhe</a>
-            <a  href="#/movimento/pagamento/{{pagamento.id}}" class="btn btn-sm btn-warning" ng-show="pagamento.status != 'HOMOLOGADO'">Editar</a>
+            <a data-toggle="modal" data-target="#modalDetalhe" ng-click="onDetalhePagamento(aplicacao)" class="btn btn-sm btn-primary">Detalhe</a>
           </td>
         </tr>
       </tbody>
