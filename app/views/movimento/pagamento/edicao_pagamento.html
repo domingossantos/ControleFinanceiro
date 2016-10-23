@@ -4,14 +4,20 @@
   <div class="col-md-4">
     <div class="form-group">
       <label for="formaPagamento">Forma Pagamento</label>
-      <span id="formaPagamento" class="form-control">{{pagamento.detalhePagamento.formaPagamento.nome}}</span>
+      <select id="formaPagamento" ng-model="pagamento.detalhePagamento.formaPagamento" >
+          <option ng-repeat="forma in formasPagamento"
+                  ng-selected="pagamento.detalhePagamento.formaPagamento.id == forma.id"
+                  ng-value="forma">{{forma.nome}}</option>
+      </select>
     </div>
 
   </div>
   <div class="col-md-4">
     <div class="form-group">
       <label for="conta" >Conta</label>
-      <span id="conta" class="form-control">{{pagamento.contaCorrente.apelido}}</span>
+      <select id="conta" ng-model="pagamento.contaCorrente">
+          <option ng-repeat=""></option>
+      </select>
     </div>
   </div>
 

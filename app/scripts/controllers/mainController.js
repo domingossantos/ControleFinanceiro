@@ -64,7 +64,7 @@ angular.module('controleFinanceiroApp.controllers')
     }
 
     $scope.onMovimentosPendentes = function(){
-
+        console.log('aqui');
       $scope.movimentoResources.query({idCliente: 1, status : 'PENDENTE_HOMOLOGACAO', maxResults : $scope.maxResults, firstResult: $scope.firstResult}).$promise.then(
         function (success) {
           $scope.movimentosPendentes = success.itens;
@@ -118,11 +118,13 @@ angular.module('controleFinanceiroApp.controllers')
       
     $scope.onPaginarHomologacao = function (pagina) {
 
-        if(pagina = '+1'){
+        console.log(pagina);
+
+        if(pagina == '+1'){
             $scope.firstResult += $scope.maxResults;
         }
 
-        if(pagina = '-1'){
+        if(pagina == '-1'){
             $scope.firstResult -= $scope.maxResults;
         }
 

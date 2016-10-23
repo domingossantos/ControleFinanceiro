@@ -72,6 +72,10 @@
           <div class="col-md-3 text-right">Conta: </div>
           <div class="col-md-9">{{pagamento.contaCorrente.banco.sigla}} - {{pagamento.contaCorrente.apelido}}</div>
         </div>
+          <div class="row">
+              <div class="col-md-3 text-right">Forma de Pagamento: </div>
+              <div class="col-md-9">{{pagamento.detalhePagamento.formaPagamento.nome}}</div>
+          </div>
         <div class="row">
           <div class="col-md-3 text-right">Valor: </div>
           <div class="col-md-9">{{pagamento.valor | currency}}</div>

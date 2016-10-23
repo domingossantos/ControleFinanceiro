@@ -17,7 +17,7 @@
       <th>#</th>
     </tr>
      <tr ng-repeat="movimento in movimentosHomologados">
-      <td>{{movimento.descricao}}</td>
+      <td>{{movimento.tipoMovimento}}</td>
       <td>{{movimento.descricao}}</td>
       <td class="text-right">{{movimento.valor | currency}}</td>
       <td class="text-center">{{movimento.dataOperacao | date:'dd/MM/yyyy'}}</td>
@@ -36,7 +36,7 @@
     </tr>
     <tr ng-repeat="pendente in movimentosPendentes">
       <td>Pagamento</td>
-      <td>{{pendente.descricao}}</td>
+      <td>{{pendente.tipoMovimento}}</td>
       <td class="text-right">{{pendente.valor | currency}}</td>
       <td class="text-center">{{pendente.dataOperacao | date:'dd/MM/yyyy'}}</td>
       <td class="text-center">
@@ -45,9 +45,13 @@
         </a>
       </td>
     </tr>
+
   </table>
-    <button ng-click="onPaginarHomologacao('-1')">Anterior</button>
-    <button ng-click="onPaginarHomologacao('+1')">Próximo</button>
+
+</div>
+<div class="row text-right">
+    <button class="btn btn-sm btn-primary" ng-click="onPaginarHomologacao('-1')">Anterior</button>
+    <button class="btn btn-sm btn-primary" ng-click="onPaginarHomologacao('+1')">Próximo</button>
 </div>
 
 <!-- Modal Homologar-->

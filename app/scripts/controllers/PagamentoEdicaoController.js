@@ -8,6 +8,7 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.planosContas = [];
     $scope.fornecedores = [];
     $scope.obras = [];
+    $scope.formasPagamento = [];
 
 
 

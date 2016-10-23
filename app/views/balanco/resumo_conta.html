@@ -2,16 +2,16 @@
   <form class="form-inline">
     <div class="form-group">
       <label class="sr-only" for="inicio">Data de Início</label>
-      <input id="inicio" name="inicio" class="form-control" ng-model="dataInicio"  ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\.\/]?+$/"
+      <input id="inicio" name="inicio" class="form-control" ng-model="dataInicio"  ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\.\/]?+$/" />
     </div>
     <div class="form-group">
       <label class="sr-only" for="fim">Data de Fim</label>
-      <input id="fim" name="fim" class="form-control" ng-model="dataFim" ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\.\/]?+$/">
+      <input id="fim" name="fim" class="form-control" ng-model="dataFim" ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\.\/]?+$/" />
     </div>
     <button ng-click="gerar()" type="button" class="btn btn-primary">Gerar</button>
   </form>
 </div>
-<br />
+
 <div class="row">
   <table ng-show="balanco" class="table table-condensed table-hover">
     <thead>
@@ -23,8 +23,8 @@
     </thead>
     <tbody>
       <tr ng-repeat="p in balanco.item.planos">
-        <th>{{p.codigo}}</th>
-        <th>{{p.descricao}}</th>
+        <td>{{p.codigo}}</td>
+        <td>{{p.descricao}}</td>
         <td ng-repeat="o in balanco.item.obras"><span ng-show="p.tipoPlanoConta != 'GERAL'">{{balanco.item.valores[$parent.$index][$index] | currency}}</span></td>
       </tr>
     </tbody>
@@ -32,7 +32,7 @@
       <tr>
         <td></td>
         <td></td>
-        <th ng-class="{ 'bg-info' : balanco.item.totais[$index] == 0, 'bg-success' : balanco.item.totais[$index] > 0, 'bg-danger' : balanco.item.totais[$index] < 0 }" ng-repeat="o in balanco.item.obras">{{balanco.item.totais[$index] | currency}}</th>
+        <td ng-class="{ 'bg-info' : balanco.item.totais[$index] == 0, 'bg-success' : balanco.item.totais[$index] > 0, 'bg-danger' : balanco.item.totais[$index] < 0 }" ng-repeat="o in balanco.item.obras">{{balanco.item.totais[$index] | currency}}</td>
       </tr>
     </tfoot>
   </table>
