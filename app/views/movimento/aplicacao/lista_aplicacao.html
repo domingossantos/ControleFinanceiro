@@ -1,9 +1,9 @@
-<h4>Lista de Pagamentos</h4>
+<h4>Lista de Aplicações/Tranferência</h4>
 <div class="row">
   <div class="col-md-8">
     <form class="form-inline">
       <label for="mes">Mês Referência</label>
-      <select id="mes"
+      <select id="mes" ng-change="onPesquisar()"
               ng-selected="mes"
               ng-model="mes"
               ng-options="mes as mes.nome for mes in meses"
@@ -34,11 +34,11 @@
         <tr ng-repeat="aplicacao in aplicacoes.itens">
           <td>{{aplicacao.descricao}}</td>
           <td>{{aplicacao.dataOperacao | date:'dd/MM/yyyy'}}</td>
-          <td class="text-right">{{aplicacao.contaOrigem.apelido}}</td>
-          <td class="text-right">{{aplicacao.contaDestino.apelido}}</td>
+          <td class="text-right">{{aplicacao.origem.apelido}}</td>
+          <td class="text-right">{{aplicacao.destino.apelido}}</td>
           <td class="text-right">{{aplicacao.valor | currency}}</td>
           <td class="text-center">
-            <a data-toggle="modal" data-target="#modalDetalhe" ng-click="onDetalhePagamento(aplicacao)" class="btn btn-sm btn-primary">Detalhe</a>
+            <a data-toggle="modal" data-target="#modalDetalhe" ng-click="onDetalheAplicacao(aplicacao)" class="btn btn-sm btn-primary">Detalhe</a>
           </td>
         </tr>
       </tbody>
@@ -47,9 +47,9 @@
   </div>
 
 </div>
-<div ng-show="pagamentos.itens.length < 1" class="row">
+<div ng-show="aplicacoes.itens.length < 1" class="row">
   <div class="alert alert-info">
-    <h3>Nenhum Pagamento encontrado.</h3>
+    <h3>Nenhuma Aplicação/Transferência encontrada para esta referência de mês.</h3>
   </div>
 </div>
 
@@ -58,44 +58,36 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Detalhe de Pagamento</h4>
+        <h4 class="modal-title" id="myModalLabel">Detalhe de Aplicação</h4>
       </div>
       <div class="modal-body">
         <div class="row">
           <div class="col-md-3 text-right">Descrição: </div>
-          <div class="col-md-9">{{pagamento.descricao}}</div>
+          <div class="col-md-9">{{aplicacao.descricao}}</div>
         </div>
         <div class="row">
           <div class="col-md-3 text-right">Data: </div>
-          <div class="col-md-9">{{pagamento.dataOperacao | date:'dd/MM/yyyy'}}</div>
+          <div class="col-md-9">{{aplicacao.dataOperacao | date:'dd/MM/yyyy'}}</div>
         </div>
         <div class="row">
-          <div class="col-md-3 text-right">Conta: </div>
-          <div class="col-md-9">{{pagamento.contaCorrente.banco.sigla}} - {{pagamento.contaCorrente.apelido}}</div>
+          <div class="col-md-3 text-right">Conta Origem: </div>
+          <div class="col-md-9">{{aplicacao.origem.banco.sigla}} - {{aplicacao.origem.apelido}}</div>
         </div>
+          <div class="row">
+              <div class="col-md-3 text-right">Conta Destino: </div>
+              <div class="col-md-9">{{aplicacao.destino.banco.sigla}} - {{aplicacao.destino.apelido}}</div>
+          </div>
         <div class="row">
           <div class="col-md-3 text-right">Valor: </div>
-          <div class="col-md-9">{{pagamento.valor | currency}}</div>
+          <div class="col-md-9">{{aplicacao.valor | currency}}</div>
         </div>
         <div class="row">
-          <table class="table">
-            <tr class="info">
-              <th>Historico</th>
-              <th>Fornecedor</th>
-              <th>Obra</th>
-              <th>Valor</th>
-            </tr>
-            <tr ng-repeat="item in itensPagamento">
-              <td>{{item.historico}}</td>
-              <td>{{item.fornecedor.nome}}</td>
-              <td>{{item.obra.apelido}}</td>
-              <td>{{item.valor | currency}}</td>
-            </tr>
-          </table>
+
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button ng-show="aplicacao.status == 'PENDENTE_HOMOLOGACAO'" type="button" class="btn btn-primary" data-dismiss="modal" ng-click="onHomologar(aplicacao)">Homologar</button>
       </div>
     </div>
   </div>

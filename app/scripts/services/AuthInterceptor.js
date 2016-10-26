@@ -9,7 +9,7 @@ angular.module('controleFinanceiroApp.services', [])
     $httpProvider.interceptors.push('AuthInterceptor');
   });
 
-function AuthInterceptor ($location, $q) {
+function v ($location, $q) {
   return {
     request: function(config) {
       config.headers = config.headers || {};

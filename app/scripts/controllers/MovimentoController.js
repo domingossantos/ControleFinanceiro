@@ -28,6 +28,7 @@ angular.module('controleFinanceiroApp')
     $scope.historico = '';
     $scope.valor;
     $scope.valorTotal = 0;
+
      $scope.onCarregaFormasPagamento = function () {
       FormaPagamantoResources.query({},function (success) {
         $scope.formasPagamento = success.itens;

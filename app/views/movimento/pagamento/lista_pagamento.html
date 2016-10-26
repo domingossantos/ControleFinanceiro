@@ -3,7 +3,7 @@
   <div class="col-md-8">
     <form class="form-inline">
       <label for="mes">Mês Referência</label>
-      <select id="mes"
+      <select id="mes" ng-change="onPesquisar()"
               ng-selected="mes"
               ng-model="mes"
               ng-options="mes as mes.nome for mes in meses"
@@ -19,7 +19,7 @@
 </div>
 <div class="row" ng-show="pagamentos.itens.length > 0">
   <div class="col-md-12">
-    <table class="table table-hover">
+    <table class="table table-striped table-hover">
       <thead>
       <tr class="info">
         <th width="35%">Descrição</th>
@@ -46,9 +46,13 @@
   </div>
 
 </div>
+<div class="row text-right">
+    <button class="btn btn-sm btn-primary" ng-click="onPaginar('-1')">Anterior</button>
+    <button class="btn btn-sm btn-primary" ng-click="onPaginar('+1')">Próximo</button>
+</div>
 <div ng-show="pagamentos.itens.length < 1" class="row">
   <div class="alert alert-info">
-    <h3>Nenhum Pagamento encontrado.</h3>
+    <h3>Nenhum Pagamento encontrado para esta referência de mês.</h3>
   </div>
 </div>
 
@@ -66,14 +70,14 @@
         </div>
         <div class="row">
           <div class="col-md-3 text-right">Data: </div>
-          <div class="col-md-9">{{pagamento.dataOperacao | date:'dd/MM/yyyy'}}</div>
+          <div class="col-md-9">{{pagamento.dataOperacao | date}}</div>
         </div>
         <div class="row">
           <div class="col-md-3 text-right">Conta: </div>
           <div class="col-md-9">{{pagamento.contaCorrente.banco.sigla}} - {{pagamento.contaCorrente.apelido}}</div>
         </div>
           <div class="row">
-              <div class="col-md-3 text-right">Forma de Pagamento: </div>
+              <div class="col-md-3 text-right">Forma Pagto: </div>
               <div class="col-md-9">{{pagamento.detalhePagamento.formaPagamento.nome}}</div>
           </div>
         <div class="row">
@@ -99,6 +103,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+        <button type="button" ng-show="pagamento.status == 'PENDENTE_HOMOLOGACAO'" ng-click="onHomologar(pagamento)" class="btn btn-primary" data-dismiss="modal">Homologar</button>
       </div>
     </div>
   </div>

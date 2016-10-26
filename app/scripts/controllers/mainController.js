@@ -15,9 +15,9 @@ angular.module('controleFinanceiroApp.controllers')
       $scope.menu = true;
     };
 
-    $scope.movimentosHomologados =[];
-    $scope.movimentosPendentes =[];
-    $scope.movimentosNaoHomologados =[];
+
+    $scope.movimentos =[];
+    $scope.status = 'PENDENTE_HOMOLOGACAO';
 
     $scope.posicaoContas = 0;
 
@@ -63,34 +63,19 @@ angular.module('controleFinanceiroApp.controllers')
 
     }
 
-    $scope.onMovimentosPendentes = function(){
-        console.log('aqui');
-      $scope.movimentoResources.query({idCliente: 1, status : 'PENDENTE_HOMOLOGACAO', maxResults : $scope.maxResults, firstResult: $scope.firstResult}).$promise.then(
+    $scope.onPesquisaMovimentos = function(){
+
+      $scope.movimentoResources.query({idCliente: 1, status : $scope.status, maxResults : $scope.maxResults, firstResult: $scope.firstResult}).$promise.then(
         function (success) {
-          $scope.movimentosPendentes = success.itens;
+          $scope.movimentos = success.itens;
         }
       );
 
     };
 
-    $scope.onMovimentosHomologados = function(){
-
-      $scope.movimentoResources.query({idCliente: 1, status : 'HOMOLOGADO', maxResults : 10, firstResult: 0}).$promise.then(
-        function (success) {
-          $scope.movimentosHomologados = success.itens;
-        }
-      );
-
-    };
-
-    $scope.onMovimentosNaoHomologados = function(){
-
-      $scope.movimentoResources.query({idCliente: 1, status : 'NAO_HOMOLOGADO', maxResults : 10, firstResult: 0}).$promise.then(
-        function (success) {
-          $scope.movimentosNaoHomologados = success.itens;
-        }
-      );
-    };
+    $scope.onPesquisaPorStatus = function(){
+        $scope.onPesquisaMovimentos();
+    }
 
     $scope.onMudarStatus = function(movimento,status){
 
@@ -104,36 +89,29 @@ angular.module('controleFinanceiroApp.controllers')
 
           $('#modalHomologa').modal('hide');
 
-          $scope.onMovimentosPendentes();
-          $scope.onMovimentosHomologados();
-          $scope.onMovimentosNaoHomologados();
+          $scope.onPesquisaMovimentos();
+
           $scope.onAtualizarPosicao();
         }
       );
-
-
-
-
     }
       
-    $scope.onPaginarHomologacao = function (pagina) {
-
-        console.log(pagina);
+    $scope.onPaginar = function (pagina) {
 
         if(pagina == '+1'){
             $scope.firstResult += $scope.maxResults;
         }
 
         if(pagina == '-1'){
-            $scope.firstResult -= $scope.maxResults;
+            if($scope.firstResult > 0){
+                $scope.firstResult -= $scope.maxResults;
+            }
         }
 
-        $scope.onMovimentosPendentes();
+        $scope.onPesquisaMovimentos();
     }
 
-    $scope.onMovimentosPendentes();
-    $scope.onMovimentosHomologados();
-    $scope.onMovimentosNaoHomologados();
+    $scope.onPesquisaMovimentos()
     $scope.onAtualizarPosicao();
 
   }]);

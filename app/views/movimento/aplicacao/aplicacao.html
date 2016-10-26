@@ -59,7 +59,13 @@
       <input id="descricao" name="descricao" ng-model="aplicacao.descricao" class="form-control" size="50">
     </div>
   </div>
+
+    <div class="col-md-4" ng-show="tipo == 3">
+        <label for="valorImposto">Valor de Tributo</label>
+        <input id="valorImposto" ng-model="valorTributoResgate" class="form-control" ui-number-mask="2"/>
+    </div>
 </div>
+
 <div class="row">
   <div class="text-right">
     <button class="btn btn-primary" ng-click="onSalvar()"><i class="glyphicon glyphicon-ok"></i> Salvar</button>

@@ -39,7 +39,11 @@ angular.module('controleFinanceiroApp')
           } else if($scope.tipoConsulta == 'O') {
             $scope.saldoAtual = $scope.obraSelecionada.saldoAtual;
           }
+
+            console.log($scope.movimentos);
         }
+
+
       );
     }
 

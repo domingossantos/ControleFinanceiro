@@ -4,44 +4,39 @@
     <a href="#/aplicacao" class="btn btn-sm btn-primary">Registrar Transferência/Aplicação</a>
       <a href="#/deposito" class="btn btn-sm btn-primary">Registrar Crédito</a>
   </div>
-  <div class="col-md-4">Saldo Consolidado: <span class="valor_positivo">{{posicaoContas | currency}}</span></div>
+
 </div>
 <div class="row">
-  <h4>Últimos movimentos </h4>
-  <table class="table table-condensed">
-    <tr class="info">
-      <th>Tipo</th>
-      <th>Descrição</th>
-      <th>Valor</th>
-      <th class="text-center">Homologação</th>
-      <th>#</th>
-    </tr>
-     <tr ng-repeat="movimento in movimentosHomologados">
-      <td>{{movimento.tipoMovimento}}</td>
-      <td>{{movimento.descricao}}</td>
-      <td class="text-right">{{movimento.valor | currency}}</td>
-      <td class="text-center">{{movimento.dataOperacao | date:'dd/MM/yyyy'}}</td>
-      <td><a href="javascript:" data-toggle="modal" data-target="#modalHomologa" ng-click="onDetalheMovimento(movimento.id, 1)"><i class="glyphicon glyphicon-eye-open"></i></a></td>
-    </tr>
-  </table>
+    <div class="col-md-6"><h4>Movimentos: {{status}}</h4></div>
+    <div class="col-md-6 form-inline text-right">
+        <label for="status">Status</label>
+        <select id="status" class="form-control" ng-model="status" ng-change="onPesquisaPorStatus()">
+            <option value="PENDENTE_HOMOLOGACAO">Pendente</option>
+            <option value="HOMOLOGADO">Homologado</option>
+            <option value="NAO_HOMOLOGADO">Não Homologado</option>
+            <option value="RASCUNHO">Rascunho</option>
+        </select>
+        <button ng-click="onPesquisaPorStatus()" class="btn btn-primary"><i class=" glyphicon glyphicon-search"></i></button>
+    </div>
+</div>
+<div class="row">
 
-  <h4>Movimentos a homologar </h4>
-  <table class="table table-condensed">
+  <table class="table table-striped table-hover">
     <tr class="info">
       <th>Tipo</th>
       <th>Descrição</th>
       <th>Valor</th>
       <th class="text-center">Data</th>
-      <th class="text-center">Homologar</th>
+      <th class="text-center">Detalhar</th>
     </tr>
-    <tr ng-repeat="pendente in movimentosPendentes">
-      <td>Pagamento</td>
-      <td>{{pendente.tipoMovimento}}</td>
-      <td class="text-right">{{pendente.valor | currency}}</td>
-      <td class="text-center">{{pendente.dataOperacao | date:'dd/MM/yyyy'}}</td>
+    <tr ng-repeat="movimento in movimentos">
+      <td>{{movimento.tipoMovimento}}</td>
+      <td>{{movimento.descricao}}</td>
+      <td class="text-right">{{movimento.valor | currency}}</td>
+      <td class="text-center">{{movimento.dataOperacao | date:'dd/MM/yyyy'}}</td>
       <td class="text-center">
-        <a href="javascript:" data-toggle="modal" data-target="#modalHomologa" ng-click="onDetalheMovimento(pendente.id,2)">
-          <i class="glyphicon glyphicon-eye-open"> </i>
+        <a href="javascript:" data-toggle="modal" data-target="#modalHomologa" ng-click="onDetalheMovimento(movimento.id,2)">
+          <i class="glyphicon glyphicon-eye-open"></i>
         </a>
       </td>
     </tr>
@@ -50,8 +45,8 @@
 
 </div>
 <div class="row text-right">
-    <button class="btn btn-sm btn-primary" ng-click="onPaginarHomologacao('-1')">Anterior</button>
-    <button class="btn btn-sm btn-primary" ng-click="onPaginarHomologacao('+1')">Próximo</button>
+    <button class="btn btn-sm btn-primary" ng-click="onPaginar('-1')">Anterior</button>
+    <button class="btn btn-sm btn-primary" ng-click="onPaginar('+1')">Próximo</button>
 </div>
 
 <!-- Modal Homologar-->
@@ -99,27 +94,10 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-        <button type="button" id="btnHomologar" class="btn btn-primary" ng-click="onMudarStatus(detalheMovimento,'HOMOLOGADO')">Homologar</button>
+        <button ng-show="detalheMovimento.status == 'PENDENTE_HOMOLOGACAO'" type="button" id="btnHomologar" class="btn btn-primary" ng-click="onMudarStatus(detalheMovimento,'HOMOLOGADO')">Homologar</button>
       </div>
     </div>
   </div>
 </div>
 
 
-<!-- Modal Detalhe do Movimento-->
-<div class="modal fade" id="modalDetalhe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Detalhe de Movimento</h4>
-      </div>
-      <div class="modal-body">
-        Todas as informações do movimento
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-      </div>
-    </div>
-  </div>
-</div>
