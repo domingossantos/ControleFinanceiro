@@ -1,4 +1,31 @@
 <h4>Lista de Pagamentos</h4>
+<div id="area" ng-hide="true">
+    <h4>Lista de Pagamento referencia: {{mes.nome}}</h4>
+    <div class="col-md-12">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr class="info">
+                <th width="30%">Descrição</th>
+                <th width="10%">Data</th>
+                <th width="15%">Valor Esperado</th>
+                <th width="15%">Valor Total</th>
+                <th width="15%">Diferença Valores</th>
+                <th width="15%" class="text-center">status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="pagamento in pagamentos.itens">
+                <td>{{pagamento.descricao}}</td>
+                <td>{{pagamento.dataOperacao | date:'dd/MM/yyyy'}}</td>
+                <td class="text-right">{{pagamento.valorEsperado | currency}}</td>
+                <td class="text-right">{{pagamento.valor | currency}}</td>
+                <td class="text-right">{{pagamento.valorEsperado - pagamento.valor | currency}}</td>
+                <td class="text-center">{{pagamento.status}}</td>
+            </tr>
+            </tbody>
+        </table>
+</div>
+    </div>
 <div class="row">
   <div class="col-md-8">
     <form class="form-inline">
@@ -11,8 +38,9 @@
       >
       </select>
       <button ng-click="onPesquisar()" class="btn btn-primary">Pesquisar</button>
-      <a href="#/pagamento" class="btn btn-warning">Registrar Pagamento</a>
 
+      <a href="#/pagamento" class="btn btn-warning">Registrar Pagamento</a>
+        <button ng-click="printDiv('area')" class="btn btn-primary">Imprimir</button>
     </form>
   </div>
 
@@ -22,11 +50,12 @@
     <table class="table table-striped table-hover">
       <thead>
       <tr class="info">
-        <th width="35%">Descrição</th>
-        <th width="15%">Data</th>
+        <th width="30%">Descrição</th>
+        <th width="10%">Data</th>
         <th width="15%">Valor Esperado</th>
         <th width="15%">Valor Total</th>
-        <th class="text-center">#</th>
+        <th width="15%">Diferença Valores</th>
+        <th width="15%" class="text-center">#</th>
       </tr>
       </thead>
       <tbody>
@@ -35,6 +64,7 @@
           <td>{{pagamento.dataOperacao | date:'dd/MM/yyyy'}}</td>
           <td class="text-right">{{pagamento.valorEsperado | currency}}</td>
           <td class="text-right">{{pagamento.valor | currency}}</td>
+          <td class="text-right">{{pagamento.valorEsperado - pagamento.valor | currency}}</td>
           <td class="text-center">
             <a data-toggle="modal" data-target="#modalDetalhe" ng-click="onDetalhePagamento(pagamento)" class="btn btn-sm btn-primary">Detalhe</a>
             <a  href="#/movimento/pagamento/{{pagamento.id}}" class="btn btn-sm btn-warning" ng-show="pagamento.status != 'HOMOLOGADO'">Editar</a>

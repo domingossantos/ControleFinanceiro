@@ -6,10 +6,10 @@ angular.module('controleFinanceiroApp')
 
 .controller('LoginCtrl', ['$scope', '$rootScope', '$http', '$location', '$injector', 'MessageSrv', function ($scope, $rootScope, $http, $location, $injector, MessageSrv) {
 
-  /*$scope.usuario = {
+  $scope.usuario = {
     email: 'domsantos@gmail.com',
     senha:'passwd'
-  }*/
+  }
 
   $scope.login = function() {
     var loginResources = $injector.get('LoginResources');

@@ -1,6 +1,6 @@
 <!doctype html>
 <html class="no-js">
-  <head>
+<head>
     <meta charset="utf-8">
     <title></title>
     <meta name="description" content="">
@@ -15,168 +15,172 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-      <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
-
-      <link rel="stylesheet" href="bower_components/angular-growl-v2/build/angular-growl.min.css">
-      <!-- endbuild -->
-
-  </head>
-  <body ng-app="controleFinanceiroApp">
-    <!--[if lt IE 7]>
-      <p class="browsehappy">Você está usando um navedador  <strong>desatualizado</strong>. Por favor <a href="http://browsehappy.com/">atualize seu navegador</a> para melhorar sua esperiência.</p>
-    <![endif]-->
-
-    <div growl></div>
-    <!-- Add your site or application content here -->
-    <div ng-show="usuario" class="header">
-
-      <div class="navbar navbar-inverse" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
-
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-
-            <a class="navbar-brand" href="#/">B&M Construtora - Controle Financeiro</a>
-          </div>
-
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
-            <ul class="nav navbar-nav">
-              <li><a href="#/main">Inicio</a></li>
-              <li class="dropdown">
-                <a href="javasccript:" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movimentos <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#/movimento/pagamento">Pagamentos</a></li>
-                  <li><a href="#/movimento/aplicacao">Aplicações e Transferências</a></li>
-                  <li><a href="#">Depositos</a></li>
-
-                </ul>
-              </li>
-              <li><a ng-href="#/extrato">Extrato</a></li>
-              <li><a ng-href="#/balanco">Balanço </a></li>
-              <li><a ng-href="#/conta">Contas</a></li>
-              <li><a ng-href="#/obra">Obras </a></li>
-              <li><a ng-href="#/fornecedor">Fornecedor </a></li>
-              <li><a ng-href="#/plano">Plano de Contas </a></li>
-              <li class="dropdown">
-                <a href="javasccript:" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Segurança <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a ng-href="#/alterar-senha">Alterar Senha </a></li>
-                  <li><a href="#/perfil">Perfil</a></li>
-                  <li><a href="#/usuario">Usuário</a></li>
-
-                </ul>
-              </li>
-              <li><a ng-href="#" ng-click="sair()">Sair </a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-
-      <div ng-view=""></div>
-
-    </div>
-
-    <div class="footer">
-      <div class="container">
-        <p>v1.0.1 </p>
-      </div>
-    </div>
-
-
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <!--<script>
-       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
-       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
-       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
-       }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-       ga('create', 'UA-XXXXX-X');
-       ga('send', 'pageview');
-    </script>-->
-
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-input-masks/angular-input-masks-standalone.js"></script>
-    <script src="bower_components/angular-growl-notifications/dist/angular-growl-notifications.js"></script>
-    <script src="bower_components/angular-ui-mask/dist/mask.js"></script>
-    <script src="bower_components/angular-aria/angular-aria.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.js"></script>
-    <script src="bower_components/angular-material/angular-material.js"></script>
-    <script src="bower_components/angular-growl-v2/build/angular-growl.js"></script>
-    <script src="bower_components/angular-http-auth/src/http-auth-interceptor.js"></script>
-    <!-- endbower -->
-    <!-- endbower -->
+    <!--<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="bower_components/angular-growl-v2/build/angular-growl.min.css">
     <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/i18n/angular-locale_pt-br.js"></script>
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/mainController.js"></script>
-        <script src="scripts/controllers/MovimentoController.js"></script>
-        <script src="scripts/controllers/ContaCorrenteController.js"></script>
-        <script src="scripts/controllers/PlanoContaController.js"></script>
-        <script src="scripts/controllers/ObraController.js"></script>
-        <script src="scripts/controllers/FornecedorController.js"></script>
-        <script src="scripts/controllers/LoginController.js"></script>
-        <script src="scripts/controllers/PagamentoController.js"></script>
-        <script src="scripts/controllers/PagamentoListaController.js"></script>
-        <script src="scripts/controllers/PagamentoEdicaoController.js"></script>
-        <script src="scripts/controllers/DepositoController.js"></script>
-        <script src="scripts/controllers/AplicacaoController.js"></script>
-        <script src="scripts/controllers/ExtratoController.js"></script>
-        <script src="scripts/controllers/BalancoController.js"></script>
-        <script src="scripts/controllers/AlterarSenhaController.js"></script>
-        <script src="scripts/controllers/UsuarioController.js"></script>
-        <script src="scripts/controllers/PerfilController.js"></script>
-        <!-- Resources -->
-        <script src="scripts/resources/PlanoContaResources.js"></script>
-        <script src="scripts/resources/PlanoContaClienteResources.js"></script>
-        <script src="scripts/resources/ContaCorrenteResources.js"></script>
-        <script src="scripts/resources/PagamentoClienteResources.js"></script>
-        <script src="scripts/resources/PagamentoResources.js"></script>
-        <script src="scripts/resources/PagamentoListaResources.js"></script>
-        <script src="scripts/resources/ItemPagamentoResources.js"></script>
-        <script src="scripts/resources/FormaPagamentoResources.js"></script>
-        <script src="scripts/resources/BancoResources.js"></script>
-        <script src="scripts/resources/ObraResources.js"></script>
-        <script src="scripts/resources/ContaCorrenteResources.js"></script>
-        <script src="scripts/resources/SubContaResources.js"></script>
-        <script src="scripts/resources/FornecedorResources.js"></script>
-        <script src="scripts/resources/ClienteResources.js"></script>
-        <script src="scripts/resources/LoginResources.js"></script>
-        <script src="scripts/resources/DepositoResources.js"></script>
-        <script src="scripts/resources/MovimentoResources.js"></script>
-        <script src="scripts/resources/HomologarResources.js"></script>
-        <script src="scripts/resources/AplicacaoResources.js"></script>
-        <script src="scripts/resources/PosicaoContaCorrenteResources.js"></script>
-        <script src="scripts/resources/ExtratoResources.js"></script>
-        <script src="scripts/resources/BalancoResources.js"></script>
-        <script src="scripts/resources/AlterarSenhaResources.js"></script>
-        <script src="scripts/resources/UsuarioResources.js"></script>
-        <script src="scripts/resources/PerfilResources.js"></script>
-        <script src="scripts/resources/OperacaoResources.js"></script>
-        <!-- endbuild -->
+</head>
+<body ng-app="controleFinanceiroApp">
+<!--[if lt IE 7]>
+<p class="browsehappy">Você está usando um navedador  <strong>desatualizado</strong>. Por favor <a href="http://browsehappy.com/">atualize seu navegador</a> para melhorar sua esperiência.</p>
+<![endif]-->
+
+<div growl></div>
+<!-- Add your site or application content here -->
+<div ng-show="usuario" class="header">
+
+    <div class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="#/">B&M Construtora - Controle Financeiro</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="js-navbar-collapse">
+
+                <ul class="nav navbar-nav">
+                    <li><a href="#/main">Inicio</a></li>
+                    <li class="dropdown">
+                        <a href="javasccript:" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Movimentos <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/movimento/pagamento">Pagamentos</a></li>
+                            <li><a href="#/movimento/aplicacao">Aplicações e Transferências</a></li>
+                            <li><a href="#">Depositos</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a ng-href="#/extrato">Extrato</a></li>
+                    <li><a ng-href="#/balanco">Balanço </a></li>
+                    <li><a ng-href="#/conta">Contas</a></li>
+                    <li><a ng-href="#/obra">Obras </a></li>
+                    <li><a ng-href="#/fornecedor">Fornecedor </a></li>
+                    <li><a ng-href="#/plano">Plano de Contas </a></li>
+                    <li class="dropdown">
+                        <a href="javasccript:" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Segurança <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a ng-href="#/alterar-senha">Alterar Senha </a></li>
+                            <li><a href="#/perfil">Perfil</a></li>
+                            <li><a href="#/usuario">Usuário</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a ng-href="#" ng-click="sair()">Sair </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <div ng-view=""></div>
+
+</div>
+
+<div class="footer">
+    <div class="container">
+        <p>v1.0.1 </p>
+    </div>
+</div>
+
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+<!--<script>
+  !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+  (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+  r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+  }(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-XXXXX-X');
+  ga('send', 'pageview');
+</script>-->
+
+<!-- build:js(.) scripts/vendor.js -->
+<!-- bower:js -->
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular-animate/angular-animate.js"></script>
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-input-masks/angular-input-masks-standalone.js"></script>
+<script src="bower_components/angular-growl-notifications/dist/angular-growl-notifications.js"></script>
+<script src="bower_components/angular-ui-mask/dist/mask.js"></script>
+<script src="bower_components/angular-aria/angular-aria.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
+<script src="bower_components/angular-material/angular-material.js"></script>
+<script src="bower_components/angular-growl-v2/build/angular-growl.js"></script>
+<script src="bower_components/angular-http-auth/src/http-auth-interceptor.js"></script>
+<script src="bower_components/angular-touch/angular-touch.js"></script>
+
+
+<!-- endbower -->
+<!-- endbower -->
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/i18n/angular-locale_pt-br.js"></script>
+<script src="scripts/app.js"></script>
+<script src="scripts/controllers/mainController.js"></script>
+<script src="scripts/controllers/MovimentoController.js"></script>
+<script src="scripts/controllers/ContaCorrenteController.js"></script>
+<script src="scripts/controllers/PlanoContaController.js"></script>
+<script src="scripts/controllers/ObraController.js"></script>
+<script src="scripts/controllers/FornecedorController.js"></script>
+<script src="scripts/controllers/LoginController.js"></script>
+<script src="scripts/controllers/PagamentoController.js"></script>
+<script src="scripts/controllers/PagamentoListaController.js"></script>
+<script src="scripts/controllers/PagamentoEdicaoController.js"></script>
+<script src="scripts/controllers/DepositoController.js"></script>
+<script src="scripts/controllers/AplicacaoController.js"></script>
+<script src="scripts/controllers/ExtratoController.js"></script>
+<script src="scripts/controllers/BalancoController.js"></script>
+<script src="scripts/controllers/AlterarSenhaController.js"></script>
+<script src="scripts/controllers/UsuarioController.js"></script>
+<script src="scripts/controllers/PerfilController.js"></script>
+<!-- Resources -->
+<script src="scripts/resources/PlanoContaResources.js"></script>
+<script src="scripts/resources/PlanoContaClienteResources.js"></script>
+<script src="scripts/resources/ContaCorrenteResources.js"></script>
+<script src="scripts/resources/PagamentoClienteResources.js"></script>
+<script src="scripts/resources/PagamentoResources.js"></script>
+<script src="scripts/resources/PagamentoListaResources.js"></script>
+<script src="scripts/resources/ItemPagamentoResources.js"></script>
+<script src="scripts/resources/FormaPagamentoResources.js"></script>
+<script src="scripts/resources/BancoResources.js"></script>
+<script src="scripts/resources/ObraResources.js"></script>
+<script src="scripts/resources/ContaCorrenteResources.js"></script>
+<script src="scripts/resources/SubContaResources.js"></script>
+<script src="scripts/resources/FornecedorResources.js"></script>
+<script src="scripts/resources/ClienteResources.js"></script>
+<script src="scripts/resources/LoginResources.js"></script>
+<script src="scripts/resources/DepositoResources.js"></script>
+<script src="scripts/resources/MovimentoResources.js"></script>
+<script src="scripts/resources/HomologarResources.js"></script>
+<script src="scripts/resources/AplicacaoResources.js"></script>
+<script src="scripts/resources/PosicaoContaCorrenteResources.js"></script>
+<script src="scripts/resources/ExtratoResources.js"></script>
+<script src="scripts/resources/BalancoResources.js"></script>
+<script src="scripts/resources/AlterarSenhaResources.js"></script>
+<script src="scripts/resources/UsuarioResources.js"></script>
+<script src="scripts/resources/PerfilResources.js"></script>
+<script src="scripts/resources/OperacaoResources.js"></script>
+<script src="scripts/services/MessageSrv.js"></script>
+
+<!-- endbuild -->
+<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.2.0.js"></script>
 
 
 
-        <script src="scripts/services/MessageSrv.js"></script>
 
 
 </body>

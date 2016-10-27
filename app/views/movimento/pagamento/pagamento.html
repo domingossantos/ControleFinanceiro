@@ -28,21 +28,35 @@
             <div class="form-group" ng-class="{ 'has-error': formPagamento.dataMovimento.$invalid }">
 
                 <label for="dataMovimento">Data</label>
-                <input tabindex="3" ng-model="pagamento.dataOperacao" id="dataMovimento" name="dataMovimento" required class="form-control" ui-mask="99/99/9999" ng-value="pagamento.dataOperacao | date : 'dd/MM/yyyy'" >
+                <!--<input tabindex="3" ng-model="pagamento.dataOperacao" id="dataMovimento" name="dataMovimento" required class="form-control" ui-mask="99/99/9999" ng-value="pagamento.dataOperacao | date : 'dd/MM/yyyy'" >-->
+                <div class="input-group">
+                    <input type="text" id="dataMovimento" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="pagamento.dataOperacao" is-open="popupData.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="openPopupData()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="form-group">
                 <label for="valorEsperado">Valor Esperado: </label>
                 <input type="text" class="form-control "  id="valorEsperado" ui-number-mask="2" placeholder="Total Esperado" ng-model="pagamento.valorEsperado" >
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="form-group">
                 <label for="valorTotal">Valor Total: </label>
                 <input type="text" class="form-control " disabled="true" id="valorTotal" ui-number-mask="2" placeholder="Total" ng-model="pagamento.valor" ng-value="pagamento.valor | currency">
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="valorTotal">Diferença: </label>
+                <span class="form-control "  id="valorTotal">{{diferencaValor | currency}}</span>
             </div>
         </div>
         <div class="col-md-6">

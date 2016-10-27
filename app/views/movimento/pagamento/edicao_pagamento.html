@@ -18,7 +18,7 @@
                 <select id="contaCorrente" ng-model="pagamento.contaCorrente" class="form-control">
                     <option ng-repeat="conta in contasCorrentes"
                             ng-selected="pagamento.contaCorrente.id == conta.id"
-                            ng-value="conta">{{conta.apelido}} - {{conta.id}}</option>
+                            ng-value="conta">{{conta.apelido}}</option>
                 </select>
             </div>
         </div>
@@ -26,21 +26,33 @@
         <div class="col-md-4">
             <div class="form-group" >
                 <label for="dataMovimento">Data</label>
-                <input tabindex="3" ng-model="pagamento.dataOperacao | date:'dd/MM/yyyy'" id="dataMovimento" name="dataMovimento" required class="form-control" type="text" ui-mask="99/99/9999" ng-pattern="/^[0-9]{1,7}[-\.\/]?+$/">
+
+                <div class="input-group">
+                    <input type="text" id="dataMovimento" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="pagamento.dataOperacao" is-open="popupData.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="openPopupData()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="form-group">
                 <label for="valorEsperado">Valor Esperado: </label>
                 <input type="text" class="form-control "  id="valorEsperado" ui-number-mask="2" placeholder="Total Esperado" ng-model="pagamento.valorEsperado" >
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="form-group">
                 <label for="valorTotal">Valor Total: </label>
                 <span class="form-control "  id="valorTotal">{{pagamento.valor | currency}}</span>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="valorTotal">Diferença: </label>
+                <span class="form-control "  id="valorTotal">{{diferencaValor | currency}}</span>
             </div>
         </div>
         <div class="col-md-6">
@@ -71,16 +83,20 @@
                 <div class="col-md-12">
                     <label for="despesa">Plano de Contas</label>
                 </div>
-                <div class="col-md-4">
-                    <input class="form-control" ng-model="planoDigitado" size="5" >
-                </div>
-                <div class="col-md-8">
-                    <select id="despesa" class="form-control" name="despesa" required
-                            ng-model="itemPagamento.planoConta"
-                            ng-options="plano.planoConta as plano.descricao group by plano.grupo for plano in planosContas | filter : planoDigitado">
-                        <option value="">Selecione</option>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <input class="form-control" ng-model="planoDigitado" size="5" >
+                        </div>
+                        <div class="col-md-8">
+                            <select id="despesa" class="form-control col-md-9" name="despesa" required
+                                    ng-model="itemPagamento.planoConta"
+                                    ng-options="plano.planoConta as plano.descricao group by plano.grupo for plano in planosContas | filter : planoDigitado">
+                                <option value="">Selecione</option>
 
-                    </select>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -98,7 +114,6 @@
                             ng-model="itemPagamento.fornecedor"
                             ng-options="fornecedor.fornecedor as fornecedor.descricao for fornecedor in fornecedores | filter : fornecedorDigitado">
                         <option value="">Selecione</option>
-
                     </select>
                 </div>
 

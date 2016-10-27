@@ -42,6 +42,24 @@ angular.module('controleFinanceiroApp.controllers')
         $scope.planoContaSelecionado = null;
         $scope.fornecedorSelecionado = null;
 
+        $scope.dateOptions = {
+            formatYear: 'yyyy',
+            maxDate: new Date(2020, 5, 22),
+            minDate: new Date(2000,1,1),
+            startingDay: 1,
+
+        };
+
+        $scope.popupData = {
+            opened: false
+        };
+
+        $scope.openPopupData = function() {
+            $scope.popupData.opened = true;
+        };
+
+        $scope.altInputFormats = ['dd/MM/yyyy'];
+
         $scope.limparItem = function(){
             $scope.itemPagamento = {
                 historico: null,
@@ -125,18 +143,8 @@ angular.module('controleFinanceiroApp.controllers')
         $scope.onSalvar = function(){
 
             if($scope.pagamento.valor == $scope.pagamento.valorEsperado){
-                $scope.pagamento.status = 'PENDENTE_HOMOLOGACAO'
-                pagamentoResources.update({idPagamento: $scope.pagamento.id, status: 'PENDENTE_HOMOLOGACAO'}
-                    ,angular.copy($scope.pagamento)).$promise.then(
-                    function (success) {
-                        MessageSrv.info('Pagamento Atualizado');
-                        $location.path('/main');
-                    },
-                    function (error) {
-                        console.log(error);
-                    }
-                );
-
+                $scope.atualizarPagamento('PENDENTE_HOMOLOGACAO');
+                $location.path('/main');
             } else {
                 MessageSrv.warning('Valor Total é diferente do Valor Esperado!');
             }
@@ -145,16 +153,12 @@ angular.module('controleFinanceiroApp.controllers')
         $scope.registraPagamento = function() {
             if($scope.pagamento.id == null){
 
-                var mes = parseInt($scope.pagamento.dataOperacao.substring(2,4)) - 1;
 
-                var data = new Date($scope.pagamento.dataOperacao.substring(4,8), mes,
-                    $scope.pagamento.dataOperacao.substring(0,2));
 
 
                 $scope.pagamento.detalhePagamento = {formaPagamento : $scope.pagamento.detalhePagamento.formaPagamento};
                 $scope.pagamento.status = 'RASCUNHO';
                 $scope.pagamento.contaCorrente = $scope.contaSelecionada;
-                $scope.pagamento.dataOperacao = data;
                 $scope.pagamento.valor = $scope.itemPagamento.valor;
 
 
@@ -185,6 +189,7 @@ angular.module('controleFinanceiroApp.controllers')
                         );
 
                     });
+
 
             }
         };
@@ -218,13 +223,8 @@ angular.module('controleFinanceiroApp.controllers')
 
                             $scope.pagamento.valor += $scope.itemPagamento.valor;
 
-                            pagamentoResources.update({idPagamento:$scope.pagamento.id,status:$scope.pagamento.status}
-                                ,angular.copy($scope.pagamento)).$promise.then(
-                                function (result) {
-                                    console.log(result);
-                                }
-                            )
-
+                            $scope.atualizarPagamento('RASCUNHO');
+                            $scope.calculaDiferenca();
                             $scope.onCarregaItens();
                             $scope.limparItem();
                             if($scope.itensPagamento.length > 0 ){
@@ -249,6 +249,8 @@ angular.module('controleFinanceiroApp.controllers')
             itemPagamentoResources.delete({idItemPagamento:item.id}).$promise.then(
                 function (success) {
                     $scope.pagamento.valor -= item.valor;
+                    $scope.calculaDiferenca();
+                    $scope.atualizar('RASCUNHO');
                     $scope.onCarregaItens();
                 }
             );
@@ -259,6 +261,18 @@ angular.module('controleFinanceiroApp.controllers')
 
         }
 
+        $scope.atualizarPagamento = function(status){
+
+            pagamentoResources.update({idPagamento: $scope.pagamento.id, status: status}
+                ,angular.copy($scope.pagamento)).$promise.then(
+                function (success) {
+                    MessageSrv.info('Pagamento atualizado');
+                },
+                function (error) {
+                    console.log(error);
+                }
+            );
+        }
 
 
         var contaCorrenteResources = $injector.get('ContaCorrenteResources');
@@ -327,7 +341,9 @@ angular.module('controleFinanceiroApp.controllers')
             }
         );
 
-
+        $scope.calculaDiferenca = function () {
+            $scope.diferencaValor = $scope.pagamento.valorEsperado - $scope.pagamento.valor;
+        }
 
 
     }]);

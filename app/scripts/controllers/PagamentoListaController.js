@@ -122,4 +122,16 @@ angular.module('controleFinanceiroApp.controllers')
             $scope.onPesquisar();
         }
 
+
+
+        $scope.printDiv = function(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var popupWin = window.open('', '_blank', 'width=300,height=300');
+            popupWin.document.open();
+            popupWin.document.write('<html><head><link rel="stylesheet" type="text/css" href="style.css" /><link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"></head><body onload="window.print()">' + printContents + '</body></html>');
+            popupWin.document.close();
+        }
+
+
+
     }]);

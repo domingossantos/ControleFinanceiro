@@ -11,8 +11,30 @@ angular.module('controleFinanceiroApp.controllers')
         $scope.formasPagamento = [];
         $scope.contasCorrentes = [];
         $scope.gruposPlano = [];
+        $scope.diferencaValor = 0;
 
 
+
+
+
+        // Variaveis DataPickerOption
+        $scope.dateOptions = {
+            formatYear: 'yyyy',
+            maxDate: new Date(2020, 5, 22),
+            minDate: new Date(2000,1,1),
+            startingDay: 1,
+
+        };
+
+        $scope.popupData = {
+            opened: false
+        };
+
+        $scope.openPopupData = function() {
+            $scope.popupData.opened = true;
+        };
+
+        $scope.altInputFormats = ['dd/MM/yyyy'];
 
         $scope.itemPagamento = {
             historico: null,
@@ -39,20 +61,24 @@ angular.module('controleFinanceiroApp.controllers')
         });
 
         var contaCorrenteResources = $injector.get('ContaCorrenteResources');
+        contaCorrenteResources.query({}).$promise.then(
+            function (success) {
+                $scope.contasCorrentes = success.itens;
 
-        contaCorrenteResources.query({},function (success) {
-            $scope.contasCorrentes = success.itens;
-        });
+            }
+        );
 
 
         var pagamentoResources = $injector.get('PagamentoResources');
 
         $scope.onCarregaPagamento = function(idPagamento){
-            pagamentoResources.get({idPagamento:idPagamento},function (success) {
-                $scope.pagamento = success.item;
-                console.log($scope.pagamento);
-                $scope.onCarregaItens();
-            })
+            pagamentoResources.get({idPagamento:idPagamento}).$promise.then(
+                function (success) {
+                    $scope.pagamento = success.item;
+                    $scope.calculaDiferenca();
+                    $scope.onCarregaItens();
+                }
+            )
         }
 
         if($routeParams.idPagamento != null) {
@@ -77,29 +103,31 @@ angular.module('controleFinanceiroApp.controllers')
             $scope.gruposPlano = success.itens;
         });
 
-        planoContaResources.query({tipo:'DESPESA'},function (success) {
-            for(var i = 0; i < success.itens.length; i++){
-                var itemPlano = {
-                    planoConta : {},
-                    descricao : null,
-                    grupo:null
-                }
-
-                itemPlano.planoConta = success.itens[i];
-                itemPlano.descricao = success.itens[i].codigo + ' - '+ success.itens[i].descricao;
-
-                for(var x = 0; x < $scope.gruposPlano.length; x++ ){
-                    var parte = success.itens[i].codigo.substring(0, 3);
-                    if($scope.gruposPlano[x].codigo == parte){
-                        itemPlano.grupo = $scope.gruposPlano[x].descricao;
+        planoContaResources.query({tipo:'DESPESA'}).$promise.then(
+            function (success) {
+                for(var i = 0; i < success.itens.length; i++){
+                    var itemPlano = {
+                        planoConta : {},
+                        descricao : null,
+                        grupo:null
                     }
+
+                    itemPlano.planoConta = success.itens[i];
+                    itemPlano.descricao = success.itens[i].codigo + ' - '+ success.itens[i].descricao;
+
+                    for(var x = 0; x < $scope.gruposPlano.length; x++ ){
+                        var parte = success.itens[i].codigo.substring(0, 3);
+                        if($scope.gruposPlano[x].codigo == parte){
+                            itemPlano.grupo = $scope.gruposPlano[x].descricao;
+                        }
+                    }
+
+                    $scope.planosContas[i] = itemPlano;
                 }
 
-                $scope.planosContas[i] = itemPlano;
+
             }
-
-
-        });
+        );
 
         var fornecedorResources = $injector.get('FornecedorResources');
         fornecedorResources.query({}, function (success) {
@@ -130,6 +158,7 @@ angular.module('controleFinanceiroApp.controllers')
                     $scope.onCarregaItens();
                     $scope.atualizarPagamento('RASCUNHO');
                     $scope.limparCampos();
+                    $scope.calculaDiferenca();
                 },
                 function (error) {
                     console.log(error);
@@ -142,8 +171,9 @@ angular.module('controleFinanceiroApp.controllers')
             itemPagamentoResources.delete({idItemPagamento:item.id}).$promise.then(
                 function (success) {
                     $scope.pagamento.valor -= item.valor;
-
+                    $scope.atualizarPagamento('RASCUNHO');
                     $scope.onCarregaItens();
+                    $scope.calculaDiferenca();
                 }
             );
 
@@ -168,8 +198,18 @@ angular.module('controleFinanceiroApp.controllers')
         }
 
         $scope.onSalvar = function () {
-            $scope.atualizarPagamento('PENDENTE_HOMOLOGACAO');
-            $location.path('/movimento/pagamento');
+            if($scope.pagamento.valor == $scope.pagamento.valorEsperado){
+                $scope.atualizarPagamento('PENDENTE_HOMOLOGACAO');
+                $location.path('/movimento/pagamento');
+            } else {
+                MessageSrv.warning('Valor Total e diferente de Valor Esperado!');
+            }
+
+
+        }
+
+        $scope.calculaDiferenca = function () {
+            $scope.diferencaValor = $scope.pagamento.valorEsperado - $scope.pagamento.valor;
         }
 
 
