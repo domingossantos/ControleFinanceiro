@@ -127,16 +127,13 @@ angular.module('controleFinanceiroApp.controllers')
         console.log(planoConta);
 
       console.log($scope.aplicacao);
-        /*
+
       aplicacaoResources.save({idContaCorrenteOrigem:$scope.contaOrigemSelecionada.id,
                                idContaCorrenteDestino:$scope.contaDestinoSelecionada.id,
                                tipo:$scope.aplicacao.tipo},
                               angular.copy($scope.aplicacao)).$promise.then(
         function (success) {
             if($scope.tipo == 3){
-
-
-
                 var pagamento = {};
                 pagamento.descricao = $scope.aplicacao.descricao;
                 pagamento.detalhePagamento = {formaPagamento : formaPagamento};
@@ -183,7 +180,7 @@ angular.module('controleFinanceiroApp.controllers')
             MessageSrv.error('Erro ao salvar registro');
         }
       );
-        */
+
 
     }
 

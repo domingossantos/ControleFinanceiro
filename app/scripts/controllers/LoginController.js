@@ -12,6 +12,7 @@ angular.module('controleFinanceiroApp')
   }
 
   $scope.login = function() {
+
     var loginResources = $injector.get('LoginResources');
 
     loginResources.save($scope.usuario, function(success) {

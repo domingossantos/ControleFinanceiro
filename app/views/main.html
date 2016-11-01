@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-8">
-    <a href="#/pagamento" class="btn btn-sm btn-warning">Registrar Pagamento</a>
-    <a href="#/aplicacao" class="btn btn-sm btn-primary">Registrar Transferência/Aplicação</a>
-      <a href="#/deposito" class="btn btn-sm btn-primary">Registrar Crédito</a>
+    <a href="#/pagamento" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-plus"></i> Novo Pagamento</a>
+    <a href="#/aplicacao" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-plus"></i> Nova Transferência/Aplicação</a>
+      <a href="#/deposito" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-plus"></i> Novo Depósito</a>
   </div>
 
 </div>
@@ -36,7 +36,7 @@
       <td class="text-center">{{movimento.dataOperacao | date:'dd/MM/yyyy'}}</td>
       <td class="text-center">
         <a href="javascript:" data-toggle="modal" data-target="#modalHomologa" ng-click="onDetalheMovimento(movimento.id,2)">
-          <i class="glyphicon glyphicon-eye-open"></i>
+          <i class="glyphicon glyphicon-new-window"></i>
         </a>
       </td>
     </tr>
@@ -44,9 +44,15 @@
   </table>
 
 </div>
-<div class="row text-right">
-    <button class="btn btn-sm btn-primary" ng-click="onPaginar('-1')">Anterior</button>
-    <button class="btn btn-sm btn-primary" ng-click="onPaginar('+1')">Próximo</button>
+<div class="row">
+    <div class="col-md-6">
+        <button class="btn btn-sm btn-primary" ng-click="onIncrementaResultado()"><i class="glyphicon glyphicon-plus"></i> Registros</button>
+    </div>
+    <div class="col-md-6 text-right">
+        <button class="btn btn-sm btn-primary" ng-click="onPaginar('-1')"><i class="glyphicon glyphicon-chevron-left"></i> Anterior</button>
+        <button class="btn btn-sm btn-primary" ng-click="onPaginar('+1')">Próximo <i class="glyphicon glyphicon-chevron-right"></i></button>
+    </div>
+
 </div>
 
 <!-- Modal Homologar-->
