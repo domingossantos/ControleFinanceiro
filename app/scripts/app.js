@@ -103,7 +103,7 @@ app.run(['$rootScope', '$location', 'MessageSrv', function ($rootScope, $locatio
     $rootScope.$on('$routeChangeStart', function (angularEvent, next, current) {
         var requireLogin = typeof $rootScope.usuario === 'undefined' || $rootScope.usuario == null;
         if (requireLogin) {
-            //MessageSrv.warning('Acesso não autorizado<br>Favor entre com seu e-mail e senha!');
+            MessageSrv.warning('Acesso não autorizado<br>Favor entre com seu e-mail e senha!');
             $location.path('/');
         }
     });
@@ -131,6 +131,7 @@ app.config(['$httpProvider', function ($httpProvider) {
     }];
     $httpProvider.interceptors.push(myHttpInterceptor);
 }]);
+
 
 
 

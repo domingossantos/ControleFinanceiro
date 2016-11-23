@@ -11,9 +11,33 @@ angular.module('controleFinanceiroApp')
     $scope.contaSelecionada = null;
     $scope.parametros = { inicio : null, fim : null, idObra : null, idContaCorrente : null };
 
+    $scope.dateOptions = {
+      formatYear: 'yyyy',
+      maxDate: new Date(2020, 5, 22),
+      minDate: new Date(2000,1,1),
+      startingDay: 1,
+
+    };
+
+    $scope.popupDataInicio = {
+      opened: false
+    };
+
+    $scope.openPopupDataInicio = function() {
+      $scope.popupDataInicio.opened = true;
+    };
+
+    $scope.popupDataFim = {
+      opened: false
+    };
+
+    $scope.openPopupDataFim = function() {
+      $scope.popupDataFim.opened = true;
+    };
+
     var movimentoResources = $injector.get('ExtratoResources');
 
-    $scope.onPesquisar = function( dataInicio, dataFim){
+    $scope.onPesquisar = function( dataInicio, dataFim) {
       $scope.parametros.inicio = dataInicio;
       $scope.parametros.fim = dataFim;
 
@@ -30,6 +54,8 @@ angular.module('controleFinanceiroApp')
         $scope.parametros.idContaCorrente = null;
       }
 
+      console.log($scope.parametros);
+
       movimentoResources.query($scope.parametros).$promise.then(
         function (success) {
           $scope.movimentos = success.itens;
@@ -39,11 +65,7 @@ angular.module('controleFinanceiroApp')
           } else if($scope.tipoConsulta == 'O') {
             $scope.saldoAtual = $scope.obraSelecionada.saldoAtual;
           }
-
-            console.log($scope.movimentos);
         }
-
-
       );
     }
 
