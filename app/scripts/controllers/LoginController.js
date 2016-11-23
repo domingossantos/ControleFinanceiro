@@ -8,7 +8,7 @@ angular.module('controleFinanceiroApp')
 
   $scope.usuario = {
     email: null,
-    senha:null
+    senha: null
   }
 
   $scope.login = function() {

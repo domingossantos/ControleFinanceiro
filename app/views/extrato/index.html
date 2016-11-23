@@ -36,12 +36,14 @@
     <tr class="info">
       <th>Data</th>
       <th>Descrição</th>
-      <th>Valor</th>
+      <th>Crédito</th>
+      <th>Débito</th>
     </tr>
     <tr ng-repeat="movimento in movimentos">
       <td style="width: 15%;">{{movimento.dataOperacao | date:'dd/MM/yyyy'}}</td>
       <td>{{movimento.descricao}}</td>
-      <td ng-class="{'text-danger' : !movimento.credito}" style="width: 15%;" class="text-right"><span ng-show="!movimento.credito">-&nbsp;</span>{{movimento.valor | currency}}</td>
+      <td style="width: 15%;" class="text-right"><span ng-show="movimento.credito">{{movimento.valor | currency}}</span></td>
+      <td class="text-danger" style="width: 15%;" class="text-right"><span ng-show="!movimento.credito">- {{movimento.valor | currency}}</span></td>
     </tr>
   </table>
 </div>
