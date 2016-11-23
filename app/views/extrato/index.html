@@ -20,14 +20,22 @@
 <div class="form-inline">
   <div class="form-group">
     <label for="inicio">Data Inicio</label>
-    <input id="inicio" name="inicio" class="form-control" ng-model="dataInicio" type="text" uib-datepicker-popup="dd/MM/yyyy" is-open="popupDataInicio.opened" datepicker-options="dateOptions" close-text="Fechar">
+    <div class="input-group">
+      <input id="inicio" name="inicio" class="form-control" ng-model="dataInicio" type="text" uib-datepicker-popup="dd/MM/yyyy" is-open="popupDataInicio.opened" datepicker-options="dateOptions" close-text="Fechar">
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openPopupDataInicio()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
   </div>
-  <button type="button" class="btn btn-default" ng-click="openPopupDataInicio()"><i class="glyphicon glyphicon-calendar"></i></button>
   <div class="form-group">
     <label for="fim">Data Fim</label>
-    <input id="fim" name="fim" class="form-control" ng-model="dataFim" type="text" uib-datepicker-popup="dd/MM/yyyy" is-open="popupDataFim.opened" datepicker-options="dateOptions" close-text="Fechar">
+    <div class="input-group">
+      <input id="fim" name="fim" class="form-control" ng-model="dataFim" type="text" uib-datepicker-popup="dd/MM/yyyy" is-open="popupDataFim.opened" datepicker-options="dateOptions" close-text="Fechar">
+      <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="openPopupDataFim()"><i class="glyphicon glyphicon-calendar"></i></button>
+      </span>
+    </div>
   </div>
-  <button type="button" class="btn btn-default" ng-click="openPopupDataFim()"><i class="glyphicon glyphicon-calendar"></i></button>
   <button id="botao" class="btn btn-primary" ng-click="onPesquisar(dataInicio, dataFim)" ><i class="glyphicon glyphicon-search"></i> Pesquisar</button>
 </div>
 <br>
