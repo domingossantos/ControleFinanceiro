@@ -13,10 +13,6 @@ angular.module('controleFinanceiroApp.controllers')
         $scope.gruposPlano = [];
         $scope.diferencaValor = 0;
 
-
-
-
-
         // Variaveis DataPickerOption
         $scope.dateOptions = {
             formatYear: 'yyyy',
@@ -67,7 +63,6 @@ angular.module('controleFinanceiroApp.controllers')
 
             }
         );
-
 
         var pagamentoResources = $injector.get('PagamentoResources');
 
@@ -152,8 +147,6 @@ angular.module('controleFinanceiroApp.controllers')
                 ,angular.copy($scope.itemPagamento)).$promise.then(
                 function (success) {
                     $scope.pagamento.valor += $scope.itemPagamento.valor;
-
-
 
                     $scope.onCarregaItens();
                     $scope.atualizarPagamento('RASCUNHO');

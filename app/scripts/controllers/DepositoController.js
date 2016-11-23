@@ -3,7 +3,7 @@
  * Created by domingossantos on 07/08/16.
  */
 angular.module('controleFinanceiroApp')
-  .controller('DepositoCtrl',['$rootScope','$scope', '$injector', '$location','$timeout', '$q', '$log', function ($rootScope, $scope, $injector, $location,$timeout, $q, $log) {
+  .controller('DepositoCtrl',['$rootScope','$scope', '$injector', '$location','$timeout', '$q', '$log','MessageSrv', function ($rootScope, $scope, $injector, $location,$timeout, $q, $log,MessageSrv) {
 
     $scope.formasPagamento = [];
     $scope.contas = [];
@@ -50,7 +50,7 @@ angular.module('controleFinanceiroApp')
         function (success) {
 
           $scope.limparCampos();
-          alert('Registro salvo');
+            MessageSrv.success('Pagamento Salvo');
           $location.path('/main');
         }
       )

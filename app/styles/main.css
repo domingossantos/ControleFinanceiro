@@ -19,8 +19,7 @@ body {
 
 /* Custom page header */
 .header {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 /* Make the masthead heading the same height as the navigation */
 .header h3 {
@@ -217,7 +216,7 @@ growl-notification{
     position: absolute;
     top: 50%;
     left: 50%;
-    z-index: 0;
+    z-index: 9999;
 }
 
 .modal-dialog,
@@ -231,3 +230,5 @@ growl-notification{
     max-height: calc(100% - 120px);
     overflow-y: scroll;
 }
+
+

@@ -32,8 +32,8 @@ var app = angular.module('controleFinanceiroApp', [
                 controller: 'MainCtrl'
             })
             .when('/pagamento', {
-                templateUrl: 'views/movimento/pagamento/pagamento.html',
-                controller: 'PagamentoCtrl'
+                templateUrl: 'views/movimento/pagamento/incluir.html',
+                controller: 'PagamentoIncluirCtrl'
             })
             .when('/movimento/pagamento', {
                 templateUrl: 'views/movimento/pagamento/lista_pagamento.html',
@@ -103,7 +103,7 @@ app.run(['$rootScope', '$location', 'MessageSrv', function ($rootScope, $locatio
     $rootScope.$on('$routeChangeStart', function (angularEvent, next, current) {
         var requireLogin = typeof $rootScope.usuario === 'undefined' || $rootScope.usuario == null;
         if (requireLogin) {
-            MessageSrv.warning('Acesso não autorizado<br>Favor entre com seu e-mail e senha!');
+            //MessageSrv.warning('Acesso não autorizado<br>Favor entre com seu e-mail e senha!');
             $location.path('/');
         }
     });
@@ -111,7 +111,7 @@ app.run(['$rootScope', '$location', 'MessageSrv', function ($rootScope, $locatio
 
 
 app.config(['$httpProvider', function ($httpProvider) {
-    var myHttpInterceptor = ['$q', '$rootScope', function ($q, $rootScope ) {
+    var myHttpInterceptor = ['$q', '$rootScope', '$location', 'MessageSrv', function ($q, $rootScope, $location, MessageSrv ) {
         return {
             'request': function (request) {
                 $rootScope.showCarregando = true;
@@ -123,12 +123,14 @@ app.config(['$httpProvider', function ($httpProvider) {
             },
             'responseError': function (response) {
                 $rootScope.showCarregando = false;
+                $rootScope.usuario = null;
+                MessageSrv.warning('Acesso não autorizado<br>Favor entre com seu e-mail e senha!');
+                $location.path('/');
             }
         };
     }];
     $httpProvider.interceptors.push(myHttpInterceptor);
 }]);
-
 
 
 

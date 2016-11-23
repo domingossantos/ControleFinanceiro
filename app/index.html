@@ -15,6 +15,9 @@
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
 
+    <!-- Refatoração de estrutura de pasta usando padrão -->
+
+
     <!-- endbuild -->
 
 </head>
@@ -22,16 +25,14 @@
 <!--[if lt IE 7]>
 <p class="browsehappy">Você está usando um navedador  <strong>desatualizado</strong>. Por favor <a href="http://browsehappy.com/">atualize seu navegador</a> para melhorar sua esperiência.</p>
 <![endif]-->
-
 <div growl></div>
 <div ng-show="showCarregando" class="carregando">
-    <div  class="alert alert-danger" role="alert">Aguarde...</div>
+    <div  class="alert alert-danger" role="alert"> Aguarde...</div>
 </div>
 <!-- Add your site or application content here -->
 <div ng-show="usuario" class="header">
-
     <div class="navbar navbar-inverse" role="navigation">
-        <div class="container">
+        <div class="">
             <div class="navbar-header">
 
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
@@ -41,7 +42,7 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <a class="navbar-brand" href="#/">B&M Construtora - Controle Financeiro</a>
+                <a class="navbar-brand" href="#/">B&M Construtora </a>
             </div>
 
             <div class="collapse navbar-collapse" id="js-navbar-collapse">
@@ -117,7 +118,7 @@
 <script src="scripts/controllers/ObraController.js"></script>
 <script src="scripts/controllers/FornecedorController.js"></script>
 <script src="scripts/controllers/LoginController.js"></script>
-<script src="scripts/controllers/PagamentoController.js"></script>
+<script src="scripts/controllers/PagamentoIncluirController.js"></script>
 <script src="scripts/controllers/PagamentoListaController.js"></script>
 <script src="scripts/controllers/PagamentoEdicaoController.js"></script>
 <script src="scripts/controllers/DepositoController.js"></script>
@@ -158,8 +159,12 @@
 
 <script src="scripts/services/MessageSrv.js"></script>
 <script src="scripts/diretives/CarregandoDiretive.js"></script>
+<script src="scripts/libs/ui-bootstrap-tpls.js"></script>
 
-<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.2.0.js"></script>
+<!--<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.2.0.js"></script>-->
+
+<script src="views/movimento/pagamento/IncluirPagamentoController.js"></script>
+
 
 <!-- endbuild -->
 

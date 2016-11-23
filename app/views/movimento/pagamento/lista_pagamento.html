@@ -27,7 +27,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-4">
         <form class="form-inline">
             <label for="mes">Mês Referência</label>
             <select id="mes" ng-change="onPesquisar()"
@@ -37,11 +37,31 @@
                     class="form-control"
             >
             </select>
-            <button ng-click="onPesquisar()" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> Pesquisar</button>
 
-            <a href="#/pagamento" class="btn btn-warning"><i class="glyphicon glyphicon-plus"></i> Novo Pagamento</a>
-            <button ng-click="printDiv('area')" class="btn btn-primary"><i class="glyphicon glyphicon-print"></i> Imprimir</button>
         </form>
+
+    </div>
+    <div class="col-md-8 text-right form-inline">
+        <label for="dataInicio">Data Inicio</label>
+        <div class="input-group">
+            <input type="text" id="dataInicio" name="dataInicio" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dataInicio" is-open="popupDataInicio.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openPopupDataInicio()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </div>
+
+        <label for="dataFim">Data Fim</label>
+        <div class="input-group">
+            <input type="text" id="dataFim" name="dataFim" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dataFim" is-open="popupDataFim.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openPopupDataFim()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </div>
+
+
+        <button ng-click="onPesquisarPeriodo()" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-search"></i> Pesquisar</button>
+        <a href="#/pagamento" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-plus"></i> Novo Pagamento</a>
+        <button ng-click="printDiv('area')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-print"></i> Imprimir</button>
     </div>
 
 </div>
@@ -148,9 +168,9 @@
 </div>
 
 <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="modalApagar">
-    <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-dialog " role="document">
         <div class="modal-content">
-            <div class="modal-headr">Deseja apagar este pagamento?</div>
+            <div class="modal-headr"><h4>Deseja apagar este pagamento?</h4></div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-3 text-right">Descrição: </div>
@@ -172,10 +192,26 @@
                     <div class="col-md-3 text-right">Valor: </div>
                     <div class="col-md-9">{{pagamento.valor | currency}}</div>
                 </div>
+                <div class="row">
+                    <table class="table">
+                        <tr class="info">
+                            <th>Historico</th>
+                            <th>Fornecedor</th>
+                            <th>Obra</th>
+                            <th>Valor</th>
+                        </tr>
+                        <tr ng-repeat="item in itensPagamento">
+                            <td>{{item.historico}}</td>
+                            <td>{{item.fornecedor.nome}}</td>
+                            <td>{{item.obra.apelido}}</td>
+                            <td>{{item.valor | currency}}</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modalApagar">Cancelar</button>
-                <button type="button" ng-show="pagamento.status == 'PENDENTE_HOMOLOGACAO'" ng-click="onDeletePagamento(pagamento)" class="btn btn-primary" data-dismiss="modal">Apagar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                <button type="button" ng-show="pagamento.status != 'HOMOLOGACAO'" ng-click="onDeletePagamento(pagamento)" class="btn btn-primary" data-dismiss="modal">Sim</button>
             </div>
         </div>
     </div>

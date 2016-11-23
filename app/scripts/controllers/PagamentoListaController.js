@@ -13,6 +13,9 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.firstResult = 0;
     $scope.registrosPorPagina = 10;
 
+    $scope.dataFim = null;
+    $scope.dataInicio = null;
+
     $scope.meses = [
         {id:1,nome:'JANEIRO'},
         {id:2,nome:'FEVEVEIRO'},
@@ -57,33 +60,70 @@ angular.module('controleFinanceiroApp.controllers')
         return day;
     }
 
+    $scope.dateOptions = {
+        formatYear: 'yyyy',
+        maxDate: new Date(2020, 5, 22),
+        minDate: new Date(2000,1,1),
+        startingDay: 1,
+
+    };
+
+    $scope.popupDataInicio = {
+        opened: false
+    };
+    $scope.popupDataFim = {
+        opened: false
+    };
+
+    $scope.openPopupDataInicio = function() {
+        $scope.popupDataInicio.opened = true;
+    };
+    $scope.openPopupDataFim = function() {
+        $scope.popupDataFim.opened = true;
+    };
+
+    $scope.altInputFormats = ['dd/MM/yyyy'];
+
 
     var now = new Date;
     var mes = parseInt(now.getMonth());
     $scope.mes = $scope.meses[mes];
 
     var pagamentoListaResources = $injector.get('PagamentoResources');
+    var itemPagamentoResources = $injector.get('ItemPagamentoResources');
 
     $scope.onPesquisar = function(){
         var mes = $scope.mes.id;
         var ano = new Date().getFullYear();
-        var dataInicio = '01/'+mes+'/'+ano;
+        var dataInicio =  '01/'+mes+'/'+ano;
         var dataFim = $scope.getUltimoDiaMes(mes,ano)+'/'+mes+'/'+ano;
 
-        pagamentoListaResources.query({idContaCorrente:0, status:'',dataInicio:dataInicio, dataFim:dataFim, maxResults : $scope.maxResults, firstResult: $scope.firstResult}).$promise.then(
+        pagamentoListaResources.query({idContaCorrente:0, status:'',dataInicio:dataInicio, dataFim:dataFim, maxResults : $scope.maxResults, firstResult: $scope.firstResult, ordem:'asc'}).$promise.then(
             function (success) {
                 $scope.pagamentos = success;
             }
         );
     }
 
+
+    $scope.onPesquisarPeriodo = function(){
+
+        var dataInicio = $scope.dataInicio.toLocaleDateString();
+        var dataFim = $scope.dataFim.toLocaleDateString();
+
+        pagamentoListaResources.query({idContaCorrente:0, status:'',dataInicio:dataInicio, dataFim:dataFim, maxResults : $scope.maxResults, firstResult: $scope.firstResult, ordem:'asc'}).$promise.then(
+            function (success) {
+                $scope.pagamentos = success;
+            }
+        );
+    }
+
+
+
     $scope.onPesquisar();
 
     $scope.onDetalhePagamento = function (pagamento) {
         $scope.pagamento = pagamento;
-
-
-        var itemPagamentoResources = $injector.get('ItemPagamentoResources');
 
         itemPagamentoResources.query({idPagamento:$scope.pagamento.id},function (success) {
             $scope.itensPagamento = success.itens;
@@ -131,6 +171,10 @@ angular.module('controleFinanceiroApp.controllers')
 
     $scope.onApagarRegistro = function(pagamento){
         $scope.pagamento = pagamento;
+        itemPagamentoResources.query({idPagamento:$scope.pagamento.id},function (success) {
+            $scope.itensPagamento = success.itens;
+
+        });
         $('#modalApagar').modal('show');
     }
     var movimentoResources = $injector.get('MovimentoResources');
