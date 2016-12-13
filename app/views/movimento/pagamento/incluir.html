@@ -141,7 +141,10 @@
                     <td >{{item.planoConta.descricao}}</td>
                     <td >{{item.historico}}</td>
                     <td class="text-right">{{item.valor | currency}}</td>
-                    <td class="text-right"><button class="btn btn-warning" ng-click="onDeleteItem(item)"><i class="glyphicon glyphicon-remove"></i></button></td>
+                    <td class="text-right">
+                        <button class="btn btn-warning" ng-click="onCarregaItem(item)"><i class="glyphicon glyphicon-pencil"></i></button>
+                        <button class="btn btn-danger" ng-click="onDeleteItem(item)"><i class="glyphicon glyphicon-remove"></i></button>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -165,6 +168,7 @@
                                 <label for="obra" >Obra</label>
                                 <select id="obra" class="form-control" name="obra" required
                                         ng-model="itemPagamento.obra"
+                                        ng-selected="itemPagamento.obra.id == obra.id"
                                         ng-options="obra as obra.apelido for obra in obras">
                                     <option value="">Selecione...</option>
                                 </select>
@@ -183,6 +187,7 @@
                             <div class="col-md-8">
                                 <select id="despesa" class="form-control" name="despesa" required
                                         ng-model="itemPagamento.planoConta"
+                                        ng-selected="itemPagamento.planoConta.id == plano.id"
                                         ng-options="plano.planoConta as plano.descricao group by plano.grupo for plano in planosContas | filter : planoDigitado">
                                     <option value="">Selecione</option>
 
@@ -202,6 +207,7 @@
                             <div class="col-md-8">
                                 <select id="fornecedor" class="form-control" name="fornecedor" required
                                         ng-model="itemPagamento.fornecedor"
+                                        ng-selected="itemPagamento.fornecedor.id == fornecedor.id"
                                         ng-options="fornecedor.fornecedor as fornecedor.descricao for fornecedor in fornecedores | filter : fornecedorDigitado">
                                     <option value="">Selecione</option>
 

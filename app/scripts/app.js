@@ -96,17 +96,26 @@ var app = angular.module('controleFinanceiroApp', [
             });
     });
 
-app.run(['$rootScope', '$location', 'MessageSrv', function ($rootScope, $location,MessageSrv) {
+app.run(['$rootScope', '$location', '$http', 'MessageSrv', 'CookiesSrv', function ($rootScope, $location, $http, MessageSrv, CookiesSrv) {
 
     $rootScope.showCarregando = false;
+    $rootScope.paginaAtual = 0;
+    $rootScope.datInicio = null;
+    $rootScope.dataFim = null;
+
 
     $rootScope.$on('$routeChangeStart', function (angularEvent, next, current) {
         var requireLogin = typeof $rootScope.usuario === 'undefined' || $rootScope.usuario == null;
         if (requireLogin) {
-            MessageSrv.warning('Acesso não autorizado<br>Favor entre com seu e-mail e senha!');
-            $location.path('/');
+            if($location.path() != '/'){
+                MessageSrv.warning('Acesso não autorizado<br>Favor entre com seu e-mail e senha!');
+                $location.path('/');
+            }
         }
+
     });
+
+
 }]);
 
 
@@ -123,9 +132,7 @@ app.config(['$httpProvider', function ($httpProvider) {
             },
             'responseError': function (response) {
                 $rootScope.showCarregando = false;
-                $rootScope.usuario = null;
-                MessageSrv.warning('Acesso não autorizado<br>Favor entre com seu e-mail e senha!');
-                $location.path('/');
+                MessageSrv.warning('Erro na operação tente novamente<br> Se persistir contate o adminstrador.');
             }
         };
     }];
@@ -133,10 +140,8 @@ app.config(['$httpProvider', function ($httpProvider) {
 }]);
 
 
-
-
-//app.rootContext = 'http://api.domsantos.com.br:8080/cf-api/';
-app.rootContext = 'http://localhost:8080/cf-api/';
+app.rootContext = 'http://api.domsantos.com.br:8080/cf-api/';
+//app.rootContext = 'http://localhost:8080/cf-api/';
 
 angular.module('controleFinanceiroApp.resources',[]);
 angular.module('controleFinanceiroApp.controllers',[]);

@@ -7,8 +7,8 @@
 </div>
 
 <div ng-show="contasCorrentes.itens.length > 0" class="row">
-  <div class="col-md-12">
-    <h4>Contas Correntes <small><button class="btn btn-primary btn-xs" ng-click="adicionarContaCorrente()" role="button"><i class="glyphicon glyphicon-ok"></i> Adicionar</button></small></h4>
+  <div class="col-md-12" id="area">
+    <h4>Contas Correntes <small><button class="btn btn-primary btn-xs" ng-click="adicionarContaCorrente()" role="button"><i class="glyphicon glyphicon-ok"></i> Adicionar</button></small> <button ng-click="onImprimir('area')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-print"></i> Imprimir</button></h4>
     <table class="table table-hover">
       <thead>
         <tr class="info">

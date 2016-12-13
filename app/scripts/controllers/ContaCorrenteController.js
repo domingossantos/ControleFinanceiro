@@ -4,7 +4,7 @@
  */
 angular.module('controleFinanceiroApp')
 
-.controller('ContaCorrenteCtrl',['$rootScope', '$scope', '$injector', function ($rootScope, $scope, $injector) {
+.controller('ContaCorrenteCtrl',['$rootScope', '$scope', '$injector', 'ImpressaoSrv', function ($rootScope, $scope, $injector, ImpressaoSrv) {
   $scope.contaCorrenteSelecionada = null;
   $scope.contaCorrente = {};
   $scope.contasCorrentes = [];
@@ -68,4 +68,8 @@ angular.module('controleFinanceiroApp')
   });
 
   $scope.listarContasCorrentes();
+
+    $scope.onImprimir = function (nomeDiv) {
+        ImpressaoSrv.imprimirDiv(nomeDiv);
+    }
 }]);

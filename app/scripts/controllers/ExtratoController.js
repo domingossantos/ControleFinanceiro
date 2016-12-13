@@ -54,17 +54,35 @@ angular.module('controleFinanceiroApp')
         $scope.parametros.idContaCorrente = null;
       }
 
-      console.log($scope.parametros);
 
       movimentoResources.query($scope.parametros).$promise.then(
         function (success) {
           $scope.movimentos = success.itens;
+
+          var creditoTotal = 0;
+          var debitoTotal = 0;
+          var saldoAtual = 0;
+
+          for (var i = 0; i < $scope.movimentos.length; i++){
+              if($scope.movimentos[i].credito){
+                  creditoTotal += $scope.movimentos[i].valor;
+                  saldoAtual += $scope.movimentos[i].valor;
+
+              } else {
+                  debitoTotal += $scope.movimentos[i].valor;
+                  saldoAtual -= $scope.movimentos[i].valor;
+              }
+
+              $scope.movimentos[i].saldoAtual = saldoAtual;
+          }
 
           if($scope.tipoConsulta == 'C') {
             $scope.saldoAtual = $scope.contaSelecionada.saldoAtual;
           } else if($scope.tipoConsulta == 'O') {
             $scope.saldoAtual = $scope.obraSelecionada.saldoAtual;
           }
+
+          $scope.saldoAtual = (creditoTotal - debitoTotal);
         }
       );
     }

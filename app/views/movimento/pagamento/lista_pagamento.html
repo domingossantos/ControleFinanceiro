@@ -24,20 +24,21 @@
             </tr>
             </tbody>
         </table>
+
     </div>
 </div>
 <div class="row">
     <div class="col-md-4">
         <form class="form-inline">
             <label for="mes">Mês Referência</label>
-            <select id="mes" ng-change="onPesquisar()"
+            <select id="mes"
                     ng-selected="mes"
                     ng-model="mes"
                     ng-options="mes as mes.nome for mes in meses"
                     class="form-control"
             >
             </select>
-
+            <button class="btn btn-default" ng-click="onPesquisar()"><i class="glyphicon glyphicon-search"></i></button>
         </form>
 
     </div>
@@ -61,7 +62,7 @@
 
         <button ng-click="onPesquisarPeriodo()" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-search"></i> Pesquisar</button>
         <a href="#/pagamento" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-plus"></i> Novo Pagamento</a>
-        <button ng-click="printDiv('area')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-print"></i> Imprimir</button>
+        <button ng-click="onImprimir('area')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-print"></i> Imprimir</button>
     </div>
 
 </div>
@@ -99,7 +100,7 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-        <button class="btn btn-sm btn-primary" ng-click="onIncrementaResultado()"><i class="glyphicon glyphicon-plus"></i> Registros</button>
+        <button class="btn btn-sm btn-primary" ng-click="onIncrementaResultado()"><i class="glyphicon glyphicon-plus"></i> Mostrar Todos</button>
     </div>
     <div class="col-md-6 text-right">
         <button class="btn btn-sm btn-primary" ng-click="onPaginar('-1')"><i class="glyphicon glyphicon-chevron-left"></i> Anterior</button>

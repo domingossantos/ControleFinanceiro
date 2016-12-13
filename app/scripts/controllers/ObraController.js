@@ -3,7 +3,7 @@
  * Created by domingossantos on 12/08/16.
  */
 angular.module('controleFinanceiroApp')
-  .controller('ObraCtrl',['$rootScope', '$scope','$injector' ,function ($rootScope, $scope, $injector) {
+  .controller('ObraCtrl',['$rootScope', '$scope','$injector', 'ImpressaoSrv' ,function ($rootScope, $scope, $injector, ImpressaoSrv) {
     $scope.obras =[];
     $scope.obra = {
       apelido : null,
@@ -123,5 +123,9 @@ angular.module('controleFinanceiroApp')
 
     $scope.listarObras();
 
+
+      $scope.onImprimir = function (nomeDiv) {
+          ImpressaoSrv.imprimirDiv(nomeDiv);
+      }
 
   }]);

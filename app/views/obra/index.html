@@ -5,8 +5,8 @@
     <p><a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalCadastrarObra" role="button">Cadastrar</a></p>
   </div>
 </div>
-<div ng-show="obras.itens.length > 0" class="row">
-  <h4>Obras <small><a href="javascrit:" data-toggle="modal" data-target="#modalCadastrarObra" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-ok"></i> Adicionar</a></small></h4>
+<div ng-show="obras.itens.length > 0" class="row" id="area">
+  <h4>Obras <small><a href="javascrit:" data-toggle="modal" data-target="#modalCadastrarObra" class="btn btn-xs btn-primary"><i class="glyphicon glyphicon-ok"></i> Adicionar</a> <button ng-click="onImprimir('area')" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-print"></i> Imprimir</button</small></h4>
   <table class="table table-hover table-striped">
     <tr class="info">
       <th width="40%">Nome</th>

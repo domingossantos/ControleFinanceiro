@@ -3,7 +3,7 @@
  * Created by domingossantos on 07/08/16.
  */
 angular.module('controleFinanceiroApp.controllers')
-.controller('PagamentoListaCtrl',['$rootScope','$scope', '$injector', '$location', 'MessageSrv', function ($rootScope, $scope, $injector, $location, MessageSrv) {
+.controller('PagamentoListaCtrl',['$rootScope','$scope', '$injector', '$location','$route' ,'MessageSrv', 'ImpressaoSrv', function ($rootScope, $scope, $injector, $location, $route, MessageSrv, ImpressaoSrv) {
 
     $scope.pagamentos = [];
     $scope.itensPagamento = [];
@@ -12,9 +12,19 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.maxResults = 10;
     $scope.firstResult = 0;
     $scope.registrosPorPagina = 10;
+    $scope.origemPesquisa = 1;
+    $scope.inicioPesquisa = 0;
+    $scope.ano = new Date().getFullYear();
+
+    $scope.paginaAtual = 1;
+    $scope.totalRegistros = 0;
+
 
     $scope.dataFim = null;
     $scope.dataInicio = null;
+
+    $scope.dataInicioP = null;
+    $scope.dataFimP = null;
 
     $scope.meses = [
         {id:1,nome:'JANEIRO'},
@@ -30,6 +40,7 @@ angular.module('controleFinanceiroApp.controllers')
         {id:11,nome:'NOVEMBRO'},
         {id:12,nome:'DEZEMBRO'}
     ];
+
     $scope.getUltimoDiaMes = function(month,year)
     {
         var day;
@@ -59,6 +70,7 @@ angular.module('controleFinanceiroApp.controllers')
 
         return day;
     }
+
 
     $scope.dateOptions = {
         formatYear: 'yyyy',
@@ -90,37 +102,72 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.mes = $scope.meses[mes];
 
     var pagamentoListaResources = $injector.get('PagamentoResources');
+    var pagamentoListaQtdResources = $injector.get('PagamentoListaQtdResources');
     var itemPagamentoResources = $injector.get('ItemPagamentoResources');
 
-    $scope.onPesquisar = function(){
-        var mes = $scope.mes.id;
-        var ano = new Date().getFullYear();
-        var dataInicio =  '01/'+mes+'/'+ano;
-        var dataFim = $scope.getUltimoDiaMes(mes,ano)+'/'+mes+'/'+ano;
+    $scope.pesquisaPeriodo = function(){
+        $rootScope.atualizar = false;
+        console.log($rootScope.dataInicio);
+        console.log($rootScope.dataFim);
+        console.log($rootScope.paginaAtual);
 
-        pagamentoListaResources.query({idContaCorrente:0, status:'',dataInicio:dataInicio, dataFim:dataFim, maxResults : $scope.maxResults, firstResult: $scope.firstResult, ordem:'asc'}).$promise.then(
+        pagamentoListaResources.query({idContaCorrente:0, status:'',dataInicio:$scope.dataInicioP, dataFim:$scope.dataFimP, maxResults : $scope.maxResults, firstResult: $scope.firstResult, ordem:'asc'}).$promise.then(
             function (success) {
                 $scope.pagamentos = success;
             }
         );
+    }
+
+    $scope.getTotalRegistros = function(){
+        pagamentoListaQtdResources.query({idContaCorrente:0, status:'',dataInicio:$scope.dataInicioP, dataFim:$scope.dataFimP}).$promise.then(
+            function (success) {
+                console.log(success);
+                $scope.totalRegistros = success.item;
+            }
+        );
+    }
+
+
+    $scope.onPesquisar = function(){
+
+        var mes = $scope.mes.id;
+
+        $scope.dataInicioP =  '01/'+mes+'/'+$scope.ano;
+        $scope.dataFimP = $scope.getUltimoDiaMes(mes,$scope.ano)+'/'+mes+'/'+$scope.ano;
+        $scope.firstResult = 0;
+        $scope.maxResults = 10;
+
+        $rootScope.dataInicio = $scope.dataInicioP;
+        $rootScope.dataFim = $scope.dataFimP;
+        $rootScope.paginaAtual = 0;
+        $rootScope.atualizar = false;
+
+        $scope.pesquisaPeriodo();
+        $scope.getTotalRegistros();
+
     }
 
 
     $scope.onPesquisarPeriodo = function(){
+        $scope.origemPesquisa = 2;
 
-        var dataInicio = $scope.dataInicio.toLocaleDateString();
-        var dataFim = $scope.dataFim.toLocaleDateString();
 
-        pagamentoListaResources.query({idContaCorrente:0, status:'',dataInicio:dataInicio, dataFim:dataFim, maxResults : $scope.maxResults, firstResult: $scope.firstResult, ordem:'asc'}).$promise.then(
-            function (success) {
-                $scope.pagamentos = success;
-            }
-        );
+        $scope.dataInicioP = $scope.dataInicio.toLocaleDateString();
+        $scope.dataFimP = $scope.dataFim.toLocaleDateString();
+        $scope.maxResults = 10;
+        $scope.firstResult = 0;
+        $scope.registrosPorPagina = 10;
+        $rootScope.dataInicio = $scope.dataInicioP;
+        $rootScope.dataFim = $scope.dataFimP;
+        $rootScope.paginaAtual = 0;
+        $rootScope.atualizar = false;
+
+
+        $scope.pesquisaPeriodo();
+        $scope.getTotalRegistros();
+
     }
 
-
-
-    $scope.onPesquisar();
 
     $scope.onDetalhePagamento = function (pagamento) {
         $scope.pagamento = pagamento;
@@ -148,24 +195,33 @@ angular.module('controleFinanceiroApp.controllers')
         }
     }
 
+
+
     $scope.onPaginar = function (pagina) {
 
         if(pagina == '+1'){
             $scope.firstResult += $scope.maxResults;
+            $scope.paginaAtual++;
         }
 
         if(pagina == '-1'){
             if($scope.firstResult > 0){
                 $scope.firstResult -= $scope.maxResults;
+                $scope.paginaAtual--;
             }
         }
+        $rootScope.paginaAtual = $scope.firstResult;
+        $scope.pesquisaPeriodo();
 
-        $scope.onPesquisar();
+
     }
 
     $scope.onIncrementaResultado = function(){
-        $scope.maxResults += $scope.registrosPorPagina;
-        $scope.onPesquisar();
+        console.log($scope.totalRegistros);
+        $scope.maxResults = $scope.totalRegistros;
+        $scope.firstResult = 0;
+
+        $scope.pesquisaPeriodo();
     }
 
 
@@ -198,6 +254,25 @@ angular.module('controleFinanceiroApp.controllers')
     }
 
 
+
+
+    if($rootScope.atualizar){
+        $scope.dataInicioP = $rootScope.dataInicio;
+        $scope.dataFimP = $rootScope.dataFim;
+        $scope.firstResult = $rootScope.paginaAtual;
+    } else {
+        var mes = $scope.mes.id;
+        $scope.dataInicioP =  '01/'+mes+'/'+$scope.ano;
+        $scope.dataFimP = $scope.getUltimoDiaMes(mes,$scope.ano)+'/'+mes+'/'+$scope.ano;
+        $scope.firstResult = 0;
+    }
+
+    $scope.pesquisaPeriodo();
+
+
+    $scope.onImprimir = function (nomeDiv) {
+        ImpressaoSrv.imprimirDiv(nomeDiv);
+    }
 
 }]);
 

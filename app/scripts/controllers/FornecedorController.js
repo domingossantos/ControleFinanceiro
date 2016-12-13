@@ -8,7 +8,8 @@ angular.module('controleFinanceiroApp')
     $scope.fornecedor = {
       descricao : null,
       nome : null,
-      cliente : null
+      cliente : null,
+      preferencial : false
     }
     $scope.filtro = null;
 
@@ -46,7 +47,8 @@ angular.module('controleFinanceiroApp')
       $scope.fornecedor = {
         descricao : null,
         nome : null,
-        cliente : null
+        cliente : null,
+          preferencial : false
       }
     }
 

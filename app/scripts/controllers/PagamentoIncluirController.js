@@ -2,6 +2,7 @@
 /**
  * Created by domingossantos on 07/08/16.
  */
+(function(){
 angular.module('controleFinanceiroApp.controllers')
     .controller('PagamentoIncluirCtrl',['$rootScope','$scope', '$injector', '$location', '$routeParams' ,'MessageSrv', function ($rootScope, $scope, $injector, $location, $routeParams, MessageSrv) {
 
@@ -160,7 +161,7 @@ angular.module('controleFinanceiroApp.controllers')
 
             if($scope.pagamento.valor == $scope.pagamento.valorEsperado){
                 $scope.atualizarPagamento('PENDENTE_HOMOLOGACAO','ATIVO');
-                $location.path('/main');
+                $location.path('/pagamento');
             } else {
                 MessageSrv.warning('Valor Total é diferente do Valor Esperado!');
             }
@@ -170,6 +171,10 @@ angular.module('controleFinanceiroApp.controllers')
             itemPagamentoResources.query({idPagamento:$scope.pagamento.id}).$promise.then(
                 function (success) {
                     $scope.itensPagamento = success.itens;
+                    var valorTotal = 0;
+                    for(var i = 0; success.itens.length > i; i++){
+                        valorTotal += success.itens[i].valor;
+                    }
                 }
             );
         }
@@ -202,8 +207,12 @@ angular.module('controleFinanceiroApp.controllers')
 
         }
 
-        $scope.onDeleteItem = function(item){
+        $scope.onCarregaItem = function(item){
+            $scope.itemPagamento = item;
+            $('#myModal').modal('show');
+        }
 
+        $scope.onDeleteItem = function(item){
             itemPagamentoResources.delete({idItemPagamento:item.id}).$promise.then(
                 function (success) {
                     $scope.pagamento.valor -= item.valor;
@@ -212,7 +221,6 @@ angular.module('controleFinanceiroApp.controllers')
                     $scope.onCarregaItens();
                 }
             );
-
         }
 
         $scope.atualizarPagamento = function(statusPagamento, situacaoRegistro){
@@ -226,9 +234,6 @@ angular.module('controleFinanceiroApp.controllers')
                 }
             );
         }
-
-
-
 
         contaCorrenteResources.query({}).$promise.then(
             function (success) {
@@ -299,3 +304,4 @@ angular.module('controleFinanceiroApp.controllers')
 
 
     }]);
+})();
