@@ -19,7 +19,6 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.paginaAtual = 1;
     $scope.totalRegistros = 0;
 
-
     $scope.dataFim = null;
     $scope.dataInicio = null;
 
@@ -40,6 +39,8 @@ angular.module('controleFinanceiroApp.controllers')
         {id:11,nome:'NOVEMBRO'},
         {id:12,nome:'DEZEMBRO'}
     ];
+
+    $scope.anos = [{ano:2017},{ano:2016}];
 
     $scope.getUltimoDiaMes = function(month,year)
     {
@@ -71,13 +72,11 @@ angular.module('controleFinanceiroApp.controllers')
         return day;
     }
 
-
     $scope.dateOptions = {
         formatYear: 'yyyy',
         maxDate: new Date(2020, 5, 22),
         minDate: new Date(2000,1,1),
         startingDay: 1,
-
     };
 
     $scope.popupDataInicio = {
@@ -90,16 +89,17 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.openPopupDataInicio = function() {
         $scope.popupDataInicio.opened = true;
     };
+
     $scope.openPopupDataFim = function() {
         $scope.popupDataFim.opened = true;
     };
 
     $scope.altInputFormats = ['dd/MM/yyyy'];
 
-
     var now = new Date;
     var mes = parseInt(now.getMonth());
     $scope.mes = $scope.meses[mes];
+
 
     var pagamentoListaResources = $injector.get('PagamentoResources');
     var pagamentoListaQtdResources = $injector.get('PagamentoListaQtdResources');
@@ -107,9 +107,6 @@ angular.module('controleFinanceiroApp.controllers')
 
     $scope.pesquisaPeriodo = function(){
         $rootScope.atualizar = false;
-        console.log($rootScope.dataInicio);
-        console.log($rootScope.dataFim);
-        console.log($rootScope.paginaAtual);
 
         pagamentoListaResources.query({idContaCorrente:0, status:'',dataInicio:$scope.dataInicioP, dataFim:$scope.dataFimP, maxResults : $scope.maxResults, firstResult: $scope.firstResult, ordem:'asc'}).$promise.then(
             function (success) {
@@ -121,7 +118,6 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.getTotalRegistros = function(){
         pagamentoListaQtdResources.query({idContaCorrente:0, status:'',dataInicio:$scope.dataInicioP, dataFim:$scope.dataFimP}).$promise.then(
             function (success) {
-                console.log(success);
                 $scope.totalRegistros = success.item;
             }
         );
@@ -129,7 +125,6 @@ angular.module('controleFinanceiroApp.controllers')
 
 
     $scope.onPesquisar = function(){
-
         var mes = $scope.mes.id;
 
         $scope.dataInicioP =  '01/'+mes+'/'+$scope.ano;
@@ -147,25 +142,22 @@ angular.module('controleFinanceiroApp.controllers')
 
     }
 
-
     $scope.onPesquisarPeriodo = function(){
         $scope.origemPesquisa = 2;
-
 
         $scope.dataInicioP = $scope.dataInicio.toLocaleDateString();
         $scope.dataFimP = $scope.dataFim.toLocaleDateString();
         $scope.maxResults = 10;
         $scope.firstResult = 0;
         $scope.registrosPorPagina = 10;
+
         $rootScope.dataInicio = $scope.dataInicioP;
         $rootScope.dataFim = $scope.dataFimP;
         $rootScope.paginaAtual = 0;
         $rootScope.atualizar = false;
 
-
         $scope.pesquisaPeriodo();
         $scope.getTotalRegistros();
-
     }
 
 
@@ -174,9 +166,7 @@ angular.module('controleFinanceiroApp.controllers')
 
         itemPagamentoResources.query({idPagamento:$scope.pagamento.id},function (success) {
             $scope.itensPagamento = success.itens;
-
         });
-
     }
 
     $scope.onHomologar = function(movimento){
@@ -194,8 +184,6 @@ angular.module('controleFinanceiroApp.controllers')
             MessageSrv.warning('Valor do pagamento é inferior ao Valor Esperado!');
         }
     }
-
-
 
     $scope.onPaginar = function (pagina) {
 
@@ -217,7 +205,7 @@ angular.module('controleFinanceiroApp.controllers')
     }
 
     $scope.onIncrementaResultado = function(){
-        console.log($scope.totalRegistros);
+
         $scope.maxResults = $scope.totalRegistros;
         $scope.firstResult = 0;
 

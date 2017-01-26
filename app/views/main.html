@@ -2,13 +2,30 @@
   <div class="col-md-8">
     <a href="#/pagamento" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-plus"></i> Novo Pagamento</a>
     <a href="#/aplicacao" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-plus"></i> Nova Transferência/Aplicação</a>
-      <a href="#/deposito" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-plus"></i> Novo Depósito</a>
+    <a href="#/deposito" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-plus"></i> Novo Depósito</a>
   </div>
-
 </div>
 <div class="row">
-    <div class="col-md-6"><h4>Movimentos: {{status}}</h4></div>
-    <div class="col-md-6 form-inline text-right">
+    <div class="col-md-8 form-inline">
+        <label for="dataInicio">Inicio</label>
+        <div class="input-group">
+            <input type="text" id="dataInicio" name="dataInicio" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dataInicio" is-open="popupDataInicio.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openPopupDataInicio()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </div>
+
+        <label for="dataFim">Fim</label>
+        <div class="input-group">
+            <input type="text" id="dataFim" name="dataFim" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dataFim" is-open="popupDataFim.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openPopupDataFim()"><i class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+        </div>
+        <button ng-click="onPesquisaPorStatus()" class="btn btn-primary"><i class=" glyphicon glyphicon-search"></i></button>
+
+    </div>
+    <div class="col-md-4 form-inline text-right">
         <label for="status">Status</label>
         <select id="status" class="form-control" ng-model="status" ng-change="onPesquisaPorStatus()">
             <option value="PENDENTE_HOMOLOGACAO">Pendente</option>
@@ -35,7 +52,7 @@
       <td class="text-right">{{movimento.valor | currency}}</td>
       <td class="text-center">{{movimento.dataOperacao | date:'dd/MM/yyyy'}}</td>
       <td class="text-center">
-        <a href="javascript:" data-toggle="modal" data-target="#modalHomologa" ng-click="onDetalheMovimento(movimento.id,2)">
+        <a href="javascript:" data-toggle="modal" data-target="#modalHomologa" ng-click="onDetalheMovimento(movimento.id,2,movimento.tipoMovimento)">
           <i class="glyphicon glyphicon-new-window"></i>
         </a>
       </td>

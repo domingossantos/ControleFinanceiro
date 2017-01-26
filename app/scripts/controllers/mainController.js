@@ -10,6 +10,70 @@
 angular.module('controleFinanceiroApp.controllers')
     .controller('MainCtrl', ['$rootScope','$scope', '$injector',function ($rootScope, $scope, $injector) {
         $scope.menu = false;
+        $scope.dataFim = null;
+        $scope.dataInicio = null;
+
+        $scope.dataInicioP = null;
+        $scope.dataFimP = null;
+
+        $scope.getUltimoDiaMes = function(month,year)
+        {
+            var day;
+            switch(month) {
+                case 1 :
+                case 3 :
+                case 5 :
+                case 7 :
+                case 8 :
+                case 10:
+                case 12:
+                    day = 31;
+                    break;
+                case 4 :
+                case 6 :
+                case 9 :
+                case 11:
+                    day = 30;
+                    break;
+                case 2 :
+                    if( ( (year % 4 == 0) && ( year % 100 != 0) ) || (year % 400 == 0) )
+                        day = 29;
+                    else
+                        day = 28;
+                    break;
+            }
+
+            return day;
+        }
+
+        $scope.dateOptions = {
+            formatYear: 'yyyy',
+            maxDate: new Date(2020, 5, 22),
+            minDate: new Date(2000,1,1),
+            startingDay: 1,
+
+        };
+
+        $scope.popupDataInicio = {
+            opened: false
+        };
+
+        $scope.openPopupDataInicio = function() {
+            $scope.popupDataInicio.opened = true;
+        };
+
+        $scope.popupDataFim = {
+            opened: false
+        };
+
+        $scope.openPopupDataFim = function() {
+            $scope.popupDataFim.opened = true;
+        };
+
+        var dataAtual = new Date();
+        var mes = dataAtual.getMonth() + 1;
+        $scope.dataInicioP = '01/0'+mes.toString()+'/'+dataAtual.getFullYear();
+        $scope.dataFimP = $scope.getUltimoDiaMes(mes,dataAtual.getFullYear())+'/0'+mes.toString()+'/'+dataAtual.getFullYear();
 
         $scope.login = function(){
             $scope.menu = true;
@@ -42,7 +106,7 @@ angular.module('controleFinanceiroApp.controllers')
             );
         };
 
-        $scope.onDetalheMovimento = function(id, origem){
+        $scope.onDetalheMovimento = function(id, origem, tipo){
 
             if(origem == 1){
                 $('#btnHomologar').hide();
@@ -54,19 +118,21 @@ angular.module('controleFinanceiroApp.controllers')
                 function (success) {
                     $scope.detalheMovimento = success.item;
 
-                    $scope.itensPagamentoResources.get({idPagamento:id}).$promise.then(
-                        function (success) {
-                            $scope.itens = success.itens;
-                        }
-                    );
+                    if(tipo != 'Deposito'){
+                        $scope.itensPagamentoResources.get({idPagamento:id}).$promise.then(
+                            function (success) {
+                                $scope.itens = success.itens;
+                            }
+                        );
+                    }
+
                 }
             );
 
         }
 
         $scope.onPesquisaMovimentos = function(){
-
-            $scope.movimentoResources.query({idCliente: 1, status : $scope.status, maxResults : $scope.maxResults, firstResult: $scope.firstResult}).$promise.then(
+            $scope.movimentoResources.query({idCliente: 1, status : $scope.status, maxResults : $scope.maxResults, firstResult: $scope.firstResult, dataInicio:$scope.dataInicioP, dataFim:$scope.dataFimP}).$promise.then(
                 function (success) {
                     $scope.movimentos = success.itens;
                 }
@@ -75,6 +141,9 @@ angular.module('controleFinanceiroApp.controllers')
         };
 
         $scope.onPesquisaPorStatus = function(){
+
+            $scope.dataInicioP = $scope.dataInicio.toLocaleDateString();
+            $scope.dataFimP = $scope.dataFim.toLocaleDateString();
             $scope.onPesquisaMovimentos();
         }
 

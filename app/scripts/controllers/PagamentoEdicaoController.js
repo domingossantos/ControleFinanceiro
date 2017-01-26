@@ -213,11 +213,10 @@ angular.module('controleFinanceiroApp.controllers')
             $scope.pagamento.contaCorrente = $scope.contaSelecionada;
             $scope.pagamento.detalhePagamento.formaPagamento = $scope.formaSelecionada;
 
-
-
             pagamentoResources.update({idPagamento: $scope.pagamento.id, statusPagamento: statusPagamento, statusRegistro: situacaoRegistro}
                 ,angular.copy($scope.pagamento)).$promise.then(
                 function (success) {
+                    console.log($scope.pagamento);
                     MessageSrv.info('Pagamento atualizado');
                 },
                 function (error) {
@@ -246,6 +245,9 @@ angular.module('controleFinanceiroApp.controllers')
         }
 
         $scope.onSalvar = function () {
+
+
+
             if($scope.pagamento.valor == $scope.pagamento.valorEsperado){
                 $scope.atualizarPagamento('PENDENTE_HOMOLOGACAO','ATIVO');
                 $location.path('/movimento/pagamento');

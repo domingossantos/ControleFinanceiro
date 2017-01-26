@@ -15,6 +15,8 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.aplicacoes = [];
     $scope.aplicacao = [];
     $scope.valorTributoResgate = 0;
+    $scope.ano = new Date().getFullYear();
+    $scope.dataOperacao = null;
 
       $scope.meses = [
           {id:1,nome:'JANEIRO'},
@@ -59,6 +61,32 @@ angular.module('controleFinanceiroApp.controllers')
 
           return day;
       }
+
+      $scope.dateOptions = {
+          formatYear: 'yyyy',
+          maxDate: new Date(2020, 5, 22),
+          minDate: new Date(2000,1,1),
+          startingDay: 1,
+
+      };
+
+      $scope.popupDataInicio = {
+          opened: false
+      };
+
+      $scope.openPopupDataInicio = function() {
+          $scope.popupDataInicio.opened = true;
+      };
+
+      $scope.popupDataFim = {
+          opened: false
+      };
+
+      $scope.openPopupDataFim = function() {
+          $scope.popupDataFim.opened = true;
+      };
+
+
       var now = new Date;
       var mes = parseInt(now.getMonth());
       $scope.mes = $scope.meses[mes];
@@ -76,10 +104,11 @@ angular.module('controleFinanceiroApp.controllers')
 
     $scope.onSalvar = function () {
 
-        var data = new Date($scope.dataMovimento.substring(4,8),
+        /*var data = new Date($scope.dataMovimento.substring(4,8),
                             parseInt($scope.dataMovimento.substring(2,4) - 1),
-                            $scope.dataMovimento.substring(0,2));
+                            $scope.dataMovimento.substring(0,2));*/
 
+        var data = $scope.dataOperacao.toLocaleDateString();
         $scope.aplicacao.dataOperacao = data;
       $scope.aplicacao.status = 'PENDENTE_HOMOLOGACAO';
       $scope.aplicacao.origem = $scope.contaOrigemSelecionada;
@@ -105,6 +134,7 @@ angular.module('controleFinanceiroApp.controllers')
         var fornecedor = {};
 
         fornecedorResources.query({idFornecedor:40}, function (result) {
+            console.log(result);
             fornecedor = result.item;
         });
 
@@ -121,12 +151,6 @@ angular.module('controleFinanceiroApp.controllers')
             planoConta = result.item;
         });
 
-        console.log(formaPagamento);
-        console.log(fornecedor);
-        console.log(obra);
-        console.log(planoConta);
-
-      console.log($scope.aplicacao);
 
       aplicacaoResources.save({idContaCorrenteOrigem:$scope.contaOrigemSelecionada.id,
                                idContaCorrenteDestino:$scope.contaDestinoSelecionada.id,
@@ -215,9 +239,8 @@ angular.module('controleFinanceiroApp.controllers')
     $scope.onPesquisar = function () {
 
         var mes = $scope.mes.id;
-        var ano = new Date().getFullYear();
-        var dataInicio = '01/'+mes+'/'+ano;
-        var dataFim = $scope.getUltimoDiaMes(mes,ano)+'/'+mes+'/'+ano;
+        var dataInicio = '01/'+mes+'/'+$scope.ano;
+        var dataFim = $scope.getUltimoDiaMes(mes,ano)+'/'+mes+'/'+$scope.ano;
 
         aplicacaoResources.query({dataInicio:dataInicio, dataFim:dataFim},function (success) {
             $scope.aplicacoes = success;
