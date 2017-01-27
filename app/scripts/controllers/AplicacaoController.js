@@ -103,13 +103,6 @@ angular.module('controleFinanceiroApp.controllers')
     var aplicacaoResources = $injector.get('AplicacaoResources');
 
     $scope.onSalvar = function () {
-
-        /*var data = new Date($scope.dataMovimento.substring(4,8),
-                            parseInt($scope.dataMovimento.substring(2,4) - 1),
-                            $scope.dataMovimento.substring(0,2));*/
-
-        var data = $scope.dataOperacao.toLocaleDateString();
-        $scope.aplicacao.dataOperacao = data;
       $scope.aplicacao.status = 'PENDENTE_HOMOLOGACAO';
       $scope.aplicacao.origem = $scope.contaOrigemSelecionada;
       $scope.aplicacao.destino = $scope.contaDestinoSelecionada;
@@ -133,7 +126,7 @@ angular.module('controleFinanceiroApp.controllers')
         var fornecedorResources = $injector.get('FornecedorResources');
         var fornecedor = {};
 
-        fornecedorResources.query({idFornecedor:40}, function (result) {
+        fornecedorResources.query({idFornecedor:67}, function (result) {
             console.log(result);
             fornecedor = result.item;
         });
@@ -141,7 +134,7 @@ angular.module('controleFinanceiroApp.controllers')
         var obraResources = $injector.get('ObraResources');
         var obra = {};
 
-        obraResources.query({id:66}, function (result) {
+        obraResources.query({idObra:41}, function (result) {
             obra = result.item;
         });
 
@@ -165,6 +158,7 @@ angular.module('controleFinanceiroApp.controllers')
                 pagamento.contaCorrente = $scope.contaOrigemSelecionada;
                 pagamento.dataOperacao = data;
                 pagamento.valor = $scope.valorTributoResgate;
+                pagamento.situacaoRegistro = 'ATIVO';
 
                 var pagamentoResources = $injector.get('PagamentoResources');
 
@@ -182,7 +176,7 @@ angular.module('controleFinanceiroApp.controllers')
                         itemPagamentoResources.save({idPagamento:pagamento.id}
                             ,angular.copy(itemPagamento)).$promise.then(
                             function (result) {
-                                MessageSrv.success('Resgate Realizado com sucesso!')
+                                MessageSrv.success('Resgate Realizado com sucesso!');
                             },
                             function (error) {
                                 MessageSrv.error('Erro ao realizar registro de pagamento!');
@@ -195,6 +189,8 @@ angular.module('controleFinanceiroApp.controllers')
                         console.log(error);
                     }
                 );
+            } else {
+                MessageSrv.success('Operação Realizado com sucesso!');
             }
 
 
@@ -240,10 +236,11 @@ angular.module('controleFinanceiroApp.controllers')
 
         var mes = $scope.mes.id;
         var dataInicio = '01/'+mes+'/'+$scope.ano;
-        var dataFim = $scope.getUltimoDiaMes(mes,ano)+'/'+mes+'/'+$scope.ano;
+        var dataFim = $scope.getUltimoDiaMes(mes,$scope.ano)+'/'+mes+'/'+$scope.ano;
 
         aplicacaoResources.query({dataInicio:dataInicio, dataFim:dataFim},function (success) {
             $scope.aplicacoes = success;
+            console.log(success);
         })
     }
     

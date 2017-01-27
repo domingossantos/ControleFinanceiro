@@ -56,7 +56,11 @@ var app = angular.module('controleFinanceiroApp', [
                 controller: 'ExtratoCtrl'
             })
             .when('/deposito', {
-                templateUrl: 'views/movimento/deposito.html',
+                templateUrl: 'views/movimento/deposito/deposito.html',
+                controller: 'DepositoCtrl'
+            })
+            .when('/movimento/deposito', {
+                templateUrl: 'views/movimento/deposito/lista_deposito.html',
                 controller: 'DepositoCtrl'
             })
             .when('/conta', {

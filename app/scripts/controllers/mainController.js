@@ -72,8 +72,9 @@ angular.module('controleFinanceiroApp.controllers')
 
         var dataAtual = new Date();
         var mes = dataAtual.getMonth() + 1;
-        $scope.dataInicioP = '01/0'+mes.toString()+'/'+dataAtual.getFullYear();
-        $scope.dataFimP = $scope.getUltimoDiaMes(mes,dataAtual.getFullYear())+'/0'+mes.toString()+'/'+dataAtual.getFullYear();
+
+        $scope.dataInicio =  new Date(dataAtual.getFullYear(),dataAtual.getMonth(), 1);
+        $scope.dataFim =  new Date(dataAtual.getFullYear(),dataAtual.getMonth(),$scope.getUltimoDiaMes(mes,dataAtual.getFullYear()));
 
         $scope.login = function(){
             $scope.menu = true;
@@ -141,9 +142,9 @@ angular.module('controleFinanceiroApp.controllers')
         };
 
         $scope.onPesquisaPorStatus = function(){
-
             $scope.dataInicioP = $scope.dataInicio.toLocaleDateString();
             $scope.dataFimP = $scope.dataFim.toLocaleDateString();
+
             $scope.onPesquisaMovimentos();
         }
 
@@ -196,7 +197,7 @@ angular.module('controleFinanceiroApp.controllers')
             popupWin.document.close();
         }
 
-        $scope.onPesquisaMovimentos();
+        $scope.onPesquisaPorStatus();
         $scope.onAtualizarPosicao();
 
     }]);

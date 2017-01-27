@@ -53,7 +53,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="#/movimento/pagamento">Pagamentos</a></li>
                             <li><a href="#/movimento/aplicacao">Aplicações e Transferências</a></li>
-                            <li><a href="#">Depositos</a></li>
+                            <li><a href="#/movimento/deposito">Depositos</a></li>
 
                         </ul>
                     </li>
@@ -79,13 +79,11 @@
     </div>
 </div>
 
-<div class="container">
-    <div ng-view=""></div>
+<div class="container" ng-view="">
 </div>
-
-<div class="footer">
+<div class="active">
     <div class="container">
-        <p>v1.0.3 </p>
+        v1.0.4
     </div>
 </div>
 
@@ -167,8 +165,6 @@
 <!--<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.2.0.js"></script>-->
 
 <script src="views/movimento/pagamento/IncluirPagamentoController.js"></script>
-
-
 <!-- endbuild -->
 
 

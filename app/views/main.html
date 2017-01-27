@@ -9,7 +9,7 @@
     <div class="col-md-8 form-inline">
         <label for="dataInicio">Inicio</label>
         <div class="input-group">
-            <input type="text" id="dataInicio" name="dataInicio" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dataInicio" is-open="popupDataInicio.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            <input type="text" id="dataInicio" name="dataInicio" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dataInicio" ng-value="dataInicio" is-open="popupDataInicio.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
             <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="openPopupDataInicio()"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
@@ -17,7 +17,7 @@
 
         <label for="dataFim">Fim</label>
         <div class="input-group">
-            <input type="text" id="dataFim" name="dataFim" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dataFim" is-open="popupDataFim.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+            <input type="text" id="dataFim" name="dataFim" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dataFim" ng-value="dataFim" is-open="popupDataFim.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
             <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="openPopupDataFim()"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
@@ -71,6 +71,7 @@
     </div>
 
 </div>
+
 
 <!-- Modal Homologar-->
 <div class="modal fade" id="modalHomologa" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

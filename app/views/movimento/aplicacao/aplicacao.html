@@ -17,10 +17,12 @@
   <div class="col-md-4">
     <div class="form-group">
       <label for="dataOperacao">Data Operação</label>
-        <input type="text" id="dataOperacao" name="dataOperacao" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="dataOperacao" is-open="popupDataInicio.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+        <div class="input-group">
+        <input type="text" id="dataOperacao" name="dataOperacao" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="aplicacao.dataOperacao" is-open="popupDataInicio.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
         <span class="input-group-btn">
                 <button type="button" class="btn btn-default" ng-click="openPopupDataInicio()"><i class="glyphicon glyphicon-calendar"></i></button>
             </span>
+        </div>
     </div>
   </div>
 
